@@ -8,6 +8,6 @@ Run `npm run walkthrough` from the repository root, then open `http://localhost:
 
 ![Front Pages catalogue](preview.png)
 
-## TypeScript handoff
+## Application
 
-The `typescript-handoff` folder preserves the React, React Three Fiber, Theatre, audio, data, scenario, shader, overlay and mock Reactor source. Raw source media is intentionally excluded from version control. Remaining asset substitutions are recorded in `walkthrough/PLACEHOLDERS.md`.
+The `typescript-handoff` folder holds the React, React Three Fiber and Tone.js application. Run `npm install` and `npm run dev` inside it, then open `http://localhost:5173`. It serves the `walkthrough` folder as its public root, so both pieces share the catalogue, the scenario files and the assets. Raw source media is intentionally excluded from version control. Asset substitutions are recorded in `walkthrough/PLACEHOLDERS.md`, the asset list in `INVENTORY.md`, and the state of the data branch in `DATA_BRANCH.md`.
