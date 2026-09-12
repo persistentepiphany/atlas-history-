@@ -30,7 +30,7 @@ function useRoom() {
   }, []);
   const setDrone = useCallback((on: boolean) => { const c = ctx.current; const g = drone.current; if (!c || !g) return; g.gain.cancelScheduledValues(c.currentTime); g.gain.linearRampToValueAtTime(on ? 0.02 : 0, c.currentTime + (on ? 6 : 4)); }, []);
   const stop = useCallback(() => { void ctx.current?.suspend(); }, []);
-  return { start, stop, setDrone };
+  return useMemo(() => ({ start, stop, setDrone }), [start, stop, setDrone]);
 }
 
 /**
