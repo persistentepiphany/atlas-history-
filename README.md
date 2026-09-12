@@ -114,4 +114,16 @@ Ship only if the world:
 - [ ] Content note where required; CC BY-SA derivatives shared alike  
 - [ ] Provenance note stays visible (don’t strip for polish)
 
-Event-level citations and image checks live in the numbered research files. Re-fetch images with [`download-images.sh`](download-images.sh) if needed.
+Event-level citations and image checks live in the numbered research files.
+
+### Re-fetching the images
+
+```
+ASSET_FETCH_CONTACT='https://example.org/you' ./download-images.sh
+```
+
+Needs `bash`, `curl`, and `file`. Downloads the 26 files listed in the script into `assets/images/`, then writes per-file results and SHA-256 digests to `assets/download-report.txt`. Exit status is non-zero if any file failed; read the report rather than trusting the exit code alone. Takes a few minutes: requests are sequential with a 7-second gap.
+
+An existing local file is only replaced after a download succeeds and `file` identifies it as an image, so a failed source leaves the current copy in place.
+
+What breaks it: **19 of the 26 files come from Wikimedia**, which throttles clients whose User-Agent carries no contact details to about 10 requests a minute and answers HTTP 429 after that. Set `ASSET_FETCH_CONTACT` to a URL or email you control — without it the run will fail partway through the Wikimedia rows, and a throttled address stays throttled for a while, so repeated retries make it worse rather than better. The Library of Congress image host returns 403 from some networks; those two rows stay source-only by design.
