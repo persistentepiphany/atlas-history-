@@ -15,6 +15,11 @@
       "date_display": "20 July 1969",
       "primary_scene": "Eagle touchdown, Sea of Tranquility",
       "research_file": "research/01-apollo-11.md",
+      "image_files": [
+        "assets/images/01-apollo-aldrin-near-eagle.jpg",
+        "assets/images/02-apollo-aldrin-full-frame.jpg",
+        "assets/images/03-apollo-lm-surface.jpg"
+      ],
       "newspapers": [
         "The New York Times",
         "The Guardian",
@@ -52,6 +57,11 @@
       "date_display": "9 November 1989",
       "primary_scene": "Bornholmer Straße crossing",
       "research_file": "research/02-berlin-wall.md",
+      "image_files": [
+        "assets/images/04-berlin-potsdamer-platz-opening.jpeg",
+        "assets/images/05-berlin-people-walking.jpg",
+        "assets/images/06-berlin-checkpoint-charlie.jpg"
+      ],
       "newspapers": [
         "The New York Times",
         "The Guardian"
@@ -82,6 +92,11 @@
       "date_display": "6 June 1944",
       "primary_scene": "Omaha Beach, Easy Red",
       "research_file": "research/03-d-day.md",
+      "image_files": [
+        "assets/images/07-dday-into-the-jaws.jpg",
+        "assets/images/08-dday-eisenhower-paratroopers.jpg",
+        "assets/images/09-dday-approaching-omaha.jpg"
+      ],
       "newspapers": [
         "The New York Times",
         "The Guardian"
@@ -112,6 +127,17 @@
       "date_display": "28 August 1963",
       "primary_scene": "National Mall and Lincoln Memorial",
       "research_file": "research/04-march-on-washington.md",
+      "image_files": [
+        "assets/images/10-march-leadership-procession.jpg",
+        "assets/images/12-march-reflecting-pool-crowd.jpg"
+      ],
+      "source_only_images": [
+        {
+          "manifest_row": 11,
+          "note": "LOC 2013650621 Lincoln Memorial crowd (Leffler); host returned 403",
+          "source_page": "https://www.loc.gov/pictures/item/2013650621/"
+        }
+      ],
       "newspapers": [
         "The New York Times",
         "The Washington Post"
@@ -142,6 +168,9 @@
       "date_display": "14–15 August 1947",
       "primary_scene": "Delhi, Lahore, and Punjab atlas nodes",
       "research_file": "research/05-partition-india.md",
+      "image_files": [
+        "assets/images/13-partition-gandhi-suhrawardy.jpg"
+      ],
       "newspapers": [
         "The New York Times",
         "Manchester Guardian",
@@ -179,6 +208,11 @@
       "date_display": "11 November 1918",
       "primary_scene": "Compiègne, with city context windows",
       "research_file": "research/06-armistice-1918.md",
+      "image_files": [
+        "assets/images/14-armistice-nyc-celebration.jpg",
+        "assets/images/15-armistice-train.jpg",
+        "assets/images/16-armistice-london-crowd.jpg"
+      ],
       "newspapers": [
         "The New York Times",
         "Manchester Guardian",
@@ -216,6 +250,11 @@
       "date_display": "18–21 April 1906",
       "primary_scene": "Golden Gate Park relief camp",
       "research_file": "research/07-san-francisco-1906.md",
+      "image_files": [
+        "assets/images/17-sf-devastation.gif",
+        "assets/images/18-sf-city-hall-ruin.jpg",
+        "assets/images/19-sf-golden-gate-relief-camp.jpg"
+      ],
       "newspapers": [
         "San Francisco Call",
         "The New York Times"
@@ -246,6 +285,17 @@
       "date_display": "25 March 1911",
       "primary_scene": "Asch Building / Brown Building",
       "research_file": "research/08-triangle-fire.md",
+      "image_files": [
+        "assets/images/20-triangle-fire-exterior.jpg",
+        "assets/images/21-triangle-mourning-demonstration.jpg"
+      ],
+      "source_only_images": [
+        {
+          "manifest_row": 22,
+          "note": "Pier morgue crowd; LOC 403 — retrieve only after content note check",
+          "source_page": "https://commons.wikimedia.org/wiki/File:Triangle_Waist_Co._fire,_N.Y.C.-Crowds_outside_pier_morgue_LCCN96513967.jpg"
+        }
+      ],
       "newspapers": [
         "New-York Tribune",
         "The Washington Herald",
@@ -283,6 +333,11 @@
       "date_display": "18–24 April 1955",
       "primary_scene": "Merdeka Building, Bandung",
       "research_file": "research/09-bandung-1955.md",
+      "image_files": [
+        "assets/images/23-bandung-economic-plenary.jpg",
+        "assets/images/24-bandung-soekarno-opening.jpg",
+        "assets/images/25-bandung-savoy-homann-dinner.jpg"
+      ],
       "newspapers": [
         "The New York Times",
         "The Guardian"
@@ -306,13 +361,18 @@
       "caveat": "No invented private conversations. Do not turn Soekarno into a speaking likeness avatar. Keep plenary vs dinner spaces distinct."
     },
     {
-      "id": "10-windrush",
+      "id": "10-windrush-1948",
       "tier": "niche",
       "title": "Arrival of HMT Empire Windrush",
       "date": "1948-06-22",
       "date_display": "22 June 1948",
       "primary_scene": "Tilbury Docks",
       "research_file": "research/10-windrush-1948.md",
+      "image_files": [
+        "assets/images/26-windrush-vessel-profile.jpg",
+        "assets/images/27-windrush-passenger-list-header.jpg",
+        "assets/images/28-windrush-monte-rosa.jpg"
+      ],
       "newspapers": [
         "The Guardian",
         "The Independent"
