@@ -49,17 +49,18 @@ Image rights live in [`ASSET_MANIFEST.md`](ASSET_MANIFEST.md) and the summary ta
 clipping; it writes `briefs/<slug>.json` with heading, summary, full article, narrative, event
 context, press perspectives, world prompt, sources, and image candidates.
 
+Put `GROQ_API_KEY` and `TAVILY_API_KEY` in `.env` (gitignored, and read automatically), then:
+
 ```
-export OPENAI_API_KEY=…
-export TAVILY_API_KEY=…
 npm run brief -- https://www.example.org/story
 npm run brief -- ~/Desktop/clipping.jpg --out briefs --overwrite
 ```
 
 Needs Node 24 or newer — it runs the TypeScript directly, no build step. `npm run typecheck` and
-`npm test` cover the parts that work without network access.
+`npm test` cover the parts that work without network access. The path of the written file goes to
+stdout, progress to stderr, so it composes into a shell pipeline.
 
-URLs are fetched by Tavily rather than by this process. Photos go to an OpenAI vision model that
+URLs are fetched by Tavily rather than by this process. Photos go to a vision model that
 transcribes only what is printed and records unreadable columns instead of filling them in. The
 composer never sees a URL, so it cannot invent a citation: the source list is attached afterwards
 from the search results.
@@ -68,7 +69,25 @@ from the search results.
 what the sources did not settle, and image candidates are all `needs-review` because a search
 result carries no per-item licence. Nothing here belongs in `assets/images/` or `ASSET_MANIFEST.md`
 until a person has read the source record, and nothing should ship until `verification.status`
-reads `reviewed`. The model default is `gpt-5.5`; override it with `OPENAI_MODEL`.
+reads `reviewed`.
+
+### Models and limits
+
+Two models, because on Groq no single one does both jobs. Checked 12 September 2026:
+
+| Setting | Default | Why |
+| --- | --- | --- |
+| `SCAN_MODEL` | `qwen/qwen3.8-27b` | The only Groq model that takes images *and* a strict schema. `qwen3.6` returns 400 on one. |
+| `COMPOSE_MODEL` | `openai/gpt-oss-120b` | Strict schema, larger output budget. Text only. |
+| `LLM_BASE_URL` | `https://api.groq.com/openai/v1` | Point at `api.openai.com/v1` and set both models to move providers. |
+| `SCAN_MAX_OUTPUT_TOKENS` | 900 | Groq's free tier allows 1,000 output tokens per minute on qwen. |
+| `COMPOSE_MAX_OUTPUT_TOKENS` | 5000 | Input and output share one 8,000 tokens-per-minute allowance. |
+
+Known rough edges. Transcription of old or handwritten documents mangles proper nouns, and the
+model still reports `readConfidence: high` when it does — check `origin.excerpt` against the photo
+before trusting a name. `gpt-oss-120b` writes short, so `fullArticle` and `narrative` often land
+under target; the CLI prints the word counts when they do. Constrained decoding occasionally drops
+a field and Groq answers 400, so composition retries up to three times before failing.
 
 ## Reactor and VEED
 
