@@ -8,7 +8,9 @@ import { join } from 'node:path';
 
 /**
  * Records each event's world to its fallback film and writes the stop offsets back into the
- * scenario. The app is opened with ?prerender=1&event=<id>, which runs the live source through
+ * scenario. Two encodings of the same recording are written, the H.264 file the scenario names and a
+ * VP9 companion beside it, because a browser build without the patented decoder can play only the
+ * second, and the fallback source tries them in that order. The app is opened with ?prerender=1&event=<id>, which runs the live source through
  * every stop on the scenario's own timer while Playwright records the viewport. The recording is
  * trimmed to the first frame of the first stop with blackdetect and encoded to H.264. The seed
  * source stands in when the live model is unreachable, so the film always exists and always
@@ -53,6 +55,8 @@ for (const id of ids) {
   const out = join('..', 'walkthrough', 'assets', id, sc.world.fallback);
   await mkdir(join(out, '..'), { recursive: true });
   await execa(ffmpeg, ['-y', '-hide_banner', '-loglevel', 'error', '-ss', start.toFixed(3), '-i', webm, '-an', '-c:v', 'libx264', '-preset', 'medium', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', out]);
+  const companion = out.replace(/\.[^.]+$/, '.webm');
+  await execa(ffmpeg, ['-y', '-hide_banner', '-loglevel', 'error', '-ss', start.toFixed(3), '-i', webm, '-an', '-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', '34', '-row-mt', '1', '-speed', '3', '-pix_fmt', 'yuv420p', companion]);
   const t0 = report.entries[0] ?? 0;
   const offsets = report.entries.map((e) => Math.round((e - t0) * 1000) / 1_000_000);
   const raw = JSON.parse(await readFile(scenarioPath, 'utf8')) as { world: Record<string, unknown> };
@@ -61,7 +65,7 @@ for (const id of ids) {
   raw.world = world;
   await writeFile(scenarioPath, JSON.stringify(raw, null, 1) + '\n');
   await rm(dir, { recursive: true, force: true });
-  console.log(id + ': ' + out + ' from ' + report.sources.join(', ') + ' offsets ' + offsets.join(' ') + (report.reason ? ' (' + report.reason + ')' : ''));
+  console.log(id + ': ' + out + ' and ' + companion + ' from ' + report.sources.join(', ') + ' offsets ' + offsets.join(' ') + (report.reason ? ' (' + report.reason + ')' : ''));
 }
 await browser.close();
 await server.close();

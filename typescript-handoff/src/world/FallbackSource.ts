@@ -5,7 +5,9 @@ import { reactorConfig, worldAsset } from './config';
 /**
  * Plays the scenario's pre-rendered fallback film. Stops map to the time offsets the pre-render
  * script wrote into world.fallbackOffsets, so advancing a stop seeks the film. Without offsets
- * the stops are spaced by their scenario times from the first stop.
+ * the stops are spaced by their scenario times from the first stop. The film the scenario names is
+ * tried first and its companion encoding beside it second, since a browser build without the
+ * patented decoder can play only the second.
  */
 export class FallbackSource implements WorldSource {
   readonly name = 'fallback';
@@ -34,15 +36,30 @@ export class FallbackSource implements WorldSource {
     try {
       this.set('connecting');
       this.index = Math.max(0, this.world.stops.indexOf(stop));
-      const v = this.element; v.src = worldAsset(this.eventId, this.world.fallback); v.loop = false;
-      await new Promise<void>((resolve, reject) => {
-        if (v.readyState >= 1) return resolve();
-        v.addEventListener('loadedmetadata', () => resolve(), { once: true });
-        v.addEventListener('error', () => reject(new Error('fallback video missing ' + v.src)), { once: true });
-        setTimeout(() => reject(new Error('fallback video did not load')), 8000);
-      });
+      const v = this.element; v.loop = false;
+      const named = worldAsset(this.eventId, this.world.fallback);
+      const candidates = [named, named.replace(/\.[^./]+$/, '.webm')].filter((u, i, a) => a.indexOf(u) === i);
+      let last: Error | null = null;
+      for (const url of candidates) {
+        try { await this.open(url); last = null; break; }
+        catch (e) { last = e instanceof Error ? e : new Error(String(e)); }
+      }
+      if (last) throw last;
       v.currentTime = this.offsets[this.index] ?? 0;
     } catch (e) { this.fail(e instanceof Error ? e.message : String(e)); throw e; }
+  }
+
+  private open(url: string) {
+    const v = this.element; v.src = url;
+    return new Promise<void>((resolve, reject) => {
+      if (v.readyState >= 1) return resolve();
+      const ok = () => { cleanup(); resolve(); };
+      const bad = () => { cleanup(); reject(new Error('fallback film unplayable ' + url + (v.error ? ', ' + v.error.message : ''))); };
+      const timer = setTimeout(bad, 8000);
+      const cleanup = () => { clearTimeout(timer); v.removeEventListener('loadedmetadata', ok); v.removeEventListener('error', bad); };
+      v.addEventListener('loadedmetadata', ok, { once: true });
+      v.addEventListener('error', bad, { once: true });
+    });
   }
 
   async enter(stop: Stop) {

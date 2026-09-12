@@ -64,7 +64,9 @@ export function App() {
     }
     orchRef.current?.dispose(); orchRef.current = null; setOrch(null);
     setSc(s); setWords(w); setLines(l); setEvent(id); T.current = 0; fired.current.clear(); setRunning(false); setStop(-1); setObjective(false); setWire(null); setCaption({ text: '', kind: 'voice', until: null });
-    createSheet(s, await fetch('/scenarios/' + id + '.theatre.json').then((r) => (r.ok ? r.json() : null)).catch(() => null));
+    /** Hand keyframes override the beats when a Theatre state file exists. An event without one is driven by its beats alone, so the sheet is only built when there is a state to load. */
+    const keyframes = await fetch('/scenarios/' + id + '.theatre.json').then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    if (keyframes) createSheet(s, keyframes);
   }, [setEvent, setStop]);
   useEffect(() => { if (clusters[0] && !sc) void choose(params.get('event') ?? clusters[0].id); }, [clusters, sc, choose]);
 

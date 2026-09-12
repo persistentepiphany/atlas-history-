@@ -31,6 +31,10 @@ export class WorldOrchestrator {
   private ghost = document.createElement('img');
   private source: WorldSource | null = null;
   private chain: (() => WorldSource)[] = [];
+  private tier = 0;
+  /** Raised while a call of this class is already handling a source, so a failure reported by the
+   *  source is recovered once, by that call, rather than twice. */
+  private guard = 0;
   private stops: Stop[];
   private state: OrchestratorState = { status: 'idle', source: null, stopIndex: -1, lastFrame: null, reason: null, swaps: 0, log: [] };
   private enteredAt = 0;
@@ -66,24 +70,41 @@ export class WorldOrchestrator {
 
   private mount(src: WorldSource) {
     this.picture.replaceChildren(src.element);
-    src.onStatus((s, reason) => { if (s === 'failed' && src === this.source) void this.swap(reason ?? 'failed'); else if (src === this.source) this.patch({ status: s }); });
+    src.onStatus((s, reason) => {
+      if (src !== this.source) return;
+      if (s !== 'failed') { this.patch({ status: s }); return; }
+      if (this.guard > 0) { this.patch({ reason: reason ?? 'failed' }); return; }
+      void this.swap(reason ?? 'failed');
+    });
     this.deps.audio?.attachWorld(src.element);
     this.patch({ source: src.name, status: src.status });
   }
 
   private currentStop(): Stop | null { return this.stops[Math.max(0, this.state.stopIndex)] ?? null; }
 
+  /** The next source down the chain. The last entry is the floor and is handed out again rather than
+   *  running out, so a world that has lost its picture can always be rebuilt. */
+  private nextSource(): WorldSource | null {
+    const make = this.chain[Math.min(this.tier, this.chain.length - 1)];
+    if (!make) return null;
+    this.tier = Math.min(this.tier + 1, this.chain.length);
+    return make();
+  }
+  private get exhausted() { return this.tier >= this.chain.length; }
+
   /** Builds the next source in the chain and brings it to the current stop. Called on any failure. */
   private swapping: Promise<void> | null = null;
   private swap(reason: string): Promise<void> {
     if (this.swapping) return this.swapping;
     this.swapping = (async () => {
+      this.guard += 1;
       const old = this.source; this.source = null;
       await this.showGhost();
       old?.dispose();
       this.patch({ reason, swaps: this.state.swaps + 1 });
-      while (this.chain.length) {
-        const next = this.chain.shift()!();
+      let tries = this.chain.length + 1;
+      while (tries-- > 0) {
+        const next = this.nextSource(); if (!next) break;
         try {
           const stop = this.currentStop() ?? this.stops[0];
           if (!stop) break;
@@ -91,7 +112,7 @@ export class WorldOrchestrator {
           await next.prepare(stop);
           if (this.state.stopIndex >= 0) await next.enter(stop);
           this.hideGhost();
-          this.swapping = null;
+          this.guard -= 1; this.swapping = null;
           return;
         } catch (e) {
           this.source = null; next.dispose();
@@ -99,7 +120,7 @@ export class WorldOrchestrator {
         }
       }
       this.patch({ status: 'failed', source: null });
-      this.swapping = null;
+      this.guard -= 1; this.swapping = null;
     })();
     return this.swapping;
   }
@@ -118,12 +139,15 @@ export class WorldOrchestrator {
   async door() {
     if (this.source || this.closed) return;
     const first = this.stops[0]; if (!first) return;
-    while (this.chain.length) {
-      const src = this.chain.shift()!();
-      try { this.source = src; this.mount(src); await src.prepare(first); return; }
-      catch (e) { this.source = null; src.dispose(); this.patch({ reason: e instanceof Error ? e.message : String(e), swaps: this.state.swaps + 1 }); }
-    }
-    this.patch({ status: 'failed', source: null });
+    this.guard += 1;
+    try {
+      while (!this.exhausted) {
+        const src = this.nextSource(); if (!src) break;
+        try { this.source = src; this.mount(src); await src.prepare(first); return; }
+        catch (e) { this.source = null; src.dispose(); this.patch({ reason: e instanceof Error ? e.message : String(e), swaps: this.state.swaps + 1 }); }
+      }
+      this.patch({ status: 'failed', source: null });
+    } finally { this.guard -= 1; }
   }
 
   /** World entry. The surface fades with the world mix track, which the sequence sets through setMix. */
@@ -141,6 +165,7 @@ export class WorldOrchestrator {
     const from = this.state.stopIndex;
     this.patch({ stopIndex: i });
     if (!this.source) { await this.swap('no source at stop ' + i); return; }
+    this.guard += 1;
     try {
       if (i > from && from >= 0) {
         await this.showGhost();
@@ -149,7 +174,8 @@ export class WorldOrchestrator {
       await this.source.enter(stop);
       this.hideGhost();
       this.enteredAt = performance.now();
-    } catch (e) { await this.swap(e instanceof Error ? e.message : String(e)); }
+    } catch (e) { this.guard -= 1; await this.swap(e instanceof Error ? e.message : String(e)); return; }
+    this.guard -= 1;
   }
 
   /** The stop can be advanced once its hold has elapsed. */

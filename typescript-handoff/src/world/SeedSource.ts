@@ -38,9 +38,19 @@ export class SeedSource implements WorldSource {
   /** A dolly zooms in, yaw and pitch slide the crop, so the same rail reads as the same intent. */
   private applyPose(p: Pose) { this.cam.zoom = Math.max(1, this.cam.zoom * (1 + p[5] * 0.9)); this.cam.x += p[1] * 0.9; this.cam.y += p[0] * 0.9; }
 
+  private cache = new Map<string, HTMLImageElement>();
+
   private async load(stop: Stop): Promise<HTMLImageElement> {
     if (typeof stop.seed !== 'string') { const url = await this.captureFrame(); if (!url) throw new Error('no previous frame'); return loadImage(url); }
-    return loadImage(worldAsset(this.eventId, stop.seed));
+    const url = worldAsset(this.eventId, stop.seed);
+    const held = this.cache.get(url); if (held) return held;
+    const img = await loadImage(url); this.cache.set(url, img); return img;
+  }
+
+  /** Every seed of the visit is fetched at door entry, so a stop still lands on its own picture when
+   *  the network goes away in the middle of the world. */
+  private async warm() {
+    await Promise.all(this.world.stops.map(async (s) => { if (typeof s.seed === 'string') await this.load(s).catch(() => undefined); }));
   }
 
   private draw = () => {
@@ -65,12 +75,14 @@ export class SeedSource implements WorldSource {
       this.image = await this.load(stop); this.cam = { zoom: 1, x: 0, y: 0 };
       if (!this.raf) this.draw();
       await this.element.play();
+      void this.warm();
     } catch (e) { this.fail(e instanceof Error ? e.message : String(e)); throw e; }
   }
   async enter(stop: Stop) {
     if (this.status === 'failed') throw new Error('source failed');
     try {
-      const i = this.world.stops.indexOf(stop); if (i >= 0 && i !== this.index) { this.index = i; this.image = await this.load(stop); }
+      const i = this.world.stops.indexOf(stop);
+      if (i >= 0 && i !== this.index) { this.index = i; const img = await this.load(stop).catch(() => null); if (img) { this.previous = this.image; this.image = img; this.fade = 0; this.cam = { zoom: 1, x: 0, y: 0 }; } }
       await waitForFrame(this.element, reactorConfig.firstFrameTimeoutMs);
       this.set('streaming'); this.rail.play(stop.camera);
     } catch (e) { this.fail(e instanceof Error ? e.message : String(e)); throw e; }
@@ -78,8 +90,12 @@ export class SeedSource implements WorldSource {
   async advance() {
     if (this.status === 'failed') throw new Error('source failed');
     const next = this.world.stops[this.index + 1]; if (!next) return;
-    this.rail.stop(); const img = await this.load(next);
-    this.previous = this.image; this.image = img; this.fade = 0; this.cam = { zoom: 1, x: 0, y: 0 }; this.index += 1;
+    this.rail.stop();
+    /** A seed that cannot be fetched holds the picture it already has rather than emptying the world. */
+    const img = await this.load(next).catch(() => null);
+    this.index += 1;
+    if (!img) return;
+    this.previous = this.image; this.image = img; this.fade = 0; this.cam = { zoom: 1, x: 0, y: 0 };
   }
   captureFrame() { return frameToDataUrl(this.element).then((u) => u ?? this.canvas.toDataURL('image/jpeg', 0.92)); }
   pause() { this.paused = true; this.rail.pause(); }

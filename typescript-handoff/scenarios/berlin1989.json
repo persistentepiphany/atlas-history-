@@ -78,6 +78,11 @@
  },
  "world": {
   "fallback": "video/r02.mp4",
+  "fallbackOffsets": [
+   0,
+   15.3082,
+   30.628
+  ],
   "objective": "Find the sentence that opened the border.",
   "treatment": "flash",
   "label": "R02 fallback world",

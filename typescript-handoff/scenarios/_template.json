@@ -1,6 +1,6 @@
 {
- "id": "apollo11",
- "title": "Apollo 11",
+ "id": "_template",
+ "title": "Template, Apollo 11 recut",
  "date": "Monday 21 July 1969",
  "readPage": "A01",
  "columnX": 0.506,
@@ -72,7 +72,7 @@
   "layer": "generated"
  },
  "world": {
-  "fallback": "video/r01.mp4",
+  "fallback": "assets/apollo11/video/r01.mp4",
   "fallbackOffsets": [
    0,
    13.3637,
@@ -88,8 +88,8 @@
    {
     "t": 95,
     "label": "The camera on the lander",
-    "seed": "images/a04.png",
-    "prompt": "Sea of Tranquility, 02:56 universal time, slow scan television frame, hard low sun on grey dust, a lander leg at the edge. No text, no signage, no flags.",
+    "seed": "images/honeysuckle-1969.png",
+    "prompt": "Honeysuckle Creek in the Australian bush, 12:56 in the afternoon, 16 mm film, overcast winter light on a white dish. No text, no signage, no vehicles.",
     "negative": "text, signage, lettering, logos, watermark, modern clothing, modern vehicles",
     "camera": [
      {
@@ -105,16 +105,16 @@
      }
     ],
     "hold": 4,
-    "archive": "N02",
-    "voice": "V01-07",
+    "archive": "N05",
+    "voice": "V01-10",
     "captureFrame": true,
     "text": "Tranquility Base, 02:56 universal time. A television camera on the leg of the lander."
    },
    {
     "t": 108,
     "label": "Honeysuckle Creek",
-    "seed": "images/honeysuckle-1969.png",
-    "prompt": "Honeysuckle Creek tracking station in the Australian bush, 12:56 in the afternoon, 16 mm colour film, overcast winter light on a white dish. No text, no signage, no vehicles.",
+    "seed": "images/wire-room.png",
+    "prompt": "A newspaper wire room, early evening, press photograph, fluorescent light on teleprinters and a facsimile drum. No text, no signage, no readable pages.",
     "negative": "text, signage, lettering, logos, watermark, modern clothing, modern vehicles",
     "camera": [
      {
@@ -130,15 +130,15 @@
      }
     ],
     "hold": 4,
-    "archive": "N03",
-    "voice": "V01-08",
+    "archive": "N04",
+    "voice": "V01-09",
     "text": "Honeysuckle Creek, outside Canberra, 12:56 in the afternoon. The first eight minutes came through this dish."
    },
    {
     "t": 121,
     "label": "Houston",
     "seed": "images/houston-frame.png",
-    "prompt": "Mission Control Houston, 21:56 local time, television monitor wall in a dim room, cathode glow across rows of consoles, cigarette haze. No text, no signage, no faces in focus.",
+    "prompt": "Mission Control Houston, 21:56 local time, a monitor wall in a dim room, cathode glow across consoles. No text, no signage, no faces in focus.",
     "negative": "text, signage, lettering, logos, watermark, modern clothing, modern vehicles",
     "camera": [
      {
@@ -154,15 +154,15 @@
      }
     ],
     "hold": 4,
-    "archive": "N04",
-    "voice": "V01-09",
+    "archive": "N03",
+    "voice": "V01-08",
     "text": "Houston, the same minute. The picture is converted for broadcast and loses half its lines."
    },
    {
     "t": 134,
     "label": "The wire desk",
-    "seed": "images/wire-room.png",
-    "prompt": "A newspaper wire room, early evening, press photograph, fluorescent light on teleprinters and a facsimile drum, paper on the floor. No text, no signage, no readable pages.",
+    "seed": "images/a04.png",
+    "prompt": "Sea of Tranquility, 02:56 universal time, slow scan television frame, hard low sun on grey dust. No text, no signage, no flags.",
     "negative": "text, signage, lettering, logos, watermark, modern clothing, modern vehicles",
     "camera": [
      {
@@ -178,8 +178,8 @@
      }
     ],
     "hold": 4,
-    "archive": "N05",
-    "voice": "V01-10",
+    "archive": "N02",
+    "voice": "V01-07",
     "captureFrame": true,
     "text": "A wire desk, early evening. A frame is pulled from the broadcast and sent to print."
    }
