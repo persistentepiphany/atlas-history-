@@ -1,0 +1,32 @@
+{
+  "name": "atlas-history-",
+  "version": "1.0.0",
+  "description": "Ten source-led events for interactive learning worlds (6 well-known, 4 niche). Each world is an interpretive model: facts, press accounts, later commentary, archival images, and inferred set dressing stay labelled as such.",
+  "main": "src/cli.ts",
+  "scripts": {
+    "brief": "node --env-file-if-exists=.env src/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test 'src/**/*.test.ts'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/persistentepiphany/atlas-history-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/persistentepiphany/atlas-history-/issues"
+  },
+  "homepage": "https://github.com/persistentepiphany/atlas-history-#readme",
+  "dependencies": {
+    "@tavily/core": "0.7.11",
+    "openai": "7.15.0",
+    "zod": "4.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "26.0.0",
+    "typescript": "5.9.3"
+  }
+}
