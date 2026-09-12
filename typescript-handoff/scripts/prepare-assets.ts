@@ -5,7 +5,7 @@ import { execa } from 'execa';
 import * as pdfjs from 'pdfjs-dist/legacy/build/pdf.mjs';
 import cuts from './cuts.json' with { type: 'json' };
 
-const RAW = 'raw'; const OUT = 'public/assets/events'; const LIB = 'public/assets/library';
+const RAW = 'raw'; const OUT = '../walkthrough/assets'; const LIB = '../walkthrough/assets/library';
 const placeholders: string[] = [];
 const exists = async (p: string) => access(p).then(() => true, () => false);
 const ensure = (p: string) => mkdir(p, { recursive: true });
