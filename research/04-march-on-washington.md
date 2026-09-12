@@ -60,11 +60,30 @@ Make five evidence-tagged interactive hotspots: (1) a Washington Monument gather
 
 Use a calm, precise narrator with a humane, non-celebratory tone. The narration must say that the March was both a peaceful mass assembly and a protest against entrenched racial discrimination and economic inequality. It must acknowledge coalition tensions, women’s constrained formal speaking roles, and the continuing nature of many demands. Use only licensed or verified public-domain recordings; otherwise use restrained environmental sound and on-screen transcripts rather than synthetic voices of Martin Luther King Jr., John Lewis, or other real people. **Guardrails:** do not gamify trauma, score visitors for “solving” racism, stage a police clash, reproduce racial slurs, create violent spectacle, turn attendees into anonymous props, imply universal agreement, or imply that the March by itself completed civil-rights reform. Do not depict fabricated private dialogue or sensationalized threats. Mark all composites, inferred crowd behavior, and recreated sound as interpretive reconstruction.
 
-## VEED-compatible avatar prompts
+## VEED Studio avatars (look + script)
 
-1. **Primary historian host:** “A present-day historian host in a quiet museum-gallery setting, professional and warm, age 40s, neutral modern clothing, speaking plainly to camera. Introduce the 28 August 1963 March on Washington as a coalition for jobs and freedom, not only a single speech. Use archival citations on screen; do not imitate any real person or historical voice.”
-2. **Historically situated role:** “Interpretive reconstruction—clearly labelled on screen: a fictional Black woman union member in her early 30s, arriving at the 1963 March on Washington with a paper program and lunch parcel. Period-accurate dress and restrained delivery. She describes documented goals such as fair employment and voting rights, never claims to be a named eyewitness, and uses no invented quote from a real participant.”
-3. **Contemporary guide:** “A contemporary Washington, D.C., learning guide in their 20s, standing beside a simple map of the National Mall. Explain how to read the scene critically: compare a program, a photograph, a contemporary newspaper, and later oral history. State that the avatar is a modern educational guide, not a participant, and do not impersonate living people.”
+**How to use in VEED:** Match **Look** when picking the avatar. Paste **only Spoken script** into the talk box. Add **Lower third** by hand. Never paste Look into speech. Do not imitate King, Randolph, Rustin, or any named speaker.
+
+### 1. Historian host
+
+- **Look:** Person in their 40s; warm professional modern clothes; quiet museum gallery.
+- **Lower third:** `Historian host — contemporary educator`
+- **Spoken script:**
+  > On 28 August 1963, about a quarter of a million people gathered on the National Mall for the March on Washington for Jobs and Freedom. It was a coalition for jobs, voting rights, and civil-rights legislation, not only one speech. I am a historian host. I do not imitate any real participant.
+
+### 2. Composite marcher
+
+- **Look:** Black woman, early 30s; 1963 dress; paper program and lunch parcel. Not a named eyewitness.
+- **Lower third:** `Interpretive reconstruction — composite marcher, not a named eyewitness`
+- **Spoken script:**
+  > The official program listed speeches, music, and demands for fair employment and voting rights. Organizers planned routes, marshals, and a full day of events. I am a composite reconstruction. I do not claim to be a recorded person, and I use no invented quotes from real marchers.
+
+### 3. Contemporary Mall guide
+
+- **Look:** Person in their 20s; casual-professional clothes; beside a simple National Mall map.
+- **Lower third:** `Contemporary learning guide — not a 1963 participant`
+- **Spoken script:**
+  > Compare a program, a photograph, a 1963 newspaper, and later oral history. Each source type answers different questions. The March pressed for change; the 1964 Civil Rights Act came later, after wider struggle. I am a modern guide, not a marcher.
 
 ## Concrete interaction-design items
 

@@ -78,13 +78,30 @@ Interactive hotspots: (1) **Assembly threshold, Delhi**—an accessible transcri
 
 Narrator tone: calm, precise, plural, and humane; distinguish “the record shows,” “a newspaper reported,” and “later historians/archivists interpret.” Use no invented dialogue. Never assign collective guilt to Hindus, Muslims, Sikhs, British people, Indians, or Pakistanis. Label colonial rule and anti-colonial struggle accurately, but do not make celebration a triumphal end-state. Include visible content notes before material about displacement and violence, a skip option at every trauma-adjacent hotspot, and a quiet reflection exit. Explicit exclusions: graphic violence; mobs as entertainment; weapon interaction; playable border crossings; point systems; “choose India/Pakistan” or religious-affiliation mechanics; fabricated eyewitness speech; named-person impersonation; present-day flags or borders presented as inevitable in 1947; uncredited newspaper imagery; and any claim that a single experience represents all Partition histories.
 
-## VEED-compatible avatar prompts
+## VEED Studio avatars (look + script)
 
-1. **Primary historian host:** “Contemporary studio avatar: a South Asian woman historian in her 40s, modest professional attire in muted blue and cream, neutral background with a simple source shelf, measured and warm delivery. Identify her on-screen as ‘Historian host — contemporary educator, not a 1947 witness.’ She explains what the legal record, newspapers, and oral histories can and cannot establish; use no impersonation, no invented personal connection, and no archival footage effect.”
+**How to use in VEED:** Match **Look** when picking the avatar. Paste **only Spoken script** into the talk box. Add **Lower third** by hand. Never paste Look into speech. No violence spectacle. No claimed family trauma testimony.
 
-2. **Historically situated role:** “Interpretive reconstruction, visibly labelled ‘Composite role, not a real person’: an adult Punjabi civilian woman in 1947, wearing a practical cotton salwar kameez and shawl, carrying a small cloth bundle and water vessel at an understated railway-adjacent setting. She does not claim to be a named witness and does not narrate invented memories. Use third-person, source-cited narration about uncertainty before the Punjab boundary announcement; no tears-on-command, violence, panic, or religious stereotyping.”
+### 1. Historian host
 
-3. **Contemporary guide:** “Contemporary adult man in his late 20s, South Asian heritage, casual museum-guide attire, accessible and calm manner. On-screen label: ‘Contemporary guide — interpretation support, no claimed family testimony.’ He guides viewers through source labels, content notes, the 17 August boundary-date correction, and reflection questions. Do not imitate a living public figure, do not use a historical accent caricature, and do not present political conclusions as settled fact.”
+- **Look:** South Asian woman in her 40s; muted blue and cream professional clothes; neutral studio with a source shelf.
+- **Lower third:** `Historian host — contemporary educator, not a 1947 witness`
+- **Spoken script:**
+  > On 14 and 15 August 1947, India and Pakistan became independent Dominions under the Indian Independence Act. Ceremony in Delhi sat beside insecurity elsewhere, including Lahore. The Punjab boundary was not public until 17 August. I am a historian host, not a 1947 witness.
+
+### 2. Composite Punjabi civilian
+
+- **Look:** Adult Punjabi woman, 1947; cotton salwar kameez and shawl; small cloth bundle; quiet railway-adjacent setting. Not a named person.
+- **Lower third:** `Composite role — not a real person`
+- **Spoken script:**
+  > On independence night, many people near the future Punjab line did not yet have a public map of the final border. Newspapers reported ceremony and also violence, with different emphasis by outlet. I am a composite reconstruction. I do not invent memories or show violence.
+
+### 3. Contemporary guide
+
+- **Look:** South Asian man, late 20s; casual museum-guide clothes; calm delivery. No accent caricature.
+- **Lower third:** `Contemporary guide — interpretation support, no claimed family testimony`
+- **Spoken script:**
+  > Check each panel’s label: legal text, contemporary newspaper, later archive piece, or oral history. Death and displacement totals are estimates. Experiences were not uniform. I am a modern guide. I do not speak for every family.
 
 ## Interaction design
 

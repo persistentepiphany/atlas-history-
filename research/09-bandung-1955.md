@@ -69,11 +69,30 @@ Make five optional, source-labeled hotspots. **(1) “The hall changes meaning�
 
 Narration should be calm, precise, and Indonesian-centered without being nationalist or triumphalist. State only documented facts as facts; use “historians later describe,” “the 2007 opinion argued,” or “this is an interpretive reconstruction” for interpretation. Address colonialism and racism in the language of the communiqué and with care for people affected; do not aestheticize oppression or turn geopolitical disagreement into entertainment. **Explicit exclusions:** no fabricated dialogue, no voice or face impersonation of Sukarno, Zhou Enlai, Nehru, Nasser, or any named person; no combat, weapon display, detention, disaster imagery, blood, protest confrontation, romanticized colonial décor, or AI-generated claims of private meetings. End on the unsigned-looking working drafts and the published final principles, with a prompt asking what cooperation can accomplish when participants retain serious differences.
 
-## VEED-compatible avatar prompts
+## VEED Studio avatars (look + script)
 
-1. **Primary historian host — interpretive presenter.** A fictional Indonesian historian in her 40s, professionally dressed in a contemporary, understated batik-accented jacket, speaks directly to camera in a quiet museum-study setting. Use clear, measured English with Indonesian place names pronounced carefully. On-screen label: “Historian host — interpretive educational presentation, not a historical witness.” Explain sources, distinguish the 1955 record from later legacy claims, and never imitate a living person or a named historical leader.
-2. **Historically situated witness/role — interpretive reconstruction.** A fictional composite of a Bandung-based Indonesian venue volunteer in their early 20s in April 1955, wearing modest period-appropriate local formal attire and carrying a paper programme outside Merdeka Building. On-screen label at all times: “Interpretive reconstruction — fictional composite, not a recorded individual.” In first person, describe only ordinary, plausible logistical observations (“I am helping guests find the entrance”) and redirect all political claims to source cards; no invented dialogue with delegates, no claim to have witnessed private decisions, and no resemblance to any real person.
-3. **Contemporary guide — reflective close.** A fictional Indonesian museum educator in their 30s of any gender, in present-day professional clothing, standing beside a digital facsimile of the Final Communiqué. On-screen label: “Contemporary guide — interpretation informed by archival sources.” Invite visitors to compare source types and consider the unfinished commitments on cooperation, self-determination, and non-discrimination. Avoid impersonating living people, advocacy slogans, or claims that every present-day community shares one view of Bandung.
+**How to use in VEED:** Match **Look** when picking the avatar. Paste **only Spoken script** into the talk box. Add **Lower third** by hand. Never paste Look into speech. No Sukarno, Zhou, Nehru, or Nasser voice or face.
+
+### 1. Historian host
+
+- **Look:** Indonesian woman in her 40s; understated batik-accented jacket; quiet museum study.
+- **Lower third:** `Historian host — interpretive educational presentation, not a historical witness`
+- **Spoken script:**
+  > From 18 to 24 April 1955, twenty-nine governments met in Bandung at the Merdeka Building. Sponsors included Burma, Ceylon, India, Indonesia, and Pakistan. The Final Communiqué set out principles on cooperation and self-determination. I am a historian host. I do not imitate any named leader.
+
+### 2. Composite venue volunteer
+
+- **Look:** Indonesian volunteer, early 20s, April 1955; modest local formal attire; paper programme outside Merdeka Building. Not a recorded individual.
+- **Lower third:** `Interpretive reconstruction — fictional composite, not a recorded individual`
+- **Spoken script:**
+  > Venue staff helped guests find entrances and followed a printed programme. Political decisions belong in the communiqué and source cards, not in my mouth. I am a composite reconstruction. I invent no private talks with delegates.
+
+### 3. Contemporary guide
+
+- **Look:** Indonesian museum educator, 30s; present-day professional clothes; beside a digital facsimile of the Final Communiqué.
+- **Lower third:** `Contemporary guide — interpretation informed by archival sources`
+- **Spoken script:**
+  > Compare the 1955 communiqué with later claims about Bandung’s legacy, including non-alignment. Governments differed then, and people under colonial rule were not all represented. I am a modern educator. I do not claim one shared view for every community today.
 
 ## Interaction-design items
 

@@ -70,13 +70,30 @@ Create five optional, non-linear hotspots: (1) **Ship rail**—a map with route 
 
 Narration is calm, precise, and invitational, voiced by a clearly labelled contemporary historian. Separate “A 1948 document records…” from “Later historians and commemorators interpret…” Never invent dialogue, internal monologue, sound bites, or conflict incidents. Ambient sound is low: water, gulls, engines at idle, subdued footfall, distant dock work; optional non-diegetic music is off by default. Use content notes before material on racism or later Home Office harms. Center people’s agency, occupations and choices without turning mobility or hardship into spectacle. Explicit exclusions: no slurs, racist taunts, violence, policing drama, detention imagery, poverty porn, celebratory “welcome to Britain” fantasy, “first-ever” claims, heroic-saviour framing, automatic use of steel pan or calypso as ambience, or an ending that implies discrimination was resolved. Cite sources in a pause menu and label all composite visuals as interpretive reconstruction.
 
-## Avatar prompts
+## VEED Studio avatars (look + script)
 
-1. **Primary historian host:** “A contemporary Black British Caribbean-heritage historian, woman in her early 40s, in understated modern professional clothing at a neutral archival-study setting; warm, rigorous delivery and clear British English. She identifies herself as a historian, distinguishes documents from later interpretation, and introduces Tilbury on 22 June 1948 without speaking for all passengers. No resemblance to any named living historian; no impersonation. On-screen label: ‘Contemporary historian host — interpretive educational presentation.’”
+**How to use in VEED:** Match **Look** when picking the avatar. Paste **only Spoken script** into the talk box. Add **Lower third** by hand. Never paste Look into speech. Do not speak for all passengers. No welcome fantasy. No policing drama.
 
-2. **Historically situated role:** “Interpretive reconstruction of an unnamed adult Caribbean passenger at Tilbury Docks, June 1948; gender-neutral presentation, late 20s to early 40s, smart but practical 1948 travel clothing, small suitcase and paperwork. The avatar says only source-supported factual narration about paid passage, varied work skills, and uncertain next steps; no invented personal biography, dialogue, trauma, or claim to be a real passenger. On-screen label throughout: ‘Interpretive reconstruction: composite role, not a recorded individual.’”
+### 1. Historian host
 
-3. **Contemporary guide:** “A contemporary British educator of Caribbean heritage, man in his 30s, accessible casual-professional dress, presenting beside a clean map and document viewer. He guides learners through why the manifest count and the Assistance Board count differ, and how newspapers frame events differently. Calm, reflective, non-partisan tone; no impersonation of a living person. On-screen label: ‘Contemporary learning guide — interpretive educational presentation.’”
+- **Look:** Black British Caribbean-heritage woman, early 40s; understated modern professional clothes; archival-study setting.
+- **Lower third:** `Contemporary historian host — interpretive educational presentation`
+- **Spoken script:**
+  > On 22 June 1948, Empire Windrush arrived at Tilbury. Documents record different counts: a full passenger list and a smaller Assistance Board cohort. Passengers had varied skills and plans. I am a historian host. I do not speak for every person on board.
+
+### 2. Composite passenger
+
+- **Look:** Adult Caribbean traveller, late 20s to early 40s; smart practical 1948 travel clothes; small suitcase and paperwork. Gender-neutral presentation. Not a recorded individual.
+- **Lower third:** `Interpretive reconstruction: composite role, not a recorded individual`
+- **Spoken script:**
+  > Many people paid their own fare. Work histories and next steps differed. Arrival pathways included service volunteers, temporary shelter, and direct dispersal. I am a composite reconstruction. I invent no personal biography and claim no real passenger’s story.
+
+### 3. Contemporary learning guide
+
+- **Look:** British educator of Caribbean heritage, man in his 30s; casual-professional clothes; map and document viewer.
+- **Lower third:** `Contemporary learning guide — interpretive educational presentation`
+- **Spoken script:**
+  > Compare the passenger manifest count with the Assistance Board’s arrival cohort before treating either as the whole story. A 1948 newspaper and a later retrospective answer different questions. I am a modern educator. I do not impersonate a living person.
 
 ## Interaction design
 

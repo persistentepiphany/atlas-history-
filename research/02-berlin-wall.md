@@ -69,11 +69,30 @@ Provide five opt-in evidence hotspots: (1) a radio/television bulletin panel tha
 
 Narration must be a calm, precise museum educator: distinguish “contemporary report,” “archival record,” and “later interpretation.” In particular, label the “mistake/bureaucratic accident” explanation as later interpretation rather than treating it as the entire cause. Ambient sound is low, non-intrusive crowd murmur, footsteps, occasional vehicle idle, distant radio, and checkpoint equipment; no triumphant score. Guardrails: no combat, chases, weapons handling, detention mechanics, escape game, points, collectibles, sabotage, caricatures, simulated political endorsements, hate symbols, exploitative trauma content, invented speeches, or photo-op poses atop the Wall. Do not homogenise East Germans or treat reunification as an uncomplicated ending. Include an optional contextual note that 9 November also carries other German histories, including the 1938 antisemitic pogrom, without merging those events into this scene or turning them into spectacle.
 
-## VEED-compatible avatar prompts
+## VEED Studio avatars (look + script)
 
-1. **Primary historian host:** “Contemporary German woman historian, early 40s, neutral studio-museum setting with a restrained map of divided Berlin, modest dark blazer and plain shirt, direct warm eye contact, clear measured German-accented English, speaking to camera. On-screen label: ‘Historian host — contemporary interpretation.’ Explain sourced facts, distinguish evidence from later interpretation, and never impersonate a historical person.”
-2. **Historically situated role:** “Interpretive reconstruction, not a real person or verified testimony: fictional composite East Berlin resident, woman in her early 30s, late-1980s wool coat, scarf, practical bag, standing at a respectfully recreated Bornholmer Straße approach at night. On-screen label throughout: ‘Interpretive reconstruction based on historical context; not a named witness.’ She describes only general, sourced context in present-tense observation; no invented quotations, private memories, or claims of personal historic participation.”
-3. **Contemporary guide:** “Contemporary Berlin memorial educator, man in his 30s, outdoors at a modern Berlin Wall memorial context, weatherproof jacket and archival-map tablet, calm accessible delivery. On-screen label: ‘Contemporary guide.’ Connect the site to evidence, explain that the Wall’s opening was not its instant demolition, and invite reflection without political advocacy or impersonation of any living person.”
+**How to use in VEED:** Match **Look** when picking the avatar. Paste **only Spoken script** into the talk box. Add **Lower third** by hand. Never paste Look into speech. Captions off or edit to match speech.
+
+### 1. Historian host
+
+- **Look:** German woman, early 40s; dark blazer, plain shirt; studio with a simple map of divided Berlin.
+- **Lower third:** `Historian host — contemporary interpretation`
+- **Spoken script:**
+  > On the night of 9 November 1989, East German authorities opened the border. At Bornholmer Straße, crossings widened late that evening. The Wall did not vanish that night. Opening and later demolition are different moments. I am a historian host. I do not speak as a named person from 1989.
+
+### 2. Composite East Berlin resident
+
+- **Look:** Woman, early 30s; late-1980s wool coat, scarf, practical bag; night approach to a recreated Bornholmer Straße. Not a named witness.
+- **Lower third:** `Interpretive reconstruction — not a named witness`
+- **Spoken script:**
+  > Sources describe people waiting and then moving as the checkpoint opened. Accounts differ on exact minutes and who crossed first. I am a composite reconstruction, not a real resident’s testimony. I do not invent private memories.
+
+### 3. Contemporary memorial guide
+
+- **Look:** Man in his 30s; weatherproof jacket; modern Berlin Wall memorial; tablet with an archival map.
+- **Lower third:** `Contemporary guide`
+- **Spoken script:**
+  > Memorials show places where the Wall stood and where openings happened later. Chipping and removal mostly came after 9 November. Compare newspaper first drafts with later research. I am a site educator, not a 1989 witness.
 
 ## Interaction design
 

@@ -109,11 +109,30 @@ A respectful 3D experience can keep the Sea of Tranquility specific: a low Sun, 
 5. **Context, not spectacle portal:** A quiet source-card station connects the landing to the Abernathy protest and differing press framings. Visitors can compare primary records with later commentary; there are no points, reenacted confrontation, or invented voices.
 6. **Image provenance drawer:** Every archival reference opens metadata with repository, rights statement, image date, and a label explaining whether it depicts a later moment than the live scene.
 
-## VEED-compatible avatar prompts
+## VEED Studio avatars (look + script)
 
-1. **Primary historian host:** “A clear, measured historian host, woman in her 50s, contemporary professional clothing in muted navy and charcoal, seated before a simple evidence wall with a lunar terrain map and clearly readable source cards. Speak directly to camera with calm, concise delivery. Explain that Apollo 11 landed on 20 July 1969 and distinguish documented mission facts from later interpretations. Do not imitate Neil Armstrong, Buzz Aldrin, Michael Collins, or any living person. Use no NASA logo. On-screen lower third: ‘Historian host — interpretive educational presentation.’”
-2. **Historically situated witness/role:** “An **interpretive reconstruction** of a composite Black American adult woman in her 30s watching Apollo 11 television coverage in July 1969, in an ordinary domestic/community viewing setting. Period-appropriate late-1960s dress, a small black-and-white television, no branded newspaper pages, no named real person, and no claim that her words are recorded testimony. She reflects in careful, non-dramatic language that public wonder could coexist with documented concerns about poverty and racial inequality. On-screen label throughout: ‘Composite 1969 viewer — interpretive reconstruction, not a documented individual.’ Do not use invented quotations or impersonate a real person.”
-3. **Contemporary guide:** “A contemporary lunar-science museum guide, adult man in his 30s, practical field-jacket over neutral clothing, standing beside a clean 3D model of *Eagle* and the Sea of Tranquility. Use accessible, source-led language to explain why a touchdown scene must not show flags, footprints, or experiments that were deployed later. Gentle, factual tone; captions enabled; identify the model as an AI-generated reconstruction. Do not impersonate a living astronaut or NASA employee, and show no NASA insignia.”
+**How to use in VEED:** Match **Look** when picking the avatar. Paste **only Spoken script** into the talk box. Add **Lower third** by hand. Never paste Look into speech. Turn auto-captions off, or edit so they match the script. No NASA logo. No real astronaut face or voice.
+
+### 1. Historian host
+
+- **Look:** Woman in her 50s; muted navy/charcoal professional clothes; quiet studio with a lunar map and source cards.
+- **Lower third:** `Historian host — interpretive educational presentation`
+- **Spoken script:**
+  > Apollo 11 landed on the Moon on 20 July 1969, in the Sea of Tranquility. Armstrong and Aldrin were in the lunar module Eagle. Collins stayed in orbit in Columbia. This presentation separates mission facts from later interpretation. I am a historian host for education. I do not speak as Armstrong, Aldrin, or Collins.
+
+### 2. Composite 1969 viewer
+
+- **Look:** Black American woman in her 30s; late-1960s everyday clothes; ordinary room with a small black-and-white television. Not a named person.
+- **Lower third:** `Composite 1969 viewer — interpretive reconstruction, not a documented individual`
+- **Spoken script:**
+  > In July 1969, many people watched the Moon landing on television at home. Official records show Apollo 11 landed on the twentieth. Later writing also shows that wonder and hard questions about inequality existed at the same time. I am an interpretive reconstruction, not a real witness. What I say comes from published sources, not a private memory.
+
+### 3. Contemporary museum guide
+
+- **Look:** Man in his 30s; field jacket over neutral clothes; beside a clean 3D model of Eagle. No NASA insignia.
+- **Lower third:** `Contemporary guide — AI reconstruction labelled as such`
+- **Spoken script:**
+  > A touchdown scene should not show a flag, footprints, or surface experiments. Those came after the crew left the lander. This model is a reconstruction for learning, not NASA footage. I am a museum guide, not an astronaut or NASA employee.
 
 ## Caveat
 

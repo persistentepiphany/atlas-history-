@@ -81,13 +81,30 @@ At 4:40, transition from direct action to a **dignified evidence mode**: exterio
 
 Provide five interactive hotspots: (1) a sewing-table hotspot on the 1909 Uprising of the 20,000 and workplace conditions; (2) an accessible building-section hotspot showing the documented eighth-, ninth-, and tenth-floor routes, locked ninth-floor stairwell door, elevators, roof rescue, and disabled hose, with citations and no counterfactual rescue mechanic; (3) a fire-alarm box hotspot comparing 1911 communication and fire-protection limits with later reforms; (4) a newspaper desk comparing the *New-York Tribune*’s “more than 140” and the *Washington Herald*’s “142,” both labeled preliminary counts, then the final total; and (5) a quiet memorial hotspot with the 146-name memorial, 5 April mourning demonstration, and New York Factory Investigating Commission’s work. Use archival photographs only when rights labels accompany them. Exclude modern objects, contemporary signage, synthetic “ragged immigrant” stereotypes, celebrity heroes, villain caricatures, casual gamification, scores, collectibles, time-pressure challenges, gore, graphic sound, invented quotations, and claims that the visitor can save or blame a specific unnamed person. End on public remembrance and reforms, not the fire itself.
 
-## VEED-compatible avatar prompts
+## VEED Studio avatars (look + script)
 
-1. **Primary historian host:** “Studio-quality, waist-up historian host, woman in her 40s, contemporary professional attire, calm and plain-spoken. Introduce the Triangle Shirtwaist Factory Fire with archival citations on screen; distinguish documented fact, contemporary reportage, and later interpretation. Use a respectful, non-sensational delivery. Do not impersonate a real historian or living person; no invented dialogue, graphic descriptions, or dramatic reenactment.”
+**How to use in VEED:** Match **Look** when picking the avatar. Paste **only Spoken script** into the talk box. Add **Lower third** by hand. Never paste Look into speech. No graphic reenactment. No distress performance. No rescue role-play.
 
-2. **Historically situated role:** “Clearly label on screen: ‘Interpretive reconstruction — unnamed Triangle garment worker composite, 1911.’ Young adult Jewish immigrant woman garment worker, respectfully dressed in a period-appropriate blouse, long skirt, apron, and practical shoes; no resemblance to a named historical person. Speak only narrator-approved, source-grounded context about the 1909 shirtwaist strike, crowded factory work, and why safety mattered; do not claim personal eyewitness memories or give invented dialogue. Measured, dignified tone; no distress performance or reenacted death.”
+### 1. Historian host
 
-3. **Contemporary guide:** “Clearly label on screen: ‘Contemporary guide — historical interpretation.’ New York City public-history educator, man in his 30s, contemporary casual-professional clothing, standing outside the Brown Building memorial. Explain how to read early newspaper death counts, archival image rights, and workplace-safety reforms. Avoid impersonating any living expert. Invite reflection without asking viewers to role-play rescue, trauma, or blame.”
+- **Look:** Woman in her 40s; contemporary professional clothes; plain studio; calm delivery.
+- **Lower third:** `Historian host — archival citations on screen`
+- **Spoken script:**
+  > On 25 March 1911, fire broke out at the Triangle Shirtwaist Factory in New York. One hundred forty-six people died. Early newspaper counts differed; later research settled on that number. This presentation separates fact, contemporary reportage, and later interpretation. I am a historian host. I do not reenact the fire.
+
+### 2. Composite garment worker
+
+- **Look:** Young adult Jewish immigrant woman; 1911 blouse, long skirt, apron, practical shoes. Not a named person.
+- **Lower third:** `Interpretive reconstruction — unnamed Triangle garment worker composite, 1911`
+- **Spoken script:**
+  > Garment workers had organized in the 1909 shirtwaist strike. Factory floors were crowded. Locked exits and failed fire systems appear in the record of Triangle. I am a composite role for context only. I do not claim personal memories of the fire, and I invent no dialogue.
+
+### 3. Contemporary memorial guide
+
+- **Look:** Man in his 30s; casual-professional clothes; outside the Brown Building memorial.
+- **Lower third:** `Contemporary guide — historical interpretation`
+- **Spoken script:**
+  > Read early newspaper death counts as provisional. Check image rights before reuse. Later workplace-safety laws followed public pressure after Triangle. I am a public-history educator. I do not ask viewers to role-play rescue or blame.
 
 ## Interaction design
 

@@ -81,11 +81,30 @@ For a 3D learning world, the central story is not a thrill of collapse. A region
 >
 > Narration should be calm, precise, and compassionate, in the voice of a public historian: name uncertainty, avoid melodrama, and center safety, mutual aid, infrastructure, and unequal access to relief. No invented dialogue, no claims of personal memory, and no undated “facts.” Include an always-available content note and a leave-scene option. Explicitly exclude earthquake shaking simulation, collapsing-building gameplay, bodies, injuries, death sounds, screams, fire-as-entertainment, looting or shooting mechanics, weapons interactions, chase/score systems, reenacted executions, disaster tourism, racial slurs, “exotic” Chinatown imagery, and any implication that segregated relief was natural or inevitable. The learner never earns points for surviving, controlling crowds, or extracting resources.
 
-## VEED-compatible avatar prompts
+## VEED Studio avatars (look + script)
 
-1. **Primary historian host:** “Present-day public historian host, woman in her 40s of Chinese American heritage, in a quiet museum-gallery setting with archival maps behind her; professional contemporary clothing, direct and compassionate delivery. On-screen label: ‘Contemporary historian and interpreter.’ State only sourced facts about the 1906 San Francisco earthquake and clearly distinguish early newspaper estimates from later historical estimates. Do not impersonate a real person or use invented quotations.”
-2. **Historically situated witness role:** “An explicitly labelled **interpretive composite**, not a real or named person: a Chinese San Franciscan adult in 1906, wearing practical period-appropriate clothing and shown beside a sourced context map, not in a spectacle scene. On-screen label: ‘Interpretive reconstruction informed by records of Chinese displacement.’ Explain in measured language that Chinese refugees faced segregated camps and relocation pressure after the earthquake; do not invent biography, dialogue, trauma details, or personal testimony.”
-3. **Contemporary guide:** “Present-day San Francisco community guide, adult of unspecified heritage, standing in Golden Gate Park with a subtle map overlay; calm, accessible visitor-guide style. On-screen label: ‘Contemporary site guide.’ Explain that the park was used for earthquake relief and direct viewers to source cards. Do not impersonate any living person, wear period costume, or claim to have witnessed the event.”
+**How to use in VEED:** Match **Look** when picking the avatar. Paste **only Spoken script** into the talk box. Add **Lower third** by hand. Never paste Look into speech. No disaster spectacle. No invented personal trauma.
+
+### 1. Historian host
+
+- **Look:** Chinese American woman in her 40s; professional contemporary clothes; quiet gallery with archival maps.
+- **Lower third:** `Contemporary historian and interpreter`
+- **Spoken script:**
+  > On 18 April 1906, a major earthquake struck near San Francisco. Shaking was brief. Fires burned for days because water mains broke. Early newspapers guessed death counts; later research put deaths near three thousand. I am a historian host. I do not impersonate a real person.
+
+### 2. Composite Chinese San Franciscan
+
+- **Look:** Chinese San Franciscan adult, 1906; practical period clothes; beside a context map, not a fire scene. Not a named person.
+- **Lower third:** `Interpretive reconstruction informed by records of Chinese displacement`
+- **Spoken script:**
+  > After the quake, many people went to parks and camps for shelter. Records show Chinese refugees faced segregated camps and relocation pressure. I am a composite reconstruction from that documented pattern. I do not invent a personal biography.
+
+### 3. Contemporary park guide
+
+- **Look:** Adult; calm visitor-guide style; Golden Gate Park; subtle map overlay. Modern clothes, not period costume.
+- **Lower third:** `Contemporary site guide`
+- **Spoken script:**
+  > Golden Gate Park held earthquake relief camps in 1906. Use source cards for photographs and newspaper extracts. Early reports and later science disagree on numbers. I am a site guide today. I did not witness the event.
 
 ## Interaction design
 

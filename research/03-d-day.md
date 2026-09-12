@@ -62,11 +62,30 @@ Build five accessible interactive hotspots: (1) **Weather and decision desk**, s
 
 Narration must be calm, precise, multilingual-ready, and trauma-informed. State dates, uncertainty, sources, and the difference between contemporary reporting and later interpretation. Include an optional content notice before entry and an always-available “step back / read only” mode. Explicit guardrails: **no missions, scores, collectibles, kill counts, weapon firing, tactical advantage, first-person combat, player injury, adversary AI, cheering crowds, invented dialogue, heroic power fantasy, gore, or use of real names for composite figures**. Present multinational Allied participation, French civilian experience under occupation, and the wider war without collapsing them into a single national triumph.
 
-## VEED-compatible avatar prompts
+## VEED Studio avatars (look + script)
 
-1. **Primary historian host:** “Contemporary historian host, woman in her early 40s, neutral studio with a map of Normandy and small on-screen citations; calm, precise delivery, plain dark blazer, no military costume. On-screen label: ‘Historian host — contemporary explanation.’ Explain that this is a sourced reconstruction, distinguish D-Day from the wider Normandy campaign, and never impersonate a veteran or a living person.”
-2. **Historically situated role:** “Interpretive reconstruction of a fictional composite adult French Normandy civilian woman, early 30s, in practical 1944 civilian coat and headscarf, filmed against a simple non-combat coastal-background matte. On-screen label throughout: ‘Interpretive reconstruction — composite civilian perspective, not a real person.’ Use a restrained, source-based script about occupation, uncertainty, and risk of displacement; no invented personal biography, dialogue, or trauma performance.”
-3. **Contemporary guide:** “Contemporary French memorial-site educator in their 30s, smart weatherproof outdoor clothing, standing at a present-day Normandy overlook with the historic shoreline shown only as a map overlay. On-screen label: ‘Contemporary guide.’ Invite visitors to compare the terrain, archival photographs, and source notes; speak respectfully about remembrance, accessibility, and why the experience does not simulate combat. Do not impersonate any living person.”
+**How to use in VEED:** Match **Look** when picking the avatar. Paste **only Spoken script** into the talk box. Add **Lower third** by hand. Never paste Look into speech. No combat simulation. No veteran impersonation.
+
+### 1. Historian host
+
+- **Look:** Woman, early 40s; plain dark blazer; studio with a Normandy map. No military costume.
+- **Lower third:** `Historian host — contemporary explanation`
+- **Spoken script:**
+  > On 6 June 1944, Allied forces landed in Normandy. Omaha Beach was one sector among several. D-Day is the opening day, not the whole Normandy campaign. This is a sourced reconstruction for learning. I am a historian host, not a veteran.
+
+### 2. Composite Normandy civilian
+
+- **Look:** French woman, early 30s; 1944 civilian coat and headscarf; calm coastal backdrop, no combat. Not a real person.
+- **Lower third:** `Interpretive reconstruction — composite civilian, not a real person`
+- **Spoken script:**
+  > Civilians in Normandy lived under occupation and faced uncertainty as the landings began. Displacement and damage followed in many places. I am a composite role built from general context, not a named witness. I do not invent a personal story.
+
+### 3. Contemporary memorial guide
+
+- **Look:** Person in their 30s; weatherproof outdoor clothes; present-day Normandy overlook; map overlay only.
+- **Lower third:** `Contemporary guide`
+- **Spoken script:**
+  > Compare the shoreline, archival photographs, and source notes. Remembrance sites explain the landings without asking visitors to play combat. I am a memorial educator today, not a participant in 1944.
 
 ## Interaction-design items
 

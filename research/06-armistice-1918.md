@@ -64,13 +64,30 @@ Interactive hotspots: (1) railcar exterior: factual timeline from 5:00 a.m. agre
 
 Narrator voice: calm, precise, low-key, and non-nationalistic. Separate source-backed fact from interpretation using spoken labels such as “The signed text states…” and “Later historians caution…”. Maintain captions, transcript, keyboard navigation, and a content note before references to deaths, displacement, colonial and imperial service, and postwar instability. Exclude gore, battlefield corpses, combat gameplay, scorekeeping, enemy caricatures, celebratory conquest framing, forced emotional responses, invented dialogue, and claims that the entire war or all suffering ended at 11:00. Present German, Allied, colonial, and civilian experiences without stereotyping or collective blame.
 
-## VEED-compatible avatar prompts
+## VEED Studio avatars (look + script)
 
-1. **Primary historian host:** “Create a composed museum historian host in a neutral studio, an adult woman in her late 40s wearing a simple charcoal jacket and no military costume. She speaks clear international English at a measured pace, introduces the Armistice as a ceasefire agreed in Compiègne and distinguishes documented facts from interpretation. Lower-third: ‘Historian host — source-led interpretation.’ No impersonation of any real person; no patriotic performance or triumphal delivery.”
+**How to use in VEED:** Match **Look** when picking the avatar. Paste **only Spoken script** into the talk box. Add **Lower third** by hand. Never paste Look into speech. No triumphal tone. No claim to have witnessed the signing.
 
-2. **Historically situated role:** “Create a fictional composite French civilian railway worker in 1918, age approximately 35–50, in a practical wool coat, scarf, sturdy boots, and period-appropriate work cap, standing at a respectful distance from a forest rail siding. The speaker explains what a railway and telegraph network could and could not communicate before the 11:00 deadline. Display permanently: ‘Interpretive reconstruction — composite civilian role, not a recorded individual.’ Use no invented quotations, no claims of witnessing the signing, and no distress performance.”
+### 1. Historian host
 
-3. **Contemporary guide:** “Create a present-day French museum educator, adult in their 30s, in modern understated clothing and an accessible gallery setting. They guide visitors through a map that connects Compiègne with Manchester, London, and New York City, stressing that public celebration did not erase grief or settle the peace. Lower-third: ‘Contemporary guide — historical context.’ No impersonation of any living person and no claims to represent all descendants or nations.”
+- **Look:** Woman, late 40s; charcoal jacket; neutral museum studio. No military costume.
+- **Lower third:** `Historian host — source-led interpretation`
+- **Spoken script:**
+  > The Armistice of 11 November 1918 took effect at 11 a.m. It had been agreed about six hours earlier in a railway carriage in the Forest of Compiègne. It was a ceasefire, not a peace treaty. Celebration and grief both appear in the record. I am a historian host. I do not impersonate any real person.
+
+### 2. Composite railway worker
+
+- **Look:** French civilian, about 35–50; wool coat, scarf, work cap, sturdy boots; forest rail siding at a respectful distance.
+- **Lower third:** `Interpretive reconstruction — composite civilian role, not a recorded individual`
+- **Spoken script:**
+  > After the agreement, orders had to travel by wire and rail before fighting was supposed to stop at 11. Networks could move messages; they could not make every place silent at once. I am a composite role. I did not witness the signing, and I invent no quotations.
+
+### 3. Contemporary guide
+
+- **Look:** Person in their 30s; understated modern clothes; accessible gallery; map linking Compiègne, London, Manchester, New York.
+- **Lower third:** `Contemporary guide — historical context`
+- **Spoken script:**
+  > Newspapers announced the news in different cities with different headlines. Public celebration did not erase loss, and fighting ended unevenly elsewhere. I am a museum educator today. I do not speak for every nation or every family.
 
 ## Interaction design
 
