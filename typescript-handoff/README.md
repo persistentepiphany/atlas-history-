@@ -14,7 +14,7 @@ An event's world is described entirely by the `world` block of its scenario. The
 
 Four implementations sit behind one interface. The live source streams a Reactor session, seeding each stop and playing its rail as pose commands. The pre-rendered source plays the recorded film and seeks by the recorded offsets. The seed source draws the stop seeds under the same rail and is the floor, so a visit always has a picture. The orchestrator owns the active source, the swap between them when one fails, the crossfade, the audio lead, the grade and the frame kept for the mark. Model choice and every timing constant come from `reactor.config.json`.
 
-The pre-rendered film is the default path. `reactor.config.json` carries `preferFallback`, which holds it in front of the live source until the live path has run clean ten times.
+The pre-rendered film is the default path. `reactor.config.json` carries `preferFallback` and `liveCleanRunsRequired`, and the recorded film leads the chain until the live model has carried a visit through every stop without a swap that many times. A clean visit is counted on the return beat and the count is kept in the browser, so the demonstration machine promotes the live path only once it has earned it, and `live=1` forces the live path at any time.
 
 ## Commands
 

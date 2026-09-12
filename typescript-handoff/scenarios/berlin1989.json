@@ -80,8 +80,8 @@
   "fallback": "video/r02.mp4",
   "fallbackOffsets": [
    0,
-   15.3082,
-   30.628
+   15.2944,
+   30.6326
   ],
   "objective": "Find the sentence that opened the border.",
   "treatment": "flash",

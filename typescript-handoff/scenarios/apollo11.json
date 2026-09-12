@@ -75,9 +75,9 @@
   "fallback": "video/r01.mp4",
   "fallbackOffsets": [
    0,
-   13.3637,
-   26.7104,
-   40.1023
+   13.3147,
+   26.606,
+   39.9485
   ],
   "objective": "Follow this picture home.",
   "treatment": "tv",

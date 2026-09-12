@@ -19,7 +19,7 @@ export function WorldSurface({ orch, provenance, model }: { orch: WorldOrchestra
     <>
       <div ref={host} className="pointer-events-none fixed inset-0" style={{ visibility: provenance ? 'hidden' : 'visible' }} />
       {provenance && state?.lastFrame && (
-        <div className="ui pointer-events-none fixed right-8 bottom-[18px] flex flex-col items-end gap-1" style={{ maxWidth: '34ch', textAlign: 'right' }}>
+        <div className="ui pointer-events-none fixed right-8 bottom-[56px] flex flex-col items-end gap-1" style={{ maxWidth: '34ch', textAlign: 'right' }}>
           <img src={state.lastFrame} alt="" style={{ width: 200, border: '1px solid rgba(235,230,220,0.4)', filter: 'grayscale(1)', opacity: 0.85 }} />
           <span>Generated world, {state.source ?? 'no source'}</span>
           <span style={{ opacity: 0.5 }}>{state.source === 'live' ? model : state.source === 'fallback' ? 'pre-rendered from ' + model : 'seed still'}</span>

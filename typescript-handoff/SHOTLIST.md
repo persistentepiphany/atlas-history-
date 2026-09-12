@@ -28,9 +28,9 @@ World, treatment tv, objective Follow this picture home., fallback video/r01.mp4
 | T | Offset | Stop | Seed | Rail | Hold | Archive | Narrator |
 |---|---|---|---|---|---|---|---|
 | 1:35 | 0.00 | The camera on the lander | images/a04.png | hold 2, dolly 0.12 over seconds 6, pan 0.05 over seconds 4 | 4 | N02 | V01-07 |
-| 1:48 | 13.36 | Honeysuckle Creek | images/honeysuckle-1969.png | hold 1.5, tilt 0.04 over seconds 4, dolly 0.08 over seconds 6 | 4 | N03 | V01-08 |
-| 2:01 | 26.71 | Houston | images/houston-frame.png | hold 1, pan -0.06 over seconds 5, dolly 0.1 over seconds 6 | 4 | N04 | V01-09 |
-| 2:14 | 40.10 | The wire desk | images/wire-room.png | hold 2, orbit 0.05 over seconds 6, dolly 0.06 over seconds 4 | 4 | N05 | V01-10 |
+| 1:48 | 13.31 | Honeysuckle Creek | images/honeysuckle-1969.png | hold 1.5, tilt 0.04 over seconds 4, dolly 0.08 over seconds 6 | 4 | N03 | V01-08 |
+| 2:01 | 26.61 | Houston | images/houston-frame.png | hold 1, pan -0.06 over seconds 5, dolly 0.1 over seconds 6 | 4 | N04 | V01-09 |
+| 2:14 | 39.95 | The wire desk | images/wire-room.png | hold 2, orbit 0.05 over seconds 6, dolly 0.06 over seconds 4 | 4 | N05 | V01-10 |
 
 Shot cards
 
@@ -67,7 +67,7 @@ World, treatment flash, objective Find the sentence that opened the border., fal
 | T | Offset | Stop | Seed | Rail | Hold | Archive | Narrator |
 |---|---|---|---|---|---|---|---|
 | 1:40 | 0.00 | The podium | images/b05.png | hold 2, dolly 0.08 over seconds 6, pan 0.04 over seconds 5 | 4 |  | W01-07 |
-| 1:55 | 15.31 | The printed regulation | images/regulation-crop.png | hold 1.5, dolly 0.1 over seconds 6, tilt -0.03 over seconds 4 | 4 |  | W01-08 |
+| 1:55 | 15.29 | The printed regulation | images/regulation-crop.png | hold 1.5, dolly 0.1 over seconds 6, tilt -0.03 over seconds 4 | 4 |  | W01-08 |
 | 2:10 | 30.63 | Bornholmer Straße, 23:30 | images/asche-bridge.png | hold 1, pan 0.06 over seconds 5, dolly 0.12 over seconds 8 | 5 |  | W01-09 |
 
 Shot cards

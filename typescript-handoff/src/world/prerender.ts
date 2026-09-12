@@ -6,7 +6,8 @@ import { moveToPose } from './CameraRail';
  * The in page half of the pre-render. Opened with ?prerender=1&event=<id>, it mounts only the
  * world surface at the recording size, runs the live source through every stop on a timer, and
  * reports the entry time of each stop on window.__atlasPrerender so the script can write the
- * fallback offsets back into the scenario. When the live model is unreachable the seed source
+ * fallback offsets back into the scenario. The surface is recorded without its grade, so the film
+ * carries the raw picture and the grade is applied once at playback, as it is on the live path. When the live model is unreachable the seed source
  * plays the same stops, so the recorded film still lands each picture at the right second.
  */
 export interface PrerenderReport { entries: number[]; sources: string[]; done: boolean; error: string | null; reason: string | null }
@@ -20,7 +21,7 @@ export async function runPrerender(params: URLSearchParams) {
   document.body.style.background = '#000';
   try {
     const sc = await loadScenario('/scenarios/' + event + '.json');
-    const orch = new WorldOrchestrator(sc, { now: () => 0, mode: params.get('mode') === 'seed' ? 'seed' : 'prerender' });
+    const orch = new WorldOrchestrator(sc, { now: () => 0, mode: params.get('mode') === 'seed' ? 'seed' : 'prerender', treatment: 'none' });
     orch.surface.style.position = 'fixed'; orch.surface.style.inset = '0';
     document.body.append(orch.surface);
     await orch.door();

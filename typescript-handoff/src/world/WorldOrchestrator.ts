@@ -1,9 +1,9 @@
-import type { Scenario, Stop } from '../data/types';
+import type { Scenario, Stop, Treatment } from '../data/types';
 import type { WorldSource, WorldStatus } from './WorldSource';
 import { LiveReactorSource } from './LiveReactorSource';
 import { FallbackSource } from './FallbackSource';
 import { SeedSource } from './SeedSource';
-import { reactorConfig } from './config';
+import { reactorConfig, liveIsTrusted, recordCleanLiveRun } from './config';
 import { applyTreatment } from './treatment';
 
 export type WorldMode = 'auto' | 'live' | 'fallback' | 'seed' | 'prerender';
@@ -16,7 +16,12 @@ export interface WorldAudio {
   releaseWorld(tailMs: number): void;
 }
 
-export interface OrchestratorDeps { audio?: WorldAudio; now: () => number; mode?: WorldMode }
+export interface OrchestratorDeps {
+  audio?: WorldAudio; now: () => number; mode?: WorldMode;
+  /** Overrides the scenario's grade. The pre-render records without one so the film carries the raw
+   *  picture and the grade is applied once, at playback, whichever source is carrying the world. */
+  treatment?: Treatment;
+}
 
 export interface OrchestratorState { status: WorldStatus; source: string | null; stopIndex: number; lastFrame: string | null; reason: string | null; swaps: number; log: string[] }
 
@@ -47,7 +52,7 @@ export class WorldOrchestrator {
     this.surface.className = 'world-surface'; this.picture.className = 'world-picture'; this.ghost.className = 'world-ghost';
     this.surface.append(this.picture, this.ghost, el('div', 'world-scanlines'), el('div', 'world-grain'), el('div', 'world-vignette'));
     this.surface.style.opacity = '0';
-    applyTreatment(this.surface, sc.world.treatment);
+    applyTreatment(this.surface, deps.treatment ?? sc.world.treatment);
     this.chain = this.buildChain(deps.mode ?? 'auto');
   }
 
@@ -60,7 +65,7 @@ export class WorldOrchestrator {
       case 'fallback': return [fallback, seed];
       case 'seed': return [seed];
       case 'prerender': return [live, seed];
-      default: return reactorConfig.preferFallback ? [fallback, seed] : [live, fallback, seed];
+      default: return liveIsTrusted() ? [live, fallback, seed] : [fallback, seed, live];
     }
   }
 
@@ -174,6 +179,7 @@ export class WorldOrchestrator {
       await this.source.enter(stop);
       this.hideGhost();
       this.enteredAt = performance.now();
+      if (stop.captureFrame) { const frame = await this.source.captureFrame(); if (frame) this.patch({ lastFrame: frame }); }
     } catch (e) { this.guard -= 1; await this.swap(e instanceof Error ? e.message : String(e)); return; }
     this.guard -= 1;
   }
@@ -187,9 +193,12 @@ export class WorldOrchestrator {
   /** The only free input, a look offset clamped to maxLookOffset. */
   look(dx: number, dy: number) { const m = reactorConfig.maxLookOffset; this.source?.look(clamp(dx, m), clamp(dy, m)); }
 
-  /** Return beat. Captures the last frame for the provenance mark, lets the reverb tail hang, then disposes. */
+  /** Return beat. Captures the last frame for the provenance mark, lets the reverb tail hang, then disposes.
+   *  A visit that played every stop on the live model without a swap is counted, and once enough visits
+   *  have done so the live source leads the chain instead of the recorded film. */
   async leave() {
     if (this.closed) return; this.closed = true;
+    if (this.source?.name === 'live' && this.state.swaps === 0 && this.state.stopIndex === this.stops.length - 1) recordCleanLiveRun();
     const stop = this.currentStop();
     if (this.source && (stop?.captureFrame ?? true)) { const frame = await this.source.captureFrame(); if (frame) this.patch({ lastFrame: frame }); }
     this.deps.audio?.releaseWorld(reactorConfig.returnTailMs);
