@@ -98,6 +98,7 @@ export function App() {
   };
 
   const play = async () => {
+    if (walkAvailable) { void openWalk(); return; }
     const audio = audioRef.current;
     if (!audio) return;
     if (playing) {
@@ -225,13 +226,12 @@ export function App() {
               onEnded={() => setPlaying(false)}
               onTimeUpdate={event => setProgress(event.currentTarget.duration ? event.currentTarget.currentTime / event.currentTarget.duration : 0)}
             />
-            <button className="play" onClick={() => void play()}><span>{playing ? 'Ⅱ' : '▶'}</span>{playing ? 'Pause' : 'Begin'}</button>
+            <button className="play" onClick={() => void play()}><span>{playing ? 'Ⅱ' : '▶'}</span>{playing ? 'Pause' : walkAvailable ? 'Play' : 'Begin'}</button>
             <div className="narration">
-              <span>{playing ? 'Narration' : 'When you are ready'}</span>
+              <span>{playing ? 'Narration' : walkAvailable ? 'Cinematic walkthrough' : 'When you are ready'}</span>
               <p>{narration[selected.id]}</p>
               <i style={{ transform: `scaleX(${progress})` }} />
             </div>
-            {walkAvailable && <button className="play play--walk" onClick={() => void openWalk()}><span>◆</span>Walkthrough</button>}
             {selected.archive && <a href={selected.archive.sourceUrl} target="_blank" rel="noreferrer">Source ↗</a>}
           </footer>
         </section>
