@@ -77,7 +77,8 @@
   "source": "Placeholder, generated from A04 crop",
   "layer": "generated",
   "objective": "Follow this picture home.",
-  "animate": "tv"
+  "animate": "tv",
+  "video": "assets/apollo11/video/r01.mp4"
  },
  "hubCamera": {
   "x": 0.39,
@@ -159,28 +160,32 @@
    "label": "The camera on the lander",
    "audio": "N02",
    "voice": "V01-07",
-   "text": "Tranquility Base, 02:56 universal time. A television camera on the leg of the lander."
+   "text": "Tranquility Base, 02:56 universal time. A television camera on the leg of the lander.",
+   "surface": "tv"
   },
   {
    "t": 108,
    "label": "Honeysuckle Creek",
    "audio": "N03",
    "voice": "V01-08",
-   "text": "Honeysuckle Creek, outside Canberra, 12:56 in the afternoon. The first eight minutes came through this dish."
+   "text": "Honeysuckle Creek, outside Canberra, 12:56 in the afternoon. The first eight minutes came through this dish.",
+   "surface": "tv"
   },
   {
    "t": 121,
    "label": "Houston",
    "audio": "N04",
    "voice": "V01-09",
-   "text": "Houston, the same minute. The picture is converted for broadcast and loses half its lines."
+   "text": "Houston, the same minute. The picture is converted for broadcast and loses half its lines.",
+   "surface": "tv"
   },
   {
    "t": 134,
    "label": "The wire desk",
    "audio": "N05",
    "voice": "V01-10",
-   "text": "A wire desk, early evening. A frame is pulled from the broadcast and sent to print."
+   "text": "A wire desk, early evening. A frame is pulled from the broadcast and sent to print.",
+   "surface": "still"
   }
  ],
  "beats": [
@@ -251,7 +256,8 @@
    "foley": [
     {
      "id": "F01",
-     "at": 8.25
+     "at": 8.25,
+     "pan": 0.25
     }
    ],
    "voice": {
@@ -321,9 +327,9 @@
    "t": 50,
    "phase": "ghost",
    "ghost": {
-    "opacity": 0.3,
+    "opacity": 0.32,
     "scale": 1,
-    "dur": 0.8
+    "dur": 1.2
    },
    "post": {
     "grain": 0.18,
@@ -339,7 +345,8 @@
    "caption": {
     "text": "Houston, Tranquility Base here. The Eagle has landed.",
     "kind": "archive",
-    "dur": 11
+    "dur": 11,
+    "speaker": "Armstrong"
    }
   },
   {
@@ -348,7 +355,7 @@
    "ghost": {
     "opacity": 0,
     "scale": 0.98,
-    "dur": 1
+    "dur": 1.4
    },
    "post": {
     "grain": 0.06,
@@ -454,7 +461,7 @@
    },
    "focus": {
     "radius": 1,
-    "dur": 0.5
+    "dur": 1.2
    },
    "warmth": {
     "v": 1,
@@ -462,6 +469,17 @@
    },
    "objective": {
     "at": 92
+   },
+   "camera": {
+    "x": -0.887,
+    "y": 0.469,
+    "z": 0.07,
+    "dur": 2.4
+   },
+   "post": {
+    "vignette": 0.5,
+    "grain": 0.08,
+    "dur": 2
    }
   },
   {
@@ -486,7 +504,8 @@
    "post": {
     "grain": 0.08,
     "aberration": 0,
-    "dur": 3
+    "dur": 3,
+    "vignette": 0.4
    },
    "warmth": {
     "v": 0.5,

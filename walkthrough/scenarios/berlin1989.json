@@ -82,7 +82,8 @@
   "source": "Placeholder, generated from B05",
   "layer": "generated",
   "objective": "Find the sentence that opened the border.",
-  "animate": "room"
+  "animate": "room",
+  "video": "assets/berlin1989/video/r02.mp4"
  },
  "hubCamera": {
   "x": 0.5,
@@ -130,19 +131,22 @@
    "t": 100,
    "label": "The podium",
    "voice": "W01-07",
-   "text": "18:52, Mohrenstraße. He reads from a page handed to him an hour earlier."
+   "text": "18:52, Mohrenstraße. He reads from a page handed to him an hour earlier.",
+   "surface": "tv"
   },
   {
    "t": 115,
    "label": "The printed regulation",
    "voice": "W01-08",
-   "text": "Private trips abroad may be applied for without preconditions. He reaches the last line. Immediately, without delay."
+   "text": "Private trips abroad may be applied for without preconditions. He reaches the last line. Immediately, without delay.",
+   "surface": "still"
   },
   {
    "t": 130,
    "label": "Bornholmer Straße, 23:30",
    "voice": "W01-09",
-   "text": "Bornholmer Straße, 23:30. The barrier is raised."
+   "text": "Bornholmer Straße, 23:30. The barrier is raised.",
+   "surface": "film"
   }
  ],
  "beats": [
@@ -213,7 +217,8 @@
    "foley": [
     {
      "id": "F01",
-     "at": 8.25
+     "at": 8.25,
+     "pan": -0.1
     }
    ],
    "voice": {
@@ -338,9 +343,9 @@
     "dur": 2
    },
    "ghost": {
-    "opacity": 0.3,
+    "opacity": 0.32,
     "scale": 1,
-    "dur": 0.8
+    "dur": 1.2
    },
    "post": {
     "grain": 0.18,
@@ -358,7 +363,8 @@
    "caption": {
     "text": "„… sofort, unverzüglich.“ — immediately, without delay.",
     "kind": "archive",
-    "dur": 4
+    "dur": 4,
+    "speaker": "Schabowski"
    },
    "voice": {
     "id": "W01-05",
@@ -373,7 +379,7 @@
    "ghost": {
     "opacity": 0,
     "scale": 0.98,
-    "dur": 1
+    "dur": 1.4
    },
    "post": {
     "grain": 0.06,
@@ -403,9 +409,9 @@
    "t": 81,
    "phase": "ghost",
    "ghost": {
-    "opacity": 0.3,
+    "opacity": 0.32,
     "scale": 1,
-    "dur": 0.8,
+    "dur": 1.2,
     "src": "assets/berlin1989/images/k02.png"
    },
    "post": {
@@ -424,7 +430,7 @@
    "ghost": {
     "opacity": 0,
     "scale": 0.98,
-    "dur": 1
+    "dur": 1.4
    },
    "camera": {
     "x": 0.69,
@@ -481,7 +487,7 @@
    },
    "focus": {
     "radius": 1,
-    "dur": 0.5
+    "dur": 1.2
    },
    "translate": null,
    "warmth": {
@@ -490,6 +496,17 @@
    },
    "objective": {
     "at": 99
+   },
+   "camera": {
+    "x": 0.68,
+    "y": 0.78,
+    "z": 0.06,
+    "dur": 2.4
+   },
+   "post": {
+    "vignette": 0.5,
+    "grain": 0.25,
+    "dur": 2
    }
   },
   {
@@ -514,7 +531,8 @@
    "post": {
     "grain": 0.08,
     "aberration": 0,
-    "dur": 3
+    "dur": 3,
+    "vignette": 0.4
    },
    "warmth": {
     "v": 0.5,
