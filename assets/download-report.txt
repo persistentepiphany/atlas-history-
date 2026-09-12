@@ -1,0 +1,80 @@
+Downloading 01-apollo-aldrin-near-eagle.jpg
+OK 01-apollo-aldrin-near-eagle.jpg: JPEG image data, Exif standard: [TIFF image data, little-endian, direntries=14, height=3930, bps=182, compression=none, PhotometricInterpretation=RGB, orientation=upper-left, width=3930], baseline, precision 8, 3930x3930, components 3
+Downloading 02-apollo-aldrin-full-frame.jpg
+OK 02-apollo-aldrin-full-frame.jpg: JPEG image data, JFIF standard 1.02, resolution (DPI), density 300x300, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries=7, orientation=upper-left, xresolution=98, yresolution=106, resolutionunit=2, software=Adobe Photoshop CS4 Macintosh, datetime=2009:09:13 17:39:12], progressive, precision 8, 4400x4600, components 3
+Downloading 03-apollo-lm-surface.jpg
+OK 03-apollo-lm-surface.jpg: JPEG image data, JFIF standard 1.01, aspect ratio, density 1x1, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries=1, orientation=upper-left], baseline, precision 8, 1920x1920, components 3
+Downloading 04-berlin-potsdamer-platz-opening.jpeg
+OK 04-berlin-potsdamer-platz-opening.jpeg: JPEG image data, JFIF standard 1.02, resolution (DPI), density 285x285, segment length 16, comment: "File written by Adobe Photoshop\250 4.0", baseline, precision 8, 2850x1900, components 3
+Downloading 05-berlin-people-walking.jpg
+OK 05-berlin-people-walking.jpg: JPEG image data, JFIF standard 1.02, resolution (DPI), density 72x72, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries=7, orientation=upper-left, xresolution=98, yresolution=106, resolutionunit=2, software=Adobe Photoshop CS3 Windows, datetime=2009:03:31 23:26:09], baseline, precision 8, 4356x2916, components 3
+Downloading 06-berlin-checkpoint-charlie.jpg
+OK 06-berlin-checkpoint-charlie.jpg: JPEG image data, JFIF standard 1.01, resolution (DPI), density 50x50, segment length 16, baseline, precision 8, 800x508, components 1
+Downloading 07-dday-into-the-jaws.jpg
+OK 07-dday-into-the-jaws.jpg: JPEG image data, JFIF standard 1.01, resolution (DPI), density 600x600, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries=2], baseline, precision 8, 5686x4507, components 1
+Downloading 08-dday-eisenhower-paratroopers.jpg
+OK 08-dday-eisenhower-paratroopers.jpg: JPEG image data, Exif standard: [TIFF image data, big-endian, direntries=8, orientation=upper-left, xresolution=110, yresolution=118, resolutionunit=2, software=Adobe Photoshop CS6 (Windows), datetime=2013:07:17 09:00:03], baseline, precision 8, 3924x3051, components 3
+Downloading 09-dday-approaching-omaha.jpg
+OK 09-dday-approaching-omaha.jpg: JPEG image data, JFIF standard 1.01, resolution (DPI), density 300x300, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries=0], baseline, precision 8, 3000x2147, components 1
+Downloading 10-march-leadership-procession.jpg
+OK 10-march-leadership-procession.jpg: JPEG image data, JFIF standard 1.02, resolution (DPI), density 72x72, segment length 16, baseline, precision 8, 587x395, components 1
+Downloading 12-march-reflecting-pool-crowd.jpg
+OK 12-march-reflecting-pool-crowd.jpg: JPEG image data, JFIF standard 1.01, resolution (DPI), density 72x72, segment length 16, baseline, precision 8, 588x458, components 1
+Downloading 13-partition-gandhi-suhrawardy.jpg
+OK 13-partition-gandhi-suhrawardy.jpg: JPEG image data, Exif standard: [TIFF image data, little-endian, direntries=0], baseline, precision 8, 900x500, components 3
+Downloading 14-armistice-nyc-celebration.jpg
+OK 14-armistice-nyc-celebration.jpg: JPEG image data, JFIF standard 1.01, resolution (DPI), density -25536x-25536, segment length 16, Exif Standard: [TIFF image data, little-endian, direntries=4, manufacturer=Epson, model=Expression10000], baseline, precision 8, 5405x3616, components 1
+Downloading 15-armistice-train.jpg
+OK 15-armistice-train.jpg: JPEG image data, JFIF standard 1.01, aspect ratio, density 1x1, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries=5, description=Eerste Wereldoorlog.  Generaals Foch en Weygand voor het treinstel in Rehtondes, nabij Compiegne, tussen de  wapenstilstandsond], baseline, precision 8, 545x719, components 1
+Downloading 16-armistice-london-crowd.jpg
+OK 16-armistice-london-crowd.jpg: JPEG image data, Exif standard: [TIFF image data, big-endian, direntries=6, description=THE ARMISTICE DAY, 11 NOVEMBER 1918 (Q 47852) Crowds outside Buckingham Palace in London on Armistice Day, 11 November 1918. Co, xresolution=302, yresolution=310, resolutionunit=2, copyright=\251 IWM (Q 47852)], baseline, precision 8, 1300x943, components 3
+Downloading 17-sf-devastation.gif
+OK 17-sf-devastation.gif: GIF image data, version 87a, 840 x 605
+Downloading 18-sf-city-hall-ruin.jpg
+OK 18-sf-city-hall-ruin.jpg: JPEG image data, JFIF standard 1.02, resolution (DPI), density 90x90, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries=7, orientation=upper-left, xresolution=98, yresolution=106, resolutionunit=2, software=Adobe Photoshop CS3 Windows, datetime=2008:05:09 07:10:28], baseline, precision 8, 474x644, components 3
+Downloading 19-sf-golden-gate-relief-camp.jpg
+OK 19-sf-golden-gate-relief-camp.jpg: JPEG image data, JFIF standard 1.02, resolution (DPI), density 90x90, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries=7, orientation=upper-left, xresolution=98, yresolution=106, resolutionunit=2, software=Adobe Photoshop CS3 Windows, datetime=2008:05:09 07:06:17], baseline, precision 8, 745x546, components 3
+Downloading 20-triangle-fire-exterior.jpg
+OK 20-triangle-fire-exterior.jpg: JPEG image data, JFIF standard 1.01, resolution (DPI), density 800x800, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries=11, height=6254, bps=8, compression=none, PhotometricInterpretation=BlackIsZero, orientation=upper-left, width=4773], baseline, precision 8, 675x884, components 3
+Downloading 21-triangle-mourning-demonstration.jpg
+OK 21-triangle-mourning-demonstration.jpg: JPEG image data, JFIF standard 1.02, resolution (DPI), density 300x300, segment length 16, Exif Standard: [TIFF image data, little-endian, direntries=15, height=11055, bps=194, compression=LZW, PhotometricInterpretation=RGB, description=Demonstration of protest and mourning for Triangle Shirtwaist Factory fire of March 25, 1911, orientation=upper-left, width=18578], baseline, precision 8, 2994x2400, components 3
+Downloading 23-bandung-economic-plenary.jpg
+OK 23-bandung-economic-plenary.jpg: JPEG image data, Exif standard: [TIFF image data, big-endian, direntries=7, orientation=upper-left, xresolution=98, yresolution=106, resolutionunit=2, software=Adobe Photoshop CS5 Windows, datetime=2014:12:29 16:47:34], baseline, precision 8, 2000x1292, components 3
+Downloading 24-bandung-soekarno-opening.jpg
+OK 24-bandung-soekarno-opening.jpg: JPEG image data, JFIF standard 1.01, aspect ratio, density 1x1, segment length 16, comment: "CREATOR: gd-jpeg v1.0 (using IJG JPEG v62), quality = 60", baseline, precision 8, 800x531, components 3
+Downloading 25-bandung-savoy-homann-dinner.jpg
+OK 25-bandung-savoy-homann-dinner.jpg: JPEG image data, Exif standard: [TIFF image data, big-endian, direntries=7, orientation=upper-left, xresolution=98, yresolution=106, resolutionunit=2, software=Adobe Photoshop CS5 Windows, datetime=2014:12:29 16:45:17], baseline, precision 8, 1346x1318, components 3
+Downloading 26-windrush-vessel-profile.jpg
+OK 26-windrush-vessel-profile.jpg: JPEG image data, JFIF standard 1.01, aspect ratio, density 1x1, segment length 16, baseline, precision 8, 785x404, components 1
+Downloading 27-windrush-passenger-list-header.jpg
+OK 27-windrush-passenger-list-header.jpg: JPEG image data, JFIF standard 1.01, aspect ratio, density 1x1, segment length 16, baseline, precision 8, 2992x1760, components 3
+Downloading 28-windrush-monte-rosa.jpg
+OK 28-windrush-monte-rosa.jpg: JPEG image data, JFIF standard 1.01, aspect ratio, density 1x1, segment length 16, baseline, precision 8, 831x1280, components 3
+
+--- SHA-256 ---
+29ec7b0dabe92a38c974b1285fdd61dd188b59c1a9143709ca28271ad25df7f9  assets/images/01-apollo-aldrin-near-eagle.jpg
+0b2312ffb0ca0b6805b57a1b574f8f46c2920d1d62fe0c3c95f8ebd4dd50a58a  assets/images/02-apollo-aldrin-full-frame.jpg
+08ac1ce3c7f4dab0acc343014ed3267d980564cb0e7e64994c8df13a059c753c  assets/images/03-apollo-lm-surface.jpg
+ac283e22448df964fea85d7f6258c805fabec66ac868aff0e15fdd1ebd9d268d  assets/images/04-berlin-potsdamer-platz-opening.jpeg
+6eb1a8ba6622ae7d5195abca56f88800d28ad70bb9c7e2da6d4796c965e3f498  assets/images/05-berlin-people-walking.jpg
+f5b3c72fb001db8e3795dfe5ed58e64f90e877e0f26d2e839ffe449854dd9c0f  assets/images/06-berlin-checkpoint-charlie.jpg
+2c258a09c650f6e64f02c2d177d10cc728f23d6da8301f92c4274a8870801b68  assets/images/07-dday-into-the-jaws.jpg
+d266302e6915cb5819c0eed23995bf8a05f160869b5a141081be2de2cf0377c5  assets/images/08-dday-eisenhower-paratroopers.jpg
+6f1fa8fa6848b9c39fb9563794783b727737ab6aad4ef48d5a813ae9bf0e6432  assets/images/09-dday-approaching-omaha.jpg
+27f4c517d69d1a7502b1ba9acd19e983c2e77e69762225804a40fb0d24b90336  assets/images/10-march-leadership-procession.jpg
+b59f9ce0f32c91ca32fb94b8fc68a43f7ee51dc3c43c95b5227e2078a5b7de76  assets/images/12-march-reflecting-pool-crowd.jpg
+0ffc8307d39af04fe34d9f709b6178b9f4baa742219a2bdcb964412053c29f7e  assets/images/13-partition-gandhi-suhrawardy.jpg
+9aa6c8b2275ea019b6945a2e8b4e4b84ce07ffdca0d4f494dd02adf37cee1c46  assets/images/14-armistice-nyc-celebration.jpg
+6ed305f0d9f4ed8b69fd2109f97b3755520c82825b070d7ed10245b95b67dcfd  assets/images/15-armistice-train.jpg
+9cb03f52a07e6cab3bbe0ee223cff46ec811dedca56ecb00ad9f54f058fdafa3  assets/images/16-armistice-london-crowd.jpg
+a23bcef03fcbf7d7f25b1a8d10de3bd6ee9ac1a501b1ae889b19b7379425b0ba  assets/images/17-sf-devastation.gif
+a8e25894b7209cdd1dbd8e8f00ebb7e773fceaa5ad3cd69aa6cff499f7cba442  assets/images/18-sf-city-hall-ruin.jpg
+cdf1957017118fb718201e42d9ce9c6d9de3c6ca8f28333ed60c702a14929551  assets/images/19-sf-golden-gate-relief-camp.jpg
+84e4000d0c1ec9fb0c01ae62fefa231249ab3debe2ddc9239caffcaf50f03e46  assets/images/20-triangle-fire-exterior.jpg
+2c0aebe0a407aa59b602fbf78813b05ff5a343b96a49b5440366206253979284  assets/images/21-triangle-mourning-demonstration.jpg
+c0ce91246b96a32a6ee2c9997f4f9f423db78e5841e79a3e5c90266de526ecc2  assets/images/23-bandung-economic-plenary.jpg
+8c69474fc650385fbab708fc4812e44df99a98e0d7711554660a7219a8adc706  assets/images/24-bandung-soekarno-opening.jpg
+dc547f237bff93805e35de1f1a9c27ea793090681047c396e8d8d35fdcbcbdaf  assets/images/25-bandung-savoy-homann-dinner.jpg
+b44c43d772c1b46c0a08c0bfd763d0b5f505f88aa1427312aa58e04507a14117  assets/images/26-windrush-vessel-profile.jpg
+3cc6090a3a28ff9b5e2b6971a9539872a81400c9dbcbc7e624bafbb0d33cf073  assets/images/27-windrush-passenger-list-header.jpg
+085bdf885a1ed717b73917ae41498d6ae79694eebd0a13db36109ee4f073d79f  assets/images/28-windrush-monte-rosa.jpg

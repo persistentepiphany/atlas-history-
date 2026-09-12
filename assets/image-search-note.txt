@@ -1,0 +1,5 @@
+Image discovery note — 12 September 2026
+
+Image-search results surfaced three relevant Library of Congress March on Washington images and a Wikimedia Commons image titled “1963 march on washington.jpg.” Two already source-screened Library of Congress candidates could not be downloaded from the sandbox because the Library’s image CDN returned HTTP 403 to curl. Their source records remain in ASSET_MANIFEST.md. The downloaded-search thumbnails are not treated as licensed substitutes unless a source record and rights statement are retained.
+
+The current bundle contains 25 successfully downloaded historical image assets. Follow-up retrieval is limited to source records that disclose a reusable status; ordinary news imagery remains excluded.
