@@ -419,7 +419,7 @@ class Component extends DCLogic {
     const q = s.query.trim().toLowerCase();
     const on = 'rgba(235,230,220,0.85)', off = 'rgba(235,230,220,0.4)';
     const clusters = cat.clusters.filter(k => (!s.country || k.country === s.country) && (!s.decade || k.date.slice(0, 3) + '0s' === s.decade) && (!q || k.label.toLowerCase().includes(q) || k.date.includes(q)))
-      .map(k => ({ id: k.id, label: k.label, meta: k.event ? k.date : k.date + '  ·  ' + k.pageCount + ' pages, not yet harvested', thumb: k.thumb || BLANK, cursor: k.event ? 'pointer' : 'default', opacity: k.event ? 1 : 0.45, onClick: e => { e.stopPropagation(); this.openCluster(k); } }));
+      .map(k => ({ id: k.id, label: k.label, meta: k.event ? k.date : k.archive ? k.date + '  ·  ' + k.archive.title : k.date + '  ·  rights review', thumb: k.thumb || BLANK, cursor: k.event ? 'pointer' : 'default', opacity: k.event || k.archive ? 1 : 0.45, onClick: e => { e.stopPropagation(); this.openCluster(k); } }));
     return {
       r: this.r, planes: s.planes, markList: s.markList, onStageClick: this.onStageClick, backToCatalogue: this.backToCatalogue,
       dateLabel: sc ? sc.date : '', eventTitle: sc ? sc.title : '',

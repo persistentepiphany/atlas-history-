@@ -3,3 +3,4 @@ raw/
 *.zip
 .DS_Store
 dist/
+*.tsbuildinfo

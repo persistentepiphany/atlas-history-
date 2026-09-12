@@ -1,7 +1,24 @@
 {
   "name": "atlas-history",
   "private": true,
+  "type": "module",
   "scripts": {
-    "walkthrough": "python3 -m http.server 5187 --directory walkthrough"
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "walkthrough": "vite --host 0.0.0.0",
+    "fetch:ia": "node --experimental-strip-types scripts/fetch-ia.ts",
+    "voices": "node --experimental-strip-types scripts/voices.ts"
+  },
+  "dependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.0"
   }
 }
