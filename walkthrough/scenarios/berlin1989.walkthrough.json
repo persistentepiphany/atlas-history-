@@ -7,16 +7,16 @@
   "seed": "assets/berlin1989/pages/b02.png",
   "voice": { "narrator": "nPczCjzI2devNBz1zQrb", "model": "eleven_multilingual_v2" },
   "segments": [
-    { "id": "title", "kind": "title", "seconds": 14, "audio": "assets/berlin1989/audio/narration.mp3", "text": "November 10, 1989. The border is open. Berliners move through the Wall as a divided city discovers, almost at once, that history has changed direction." },
-    { "id": "page", "kind": "page", "seconds": 11, "audio": "assets/berlin1989/audio/w-page.mp3", "text": "Neues Deutschland, the party's paper. One point one million copies. Read the whole page. The border is not on it." },
-    { "id": "photo", "kind": "photo", "seconds": 10, "audio": "assets/berlin1989/audio/w-photo.mp3", "text": "Column seven, below the fold, in the language of a form. Private trips abroad may be applied for without preconditions. Not one word says border." },
-    { "id": "colour", "kind": "colour", "seconds": 9, "audio": "assets/berlin1989/audio/w-colour.mp3", "text": "Let the page warm. The next morning's photograph shows a crossing. The caption says traffic." },
-    { "id": "world", "kind": "reactor", "seconds": 24, "audio": "assets/berlin1989/audio/w-world.mp3", "text": "Now step through it. 18:52, Mohrenstrasse. He reads from a page handed to him an hour earlier. Immediately, without delay.", "prompt": "East Berlin, 9 November 1989, 18:52, the international press centre on Mohrenstrasse. Guenter Schabowski at a podium reads a travel regulation from a sheet of paper under television lights. Grainy colour television, 1989 broadcast look.", "stops": [
+    { "id": "title", "kind": "title", "seconds": 9, "audio": "assets/berlin1989/audio/narration.mp3", "text": "November 10, 1989. The border is open. Berliners move through the Wall as a divided city discovers, almost at once, that history has changed direction." },
+    { "id": "page", "kind": "page", "seconds": 9, "audio": "assets/berlin1989/audio/w-page.mp3", "voice": "JBFqnCBsd6RMkjVDRZzb", "text": "Neues Deutschland, the party's paper. One point one million copies. Read the whole page. The border is not on it." },
+    { "id": "photo", "kind": "photo", "seconds": 8, "audio": "assets/berlin1989/audio/w-photo.mp3", "voice": "Xb7hH8MSUJpSbSDYk0k2", "text": "Column seven, below the fold, in the language of a form. Private trips abroad may be applied for without preconditions. Not one word says border." },
+    { "id": "colour", "kind": "colour", "seconds": 7, "audio": "assets/berlin1989/audio/w-colour.mp3", "voice": "pFZP5JQG7iQjIQuC4Bku", "text": "Let the page warm. The next morning's photograph shows a crossing. The caption says traffic." },
+    { "id": "world", "kind": "reactor", "seconds": 24, "audio": "assets/berlin1989/audio/w-world.mp3", "voice": "CwhRBWXzGAHq8TQ4Fs17", "text": "Now step through it. 18:52, Mohrenstrasse. He reads from a page handed to him an hour earlier. Immediately, without delay.", "prompt": "East Berlin, 9 November 1989, 18:52, the international press centre on Mohrenstrasse. Guenter Schabowski at a podium reads a travel regulation from a sheet of paper under television lights. Grainy colour television, 1989 broadcast look, authentic restrained motion, no captions or modern objects.", "stops": [
       { "at": 0, "label": "The podium", "prompt": "The press conference podium, Schabowski reading the regulation, journalists in the room." },
       { "at": 9, "label": "The printed regulation", "prompt": "A close view of the typed regulation, the line that says permanent departures may take place via all border crossing points." },
       { "at": 17, "label": "Bornholmer Strasse, 23:30", "prompt": "Bornholmer Strasse checkpoint at 23:30, the barrier raised, a crowd walking through into West Berlin, night, film grain." }
     ] },
-    { "id": "return", "kind": "return", "seconds": 9, "audio": "assets/berlin1989/audio/w-return.mp3", "text": "This is what the country read the morning after. A form." },
-    { "id": "end", "kind": "end", "seconds": 7, "audio": "assets/berlin1989/audio/w-end.mp3", "text": "Two mornings. The paper of record recorded nothing." }
+    { "id": "return", "kind": "return", "seconds": 7, "audio": "assets/berlin1989/audio/w-return.mp3", "voice": "onwK4e9ZLuTAKqWW03F9", "text": "This is what the country read the morning after. A form." },
+    { "id": "end", "kind": "end", "seconds": 6, "audio": "assets/berlin1989/audio/w-end.mp3", "voice": "pFZP5JQG7iQjIQuC4Bku", "text": "Two mornings. The paper of record recorded nothing." }
   ]
 }

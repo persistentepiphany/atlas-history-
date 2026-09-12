@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { HeliosModel } from '@reactor-models/helios';
 
 export interface Stop { at: number; label: string; prompt: string }
-export interface Segment { id: string; kind: 'title' | 'page' | 'photo' | 'colour' | 'reactor' | 'return' | 'end'; seconds: number; audio?: string; text: string; archive?: string; archiveText?: string; archiveSpeaker?: string; prompt?: string; stops?: Stop[] }
+export interface Segment { id: string; kind: 'title' | 'page' | 'photo' | 'colour' | 'reactor' | 'return' | 'end'; seconds: number; audio?: string; voice?: string; text: string; archive?: string; archiveAt?: number; archiveText?: string; archiveSpeaker?: string; prompt?: string; stops?: Stop[] }
 export interface WalkthroughSpec { id: string; title: string; date: string; page: string; photo: { x: number; y: number; w: number; h: number }; seed: string | null; segments: Segment[] }
 
 interface Cue { text: string; start: number; end: number }
@@ -15,7 +16,7 @@ export function cuesFor(text: string, start: number, seconds: number): Cue[] {
   return out;
 }
 
-interface ReactorState { status: 'idle' | 'opening' | 'live' | 'fallback'; sessionId: string | null; prompt: string; inputs: string[] }
+interface ReactorState { status: 'idle' | 'opening' | 'waiting' | 'conditioning' | 'generating' | 'live' | 'fallback'; sessionId: string | null; prompt: string; inputs: string[]; detail?: string }
 
 /** The room under the walkthrough. Brown noise through a low pass and a 55 hertz drone, never above minus thirty. */
 function useRoom() {
@@ -41,7 +42,7 @@ function useRoom() {
 export function Walkthrough({ spec, onClose }: { spec: WalkthroughSpec; onClose: () => void }) {
   const [index, setIndex] = useState(-1); const [elapsed, setElapsed] = useState(0); const [ready, setReady] = useState(false);
   const [reactor, setReactor] = useState<ReactorState>({ status: 'idle', sessionId: null, prompt: '', inputs: [] });
-  const [video, setVideo] = useState<string | null>(null);
+  const [video, setVideo] = useState<MediaStream | null>(null); const model = useRef<HeliosModel | null>(null); const reactorOpening = useRef(false); const videoRef = useRef<HTMLVideoElement>(null);
   const voice = useRef<HTMLAudioElement>(null); const archive = useRef<HTMLAudioElement>(null); const room = useRoom(); const t0 = useRef(0); const raf = useRef(0);
   const segment = index >= 0 ? spec.segments[index] : undefined;
 
@@ -51,46 +52,65 @@ export function Walkthrough({ spec, onClose }: { spec: WalkthroughSpec; onClose:
 
   const begin = useCallback(() => { room.start(); t0.current = performance.now(); setIndex(0); }, [room]);
 
+  const closeReactor = useCallback(() => {
+    reactorOpening.current = false; setVideo(null); const current = model.current; model.current = null;
+    if (current) void current.disconnect().catch(() => undefined);
+  }, []);
+
+  const openReactor = useCallback(async () => {
+    if (reactorOpening.current || model.current) return;
+    reactorOpening.current = true; setReactor({ status: 'opening', sessionId: null, prompt: spec.segments.find(s => s.kind === 'reactor')?.prompt ?? '', inputs: [], detail: 'Authorising Reactor' });
+    const current = new HeliosModel(); model.current = current;
+    current.on('statusChanged', status => setReactor(s => ({ ...s, status: status === 'waiting' ? 'waiting' : status === 'ready' ? 'conditioning' : s.status, sessionId: current.getSessionId() ?? s.sessionId, detail: status === 'waiting' ? 'Warming the model' : 'Preparing the newspaper image' })));
+    current.on('trackReceived', (name, _track, stream) => { if (name === 'main_video') { setVideo(stream); setReactor(s => ({ ...s, status: 'live', sessionId: current.getSessionId() ?? null, detail: 'Live Helios stream' })); } });
+    current.on('error', error => setReactor(s => ({ ...s, status: 'fallback', detail: error.message })));
+    try {
+      const tokenResponse = await fetch('/reactor/token', { method: 'POST' }); const token = await tokenResponse.json() as { jwt?: string; error?: string };
+      if (!tokenResponse.ok || !token.jwt) throw new Error(token.error || 'Reactor authorisation failed');
+      await current.connect(token.jwt); setReactor(s => ({ ...s, status: 'conditioning', sessionId: current.getSessionId() ?? null, detail: 'Uploading the source image' }));
+      const imageResponse = await fetch(publicUrl(spec.seed ?? spec.page)); if (!imageResponse.ok) throw new Error('Source image could not be loaded');
+      const image = await current.uploadFile(await imageResponse.blob(), { name: (spec.seed ?? spec.page).split('/').at(-1) ?? 'newspaper.png' });
+      const prompt = spec.segments.find(s => s.kind === 'reactor')?.prompt ?? spec.title;
+      await current.setConditioning({ image, prompt }); await current.setImageStrength({ image_strength: .9 }); await current.setSrScale({ sr_scale: 'off' });
+      setReactor(s => ({ ...s, status: 'generating', detail: 'Generating the first frame' })); await current.start();
+      const lastError = current.getLastError(); if (lastError) throw lastError;
+    } catch (error) { setReactor(s => ({ ...s, status: 'fallback', detail: error instanceof Error ? error.message : 'Reactor unavailable' })); }
+    finally { reactorOpening.current = false; }
+  }, [spec]);
+
+  useEffect(() => { if (index === 0) void openReactor(); }, [index, openReactor]);
+  useEffect(() => { if (videoRef.current) { videoRef.current.srcObject = video; if (video) void videoRef.current.play().catch(() => undefined); } }, [video]);
+
   useEffect(() => {
     if (!segment) return;
+    let archiveTimer = 0;
     t0.current = performance.now(); setElapsed(0);
     const v = voice.current; if (v) { v.pause(); if (segment.audio) { v.src = publicUrl(segment.audio); v.currentTime = 0; void v.play().catch(() => undefined); } }
-    const a = archive.current; if (a) { a.pause(); if (segment.archive) { a.src = publicUrl(segment.archive); a.currentTime = 0; a.volume = 0.55; void a.play().catch(() => undefined); } }
+    const a = archive.current; if (a) { a.pause(); if (segment.archive) { a.src = publicUrl(segment.archive); a.currentTime = 0; a.volume = 0.55; archiveTimer = window.setTimeout(() => void a.play().catch(() => undefined), (segment.archiveAt ?? 0) * 1000); } }
     room.setDrone(segment.kind === 'page' || segment.kind === 'photo' || segment.kind === 'colour' || segment.kind === 'reactor');
-    if (segment.kind === 'reactor') {
-      setReactor({ status: 'opening', sessionId: null, prompt: segment.prompt ?? '', inputs: [] });
-      fetch('/reactor/session', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ seedUrl: publicUrl(spec.seed ?? spec.page), prompt: segment.prompt }) })
-        .then(async r => { if (!r.ok) throw new Error(String(r.status)); return r.json() as Promise<{ sessionId: string; streamUrl: string; fallbackUrl: string }>; })
-        .then(body => {
-          const probe = document.createElement('video'); probe.src = body.streamUrl; probe.muted = true;
-          const timer = setTimeout(() => { probe.src = ''; setReactor(s => ({ ...s, status: 'fallback', sessionId: body.sessionId })); setVideo(null); }, 1500);
-          probe.addEventListener('loadeddata', () => { clearTimeout(timer); setReactor(s => ({ ...s, status: 'live', sessionId: body.sessionId })); setVideo(body.streamUrl); }, { once: true });
-          void probe.play().catch(() => undefined);
-        })
-        .catch(() => setReactor(s => ({ ...s, status: 'fallback' })));
-    }
+    if (segment.kind === 'colour' || segment.kind === 'reactor') void openReactor();
     const tick = () => { const e = (performance.now() - t0.current) / 1000; setElapsed(e); if (e >= segment.seconds) { setIndex(i => i + 1); return; } raf.current = requestAnimationFrame(tick); };
     raf.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf.current);
-  }, [segment, room, spec.seed, spec.page]);
+    return () => { cancelAnimationFrame(raf.current); clearTimeout(archiveTimer); a?.pause(); };
+  }, [segment, room, openReactor]);
 
   const stop = useMemo(() => segment?.stops?.filter(s => s.at <= elapsed).at(-1), [segment, elapsed]);
   useEffect(() => {
-    if (!stop || !reactor.sessionId || reactor.inputs.includes(stop.prompt)) return;
+    if (!stop || !model.current || reactor.inputs.includes(stop.prompt)) return;
     setReactor(s => ({ ...s, inputs: [...s.inputs, stop.prompt] }));
-    void fetch('/reactor/session/' + reactor.sessionId + '/input', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ prompt: stop.prompt }) }).catch(() => undefined);
-  }, [stop, reactor.sessionId, reactor.inputs]);
+    void model.current.setPrompt({ prompt: stop.prompt });
+  }, [stop, reactor.inputs]);
 
   useEffect(() => {
-    if (index >= spec.segments.length) { room.stop(); if (reactor.sessionId) void fetch('/reactor/session/' + reactor.sessionId, { method: 'DELETE' }).catch(() => undefined); const t = setTimeout(onClose, 1800); return () => clearTimeout(t); }
-  }, [index, spec.segments.length, onClose, room, reactor.sessionId]);
+    if (index >= spec.segments.length) { room.stop(); closeReactor(); const t = setTimeout(onClose, 1800); return () => clearTimeout(t); }
+  }, [index, spec.segments.length, onClose, room, closeReactor]);
 
-  useEffect(() => { const key = (e: KeyboardEvent) => { if (e.key === 'Escape') { room.stop(); onClose(); } }; window.addEventListener('keydown', key); return () => window.removeEventListener('keydown', key); }, [onClose, room]);
+  useEffect(() => { const key = (e: KeyboardEvent) => { if (e.key === 'Escape') { room.stop(); closeReactor(); onClose(); } }; window.addEventListener('keydown', key); return () => { window.removeEventListener('keydown', key); closeReactor(); }; }, [onClose, room, closeReactor]);
 
   const start = index >= 0 ? spec.segments.slice(0, index).reduce((n, s) => n + s.seconds, 0) : 0; const now = start + elapsed;
   const cues = useMemo(() => { let t = 0; const out: Cue[] = []; for (const s of spec.segments) { out.push(...cuesFor(s.text, t + 0.3, s.seconds - 0.6)); t += s.seconds; } return out; }, [spec.segments]);
   const cue = cues.find(c => now >= c.start && now < c.end);
-  const archiveCue = segment?.archiveText && elapsed > 1.5 && elapsed < 9 ? segment.archiveText : null;
+  const archiveAt = segment?.archiveAt ?? 0; const archiveCue = segment?.archiveText && elapsed > archiveAt && elapsed < archiveAt + 7.5 ? segment.archiveText : null;
 
   const kind = segment?.kind ?? (index < 0 ? 'title' : 'end'); const done = index >= spec.segments.length;
   const p = spec.photo; const cx = (p.x + p.w / 2) * 100, cy = (p.y + p.h / 2) * 100;
@@ -104,9 +124,8 @@ export function Walkthrough({ spec, onClose }: { spec: WalkthroughSpec; onClose:
       <div className="walk-stage">
         <img className="walk-page" src={publicUrl(spec.page)} alt="" draggable={false} style={pageStyle} />
         <div className="walk-photo" style={{ opacity: inPhoto ? 1 : 0, transform: `scale(${photoScale})` }}>
-          {video && inWorld ? <video className="walk-video" src={video} autoPlay muted={false} playsInline /> : (
-            <img src={publicUrl(spec.seed ?? spec.page)} alt="" draggable={false} className={`walk-crop ${colour ? 'walk-crop--colour' : ''} ${inWorld ? 'walk-crop--world' : ''}`} />
-          )}
+          <img src={publicUrl(spec.seed ?? spec.page)} alt="" draggable={false} className={`walk-crop ${colour ? 'walk-crop--colour' : ''} ${inWorld ? 'walk-crop--world' : ''}`} />
+          {video && <video ref={videoRef} className="walk-video" autoPlay muted playsInline style={{ opacity: inWorld && reactor.status === 'live' ? 1 : 0 }} />}
           <div className="walk-scan" style={{ opacity: inWorld ? 0.45 : 0 }} />
         </div>
         <div className="walk-veil" style={{ opacity: kind === 'title' || kind === 'end' || done || index < 0 ? 1 : 0 }} />
@@ -120,17 +139,17 @@ export function Walkthrough({ spec, onClose }: { spec: WalkthroughSpec; onClose:
       {index < 0 && <button className="walk-begin" onClick={begin} disabled={!ready}>{ready ? 'Begin the walkthrough' : 'Preparing the page'}</button>}
 
       <div className="walk-reactor" style={{ opacity: inWorld ? 1 : 0 }}>
-        <span>Reactor · {reactor.status === 'live' ? 'live stream' : reactor.status === 'fallback' ? 'fallback picture' : 'opening session'}{reactor.sessionId ? ' · ' + reactor.sessionId.slice(0, 8) : ''}</span>
+        <span className={reactor.status !== 'live' && reactor.status !== 'fallback' ? 'walk-reactor-loading' : ''}>Reactor · {reactor.status === 'live' ? 'live Helios stream' : reactor.status === 'fallback' ? `source image fallback${reactor.detail ? ' · ' + reactor.detail : ''}` : reactor.detail ?? 'loading animated world'}{reactor.sessionId ? ' · ' + reactor.sessionId.slice(0, 8) : ''}</span>
         <b>{stop?.label ?? ''}</b>
         <p>{stop?.prompt ?? reactor.prompt}</p>
       </div>
 
       <div className="walk-lanes">
         <div className="walk-dialogue" style={{ opacity: archiveCue ? 1 : 0 }}>{segment?.archiveSpeaker && <i>{segment.archiveSpeaker}</i>}{archiveCue}</div>
-        <div className="walk-narrator" style={{ opacity: cue ? 1 : 0 }}>{cue?.text}</div>
+        <div className="walk-narrator" style={{ opacity: cue ? 1 : 0 }}>{cue && <span key={cue.start} className="walk-typewriter">{cue.text}</span>}</div>
       </div>
 
-      <div className="walk-hud"><span>{Math.floor(now / 60)}:{String(Math.floor(now % 60)).padStart(2, '0')}</span><span>{segment?.id ?? (done ? 'end' : 'ready')}</span><button onClick={() => { room.stop(); onClose(); }}>Close</button></div>
+      <div className="walk-hud"><span>{Math.floor(now / 60)}:{String(Math.floor(now % 60)).padStart(2, '0')}</span><span>{segment?.id ?? (done ? 'end' : 'ready')}</span><button onClick={() => { room.stop(); closeReactor(); onClose(); }}>Close</button></div>
       <audio ref={voice} preload="auto" /><audio ref={archive} preload="auto" />
     </section>
   );

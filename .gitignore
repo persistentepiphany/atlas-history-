@@ -4,3 +4,9 @@ raw/
 .DS_Store
 dist/
 *.tsbuildinfo
+.env
+.env.*
+!.env.example
+artifacts/apollo-frames/
+artifacts/debug-home.png
+artifacts/*.mov

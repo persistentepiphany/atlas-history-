@@ -10,16 +10,21 @@
     "fetch:ia": "node --experimental-strip-types scripts/fetch-ia.ts",
     "voices": "node --experimental-strip-types scripts/voices.ts",
     "voices:walkthrough": "node --experimental-strip-types scripts/walkthrough-voices.ts",
+    "capture:apollo": "node scripts/capture-apollo.mjs",
+    "record:apollo": "node scripts/record-apollo.mjs",
     "reactor": "node --experimental-strip-types typescript-handoff/mock-server/reactor.ts"
   },
   "dependencies": {
+    "@reactor-models/helios": "^1.0.1",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },
   "devDependencies": {
+    "@types/node": "^22.20.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.1",
+    "playwright-core": "^1.63.0",
     "typescript": "^7.0.2",
     "vite": "^8.3.0"
   }

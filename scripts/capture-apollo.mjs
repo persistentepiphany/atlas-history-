@@ -1,0 +1,23 @@
+import { mkdir } from 'node:fs/promises';
+import { chromium } from 'playwright-core';
+
+const out = new URL('../artifacts/', import.meta.url); await mkdir(out, { recursive: true });
+const headless = process.env.HEADFUL !== '1';
+const browser = await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless, args: ['--window-position=0,0', '--window-size=1440,900', '--autoplay-policy=no-user-gesture-required'] });
+const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
+await page.goto('http://127.0.0.1:5174/', { waitUntil: 'networkidle' });
+await page.getByRole('button', { name: /Man walks on the Moon/i }).click();
+await page.waitForSelector('.reader');
+await page.screenshot({ path: new URL('apollo-reader.png', out).pathname });
+await page.locator('.play').click(); await page.waitForSelector('.walk-begin');
+await page.screenshot({ path: new URL('apollo-ready.png', out).pathname });
+if (!headless) await page.waitForTimeout(4000);
+await page.locator('.walk-begin').click();
+await page.waitForTimeout(1500); await page.screenshot({ path: new URL('apollo-title.png', out).pathname });
+await page.waitForTimeout(8500); await page.screenshot({ path: new URL('apollo-page-typewriter.png', out).pathname });
+await page.waitForTimeout(9000); await page.screenshot({ path: new URL('apollo-photo.png', out).pathname });
+await page.waitForTimeout(7500); await page.screenshot({ path: new URL('apollo-reactor-loading.png', out).pathname });
+await page.waitForTimeout(17500); await page.screenshot({ path: new URL('apollo-reactor-world.png', out).pathname });
+const status = await page.locator('.walk-reactor span').textContent().catch(() => 'missing'); console.log('Reactor UI:', status);
+if (!headless) await page.waitForTimeout(28000);
+await browser.close();

@@ -9,24 +9,28 @@ import { fileURLToPath } from 'node:url';
  * generate what changed. The key is read from the environment and is never written anywhere.
  */
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const key = process.env.ELEVENLABS_API_KEY;
+const localEnv = await readFile(join(root, '.env'), 'utf8').then(text => Object.fromEntries(text.split(/\r?\n/).map(line => {
+  const i = line.indexOf('='); return i < 0 ? null : [line.slice(0, i).trim(), line.slice(i + 1).trim()];
+}).filter(Boolean) as [string, string][])).catch(() => ({}));
+const key = process.env.ELEVENLABS_API_KEY || localEnv.ELEVENLABS_API_KEY;
 if (!key) throw new Error('ELEVENLABS_API_KEY is required');
 const event = process.argv[2] ?? 'apollo11';
-const spec = JSON.parse(await readFile(join(root, 'walkthrough', 'scenarios', event + '.walkthrough.json'), 'utf8')) as { voice: { narrator: string; model: string }; segments: { id: string; audio?: string; text: string }[] };
+const spec = JSON.parse(await readFile(join(root, 'walkthrough', 'scenarios', event + '.walkthrough.json'), 'utf8')) as { voice: { narrator: string; model: string }; segments: { id: string; audio?: string; voice?: string; text: string }[] };
 
 for (const segment of spec.segments) {
   if (!segment.audio || !segment.audio.includes('/w-')) continue;
   const output = join(root, 'walkthrough', segment.audio); const manifestPath = output.replace(/\.mp3$/, '.json');
-  const hash = createHash('sha256').update(spec.voice.narrator + '\n' + spec.voice.model + '\n' + segment.text).digest('hex');
+  const voiceId = segment.voice ?? spec.voice.narrator;
+  const hash = createHash('sha256').update(voiceId + '\n' + spec.voice.model + '\n' + segment.text).digest('hex');
   const previous = await readFile(manifestPath, 'utf8').then(JSON.parse).catch(() => null);
   if (previous?.hash === hash) { console.log('Unchanged ' + segment.id); continue; }
-  const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/' + spec.voice.narrator + '?output_format=mp3_44100_128', {
+  const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/' + voiceId + '?output_format=mp3_44100_128', {
     method: 'POST', headers: { 'content-type': 'application/json', 'xi-api-key': key },
-    body: JSON.stringify({ text: segment.text, model_id: spec.voice.model, voice_settings: { stability: 0.62, similarity_boost: 0.8, style: 0.25, use_speaker_boost: true } }),
+    body: JSON.stringify({ text: segment.text, model_id: spec.voice.model, voice_settings: { stability: 0.62, similarity_boost: 0.8, style: 0.18, use_speaker_boost: true, speed: 1.1 } }),
   });
   if (!response.ok) throw new Error(segment.id + ' failed with ' + response.status + ' ' + await response.text());
   await mkdir(dirname(output), { recursive: true });
   await writeFile(output, Buffer.from(await response.arrayBuffer()));
-  await writeFile(manifestPath, JSON.stringify({ hash, model: spec.voice.model, voiceId: spec.voice.narrator, text: segment.text }, null, 2) + '\n');
+  await writeFile(manifestPath, JSON.stringify({ hash, model: spec.voice.model, voiceId, text: segment.text }, null, 2) + '\n');
   console.log('Generated ' + segment.id);
 }
