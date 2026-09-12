@@ -11,7 +11,7 @@ export function Hub({ cluster, resolved, visible, onSelect }: { cluster: Cluster
   useEffect(() => {
     if (!el.current) return;
     const viewer = OpenSeadragon({ element: el.current, showNavigationControl: false, showNavigator: false, animationTime: 2.4, springStiffness: 3, visibilityRatio: 1, gestureSettingsMouse: { clickToZoom: false } });
-    cluster.pages.forEach((p, i) => viewer.addTiledImage({ tileSource: p.thumb.replace(/\.(png|jpg)$/, '.dzi'), x: i * 1.12, y: 0, width: 1 }));
+    cluster.pages.forEach((p, i) => viewer.addTiledImage({ tileSource: { type: 'image', url: '/' + p.thumb }, x: i * 1.12, y: 0, width: 1 }));
     viewer.addHandler('canvas-click', (e) => {
       const point = viewer.viewport.pointFromPixel(e.position); const idx = Math.floor(point.x / 1.12); const page = cluster.pages[idx]; if (!page) return;
       const b = viewer.viewport.getBounds(); onSelect({ bounds: { x: b.x, y: b.y, width: b.width, height: b.height }, pageId: page.id });

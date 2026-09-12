@@ -14,20 +14,21 @@ export class FixtureCatalogueClient implements CatalogueClient {
   async getManifest(id: string): Promise<Manifest> { return { event: id, assets: [] }; }
 }
 
-const EVENTS = ['apollo11', 'berlin1989'] as const;
-
+/** Events are listed by scenarios/index.json. Any scenario file can also be opened directly by id, which is how a new event is checked before it is listed. */
 export class LocalEventClient implements CatalogueClient {
-  private base = '/assets/events/';
+  private base = '/scenarios/';
+  private ids: Promise<string[]> | null = null;
+  listIds() { return (this.ids ??= fetch(this.base + 'index.json').then((r) => (r.ok ? r.json() : [])).then((j: { events?: string[] }) => j.events ?? [])); }
   async listClusters(): Promise<Cluster[]> {
     const out: Cluster[] = [];
-    for (const id of EVENTS) {
+    for (const id of await this.listIds()) {
       const sc = await this.getScenario(id);
       out.push({ id, label: sc.title, date: sc.date, eventId: id, pages: Object.entries(sc.pages).filter(([, p]) => p.hub).map(([pid, p]) => ({ id: pid, title: p.label, thumb: p.src })) });
     }
     return out;
   }
-  getScenario(id: string) { return loadScenario(this.base + id + '/scenario.json'); }
-  getManifest(id: string) { return loadManifest(this.base + id + '/manifest.json'); }
+  getScenario(id: string) { return loadScenario(this.base + id + '.json'); }
+  getManifest(id: string) { return loadManifest('/assets/' + id + '/manifest.json'); }
 }
 
 export class CompositeClient implements CatalogueClient {

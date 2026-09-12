@@ -14,12 +14,13 @@ export function createSheet(sc: Scenario, handKeyframes: unknown): { sheet: IShe
   const project = getProject('front-pages-' + sc.id, handKeyframes ? { state: handKeyframes as never } : undefined);
   const sheet = project.sheet(sc.id);
   const n = (v: number, range: [number, number] = [-100, 100]) => types.number(v, { range });
+  const again = { reconfigure: true } as const;
   const objects: SheetObjects = {
-    camera: sheet.object('camera', { x: n(sc.hubCamera.x), y: n(sc.hubCamera.y), z: n(sc.hubCamera.z, [0.01, 100]), fov: n(35, [10, 90]) }),
-    focus: sheet.object('focus', { x: n(sc.hubCamera.x), y: n(sc.hubCamera.y), radius: n(1, [0, 1]), softness: n(0.15, [0, 1]) }),
-    post: sheet.object('post', { grain: n(0.04, [0, 1]), vignette: n(0.15, [0, 1]), aberration: n(0, [0, 0.01]) }),
-    warmth: sheet.object('warmth', { t: n(0, [0, 1]) }), letterbox: sheet.object('letterbox', { amount: n(0, [0, 1]) }),
-    ghost: sheet.object('ghost', { opacity: n(0, [0, 0.35]), scale: n(1.05, [0.9, 1.1]) }), world: sheet.object('world', { mix: n(0, [0, 1]) }),
+    camera: sheet.object('camera', { x: n(sc.hubCamera.x), y: n(sc.hubCamera.y), z: n(sc.hubCamera.z, [0.01, 100]), fov: n(35, [10, 90]) }, again),
+    focus: sheet.object('focus', { x: n(sc.hubCamera.x), y: n(sc.hubCamera.y), radius: n(1, [0, 1]), softness: n(0.15, [0, 1]) }, again),
+    post: sheet.object('post', { grain: n(0.04, [0, 1]), vignette: n(0.15, [0, 1]), aberration: n(0, [0, 0.01]) }, again),
+    warmth: sheet.object('warmth', { t: n(0, [0, 1]) }, again), letterbox: sheet.object('letterbox', { amount: n(0, [0, 1]) }, again),
+    ghost: sheet.object('ghost', { opacity: n(0, [0, 0.35]), scale: n(1.05, [0.9, 1.1]) }, again), world: sheet.object('world', { mix: n(0, [0, 1]) }, again),
   };
   return { sheet, objects };
 }

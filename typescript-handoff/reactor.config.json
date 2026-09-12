@@ -1,0 +1,9 @@
+{
+  "defaultModel": "reactor/lingbot-world-2",
+  "firstFrameTimeoutMs": 1500,
+  "stopCrossfadeMs": 1200,
+  "audioLeadMs": 250,
+  "maxLookOffset": 0.05,
+  "preferFallback": true,
+  "returnTailMs": 1500
+}

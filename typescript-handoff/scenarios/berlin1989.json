@@ -77,12 +77,85 @@
   "layer": "generated"
  },
  "world": {
-  "seed": null,
+  "fallback": "video/r02.mp4",
+  "objective": "Find the sentence that opened the border.",
+  "treatment": "flash",
   "label": "R02 fallback world",
   "source": "Placeholder, generated from B05",
   "layer": "generated",
-  "objective": "Find the sentence that opened the border.",
-  "animate": "room"
+  "stops": [
+   {
+    "t": 100,
+    "label": "The podium",
+    "seed": "images/b05.png",
+    "prompt": "Press conference room on Mohrenstrasse, East Berlin, 18:52, East German television still, flat studio light on a long table and a curtain. No text, no signage, no logos.",
+    "negative": "text, signage, lettering, logos, watermark, modern clothing, modern vehicles",
+    "camera": [
+     {
+      "hold": 2
+     },
+     {
+      "dolly": 0.08,
+      "seconds": 6
+     },
+     {
+      "pan": 0.04,
+      "seconds": 5
+     }
+    ],
+    "hold": 4,
+    "voice": "W01-07",
+    "captureFrame": true,
+    "text": "18:52, Mohrenstraße. He reads from a page handed to him an hour earlier."
+   },
+   {
+    "t": 115,
+    "label": "The printed regulation",
+    "seed": "images/regulation-crop.png",
+    "prompt": "A typed page on a desk under a lamp, late evening, 35 mm photograph, warm light on paper and a resting hand. No text, no signage, no legible letters.",
+    "negative": "text, signage, lettering, logos, watermark, modern clothing, modern vehicles",
+    "camera": [
+     {
+      "hold": 1.5
+     },
+     {
+      "dolly": 0.1,
+      "seconds": 6
+     },
+     {
+      "tilt": -0.03,
+      "seconds": 4
+     }
+    ],
+    "hold": 4,
+    "voice": "W01-08",
+    "text": "Private trips abroad may be applied for without preconditions. He reaches the last line. Immediately, without delay."
+   },
+   {
+    "t": 130,
+    "label": "Bornholmer Straße, 23:30",
+    "seed": "images/asche-bridge.png",
+    "prompt": "Boesebruecke at Bornholmer Strasse, 23:30, flash photograph, a crowd at a raised barrier, sodium lamps and cold breath in the dark. No text, no signage, no flags.",
+    "negative": "text, signage, lettering, logos, watermark, modern clothing, modern vehicles",
+    "camera": [
+     {
+      "hold": 1
+     },
+     {
+      "pan": 0.06,
+      "seconds": 5
+     },
+     {
+      "dolly": 0.12,
+      "seconds": 8
+     }
+    ],
+    "hold": 5,
+    "voice": "W01-09",
+    "captureFrame": true,
+    "text": "Bornholmer Straße, 23:30. The barrier is raised."
+   }
+  ]
  },
  "hubCamera": {
   "x": 0.5,
@@ -125,26 +198,6 @@
   }
  },
  "audio": {},
- "stops": [
-  {
-   "t": 100,
-   "label": "The podium",
-   "voice": "W01-07",
-   "text": "18:52, Mohrenstraße. He reads from a page handed to him an hour earlier."
-  },
-  {
-   "t": 115,
-   "label": "The printed regulation",
-   "voice": "W01-08",
-   "text": "Private trips abroad may be applied for without preconditions. He reaches the last line. Immediately, without delay."
-  },
-  {
-   "t": 130,
-   "label": "Bornholmer Straße, 23:30",
-   "voice": "W01-09",
-   "text": "Bornholmer Straße, 23:30. The barrier is raised."
-  }
- ],
  "beats": [
   {
    "t": 0,

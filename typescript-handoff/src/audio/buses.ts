@@ -1,6 +1,6 @@
 import * as Tone from 'tone';
 
-export interface Buses { voice: Tone.Gain; archive: Tone.Gain; bed: Tone.Gain; foley: Tone.Gain; bedPlayer: Tone.Player; follower: Tone.Follower }
+export interface Buses { voice: Tone.Gain; archive: Tone.Gain; bed: Tone.Gain; foley: Tone.Gain; bedPlayer: Tone.Player; follower: Tone.Meter }
 
 export function createBuses(bedUrl: string): Buses {
   const voice = new Tone.Gain(1).toDestination();
@@ -9,9 +9,9 @@ export function createBuses(bedUrl: string): Buses {
   const archiveHp = new Tone.Filter(120, 'highpass').connect(archive);
   const bed = new Tone.Gain(Tone.dbToGain(-30)).toDestination();
   const bedLp = new Tone.Filter(1800, 'lowpass').connect(bed);
-  const bedPlayer = new Tone.Player({ url: bedUrl, loop: true }).connect(bedLp);
+  const bedPlayer = new Tone.Player({ url: bedUrl, loop: true, onerror: () => undefined }).connect(bedLp);
   const foley = new Tone.Gain(Tone.dbToGain(-12)).toDestination();
-  const follower = new Tone.Follower(0.05);
+  const follower = new Tone.Meter({ smoothing: 0.9, normalRange: true });
   voiceComp.connect(follower); archiveHp.connect(follower);
   (voiceComp as unknown as { busInput: Tone.ToneAudioNode }).busInput = voiceComp;
   return { voice: voiceComp as unknown as Tone.Gain, archive: archiveHp as unknown as Tone.Gain, bed, foley, bedPlayer, follower };

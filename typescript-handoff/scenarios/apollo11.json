@@ -72,12 +72,112 @@
   "layer": "generated"
  },
  "world": {
-  "seed": "assets/apollo11/images/a04.png",
+  "fallback": "video/r01.mp4",
+  "objective": "Follow this picture home.",
+  "treatment": "tv",
   "label": "R01 fallback world",
   "source": "Placeholder, generated from A04 crop",
   "layer": "generated",
-  "objective": "Follow this picture home.",
-  "animate": "tv"
+  "stops": [
+   {
+    "t": 95,
+    "label": "The camera on the lander",
+    "seed": "images/a04.png",
+    "prompt": "Sea of Tranquility, 02:56 universal time, slow scan television frame, hard low sun on grey dust, a lander leg at the edge. No text, no signage, no flags.",
+    "negative": "text, signage, lettering, logos, watermark, modern clothing, modern vehicles",
+    "camera": [
+     {
+      "hold": 2
+     },
+     {
+      "dolly": 0.12,
+      "seconds": 6
+     },
+     {
+      "pan": 0.05,
+      "seconds": 4
+     }
+    ],
+    "hold": 4,
+    "archive": "N02",
+    "voice": "V01-07",
+    "captureFrame": true,
+    "text": "Tranquility Base, 02:56 universal time. A television camera on the leg of the lander."
+   },
+   {
+    "t": 108,
+    "label": "Honeysuckle Creek",
+    "seed": "images/honeysuckle-1969.png",
+    "prompt": "Honeysuckle Creek tracking station in the Australian bush, 12:56 in the afternoon, 16 mm colour film, overcast winter light on a white dish. No text, no signage, no vehicles.",
+    "negative": "text, signage, lettering, logos, watermark, modern clothing, modern vehicles",
+    "camera": [
+     {
+      "hold": 1.5
+     },
+     {
+      "tilt": 0.04,
+      "seconds": 4
+     },
+     {
+      "dolly": 0.08,
+      "seconds": 6
+     }
+    ],
+    "hold": 4,
+    "archive": "N03",
+    "voice": "V01-08",
+    "text": "Honeysuckle Creek, outside Canberra, 12:56 in the afternoon. The first eight minutes came through this dish."
+   },
+   {
+    "t": 121,
+    "label": "Houston",
+    "seed": "images/houston-frame.png",
+    "prompt": "Mission Control Houston, 21:56 local time, television monitor wall in a dim room, cathode glow across rows of consoles, cigarette haze. No text, no signage, no faces in focus.",
+    "negative": "text, signage, lettering, logos, watermark, modern clothing, modern vehicles",
+    "camera": [
+     {
+      "hold": 1
+     },
+     {
+      "pan": -0.06,
+      "seconds": 5
+     },
+     {
+      "dolly": 0.1,
+      "seconds": 6
+     }
+    ],
+    "hold": 4,
+    "archive": "N04",
+    "voice": "V01-09",
+    "text": "Houston, the same minute. The picture is converted for broadcast and loses half its lines."
+   },
+   {
+    "t": 134,
+    "label": "The wire desk",
+    "seed": "images/wire-room.png",
+    "prompt": "A newspaper wire room, early evening, press photograph, fluorescent light on teleprinters and a facsimile drum, paper on the floor. No text, no signage, no readable pages.",
+    "negative": "text, signage, lettering, logos, watermark, modern clothing, modern vehicles",
+    "camera": [
+     {
+      "hold": 2
+     },
+     {
+      "orbit": 0.05,
+      "seconds": 6
+     },
+     {
+      "dolly": 0.06,
+      "seconds": 4
+     }
+    ],
+    "hold": 4,
+    "archive": "N05",
+    "voice": "V01-10",
+    "captureFrame": true,
+    "text": "A wire desk, early evening. A frame is pulled from the broadcast and sent to print."
+   }
+  ]
  },
  "hubCamera": {
   "x": 0.39,
@@ -153,36 +253,6 @@
    "source": "Internet Archive, Apollo 11 audio highlights, 31:30"
   }
  },
- "stops": [
-  {
-   "t": 95,
-   "label": "The camera on the lander",
-   "audio": "N02",
-   "voice": "V01-07",
-   "text": "Tranquility Base, 02:56 universal time. A television camera on the leg of the lander."
-  },
-  {
-   "t": 108,
-   "label": "Honeysuckle Creek",
-   "audio": "N03",
-   "voice": "V01-08",
-   "text": "Honeysuckle Creek, outside Canberra, 12:56 in the afternoon. The first eight minutes came through this dish."
-  },
-  {
-   "t": 121,
-   "label": "Houston",
-   "audio": "N04",
-   "voice": "V01-09",
-   "text": "Houston, the same minute. The picture is converted for broadcast and loses half its lines."
-  },
-  {
-   "t": 134,
-   "label": "The wire desk",
-   "audio": "N05",
-   "voice": "V01-10",
-   "text": "A wire desk, early evening. A frame is pulled from the broadcast and sent to print."
-  }
- ],
  "beats": [
   {
    "t": 0,

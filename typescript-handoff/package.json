@@ -1,0 +1,53 @@
+{
+  "name": "atlas-history-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview",
+    "server": "tsx server/reactor.ts",
+    "prerender": "tsx scripts/prerender.ts",
+    "shotlist": "tsx scripts/shotlist.ts",
+    "assets": "tsx scripts/prepare-assets.ts",
+    "verify": "tsx scripts/verify.ts",
+    "seeds": "tsx scripts/seeds.ts"
+  },
+  "dependencies": {
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
+    "@react-three/postprocessing": "^2.19.1",
+    "@reactor-team/js-sdk": "^3.0.2",
+    "@theatre/core": "^0.7.2",
+    "@theatre/r3f": "^0.7.2",
+    "@theatre/studio": "^0.7.2",
+    "framer-motion": "^13.2.0",
+    "openseadragon": "^6.1.1",
+    "postprocessing": "^6.39.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.186.0",
+    "tone": "^15.1.22",
+    "zod": "^3.25.76",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@types/node": "^22.20.2",
+    "@types/openseadragon": "^5.0.2",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@types/three": "^0.186.0",
+    "autoprefixer": "^10.5.6",
+    "execa": "^10.0.1",
+    "pdfjs-dist": "^6.3.289",
+    "playwright": "1.58",
+    "postcss": "^8.5.28",
+    "sharp": "^0.35.4",
+    "tailwindcss": "^3.4.19",
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.0"
+  }
+}
