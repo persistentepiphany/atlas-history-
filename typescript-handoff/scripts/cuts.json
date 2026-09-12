@@ -1,0 +1,28 @@
+{
+  "note": "Offsets in seconds into Apollo11Highlights.mp3. Values are to be confirmed by listening once; the reel was not in the raw pack for this pass.",
+  "N01": {
+    "start": 0,
+    "end": 12,
+    "passage": "Tranquility Base here. The Eagle has landed."
+  },
+  "N02": {
+    "start": 0,
+    "end": 12,
+    "passage": "Landing"
+  },
+  "N03": {
+    "start": 0,
+    "end": 12,
+    "passage": "EVA start"
+  },
+  "N04": {
+    "start": 0,
+    "end": 12,
+    "passage": "First step"
+  },
+  "N05": {
+    "start": 0,
+    "end": 12,
+    "passage": "Flag and plaque"
+  }
+}

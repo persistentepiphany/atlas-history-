@@ -1,0 +1,633 @@
+{
+ "id": "apollo11",
+ "title": "Apollo 11",
+ "date": "Monday 21 July 1969",
+ "readPage": "A01",
+ "columnX": 0.506,
+ "lineHeight": 0.038,
+ "pages": {
+  "A01": {
+   "src": "assets/apollo11/pages/a01.png",
+   "x": 0,
+   "y": 0,
+   "w": 1,
+   "h": 2.167,
+   "label": "Canberra Times, 22 Jul 1969",
+   "short": "Canberra Times",
+   "source": "Trove, National Library of Australia",
+   "layer": "deterministic",
+   "words": "assets/apollo11/pages/a01.words.json",
+   "lines": "assets/apollo11/pages/a01.lines.json",
+   "hub": true,
+   "selectable": true
+  },
+  "A02": {
+   "src": "assets/apollo11/pages/a02.png",
+   "x": -1.343,
+   "y": 0,
+   "w": 1.223,
+   "h": 1.4,
+   "label": "Washington Post A1, 21 Jul 1969",
+   "short": "Washington Post",
+   "source": "Internet Archive, ProQuest scan",
+   "layer": "deterministic",
+   "hub": true
+  },
+  "A03": {
+   "src": "assets/apollo11/pages/a03.png",
+   "x": 1.12,
+   "y": 0,
+   "w": 1,
+   "h": 1.4,
+   "label": "Los Angeles Times, 21 Jul 1969",
+   "short": "Los Angeles Times",
+   "source": "Not yet provided",
+   "layer": "deterministic",
+   "hub": true,
+   "placeholder": true
+  },
+  "A05": {
+   "src": "assets/apollo11/pages/a05.png",
+   "x": 1.12,
+   "y": 0,
+   "w": 1.067,
+   "h": 1.4,
+   "label": "Safire memo, 18 Jul 1969",
+   "short": "Safire memo",
+   "source": "National Archives, rn100-6-1-2.pdf",
+   "layer": "deterministic",
+   "words": "assets/apollo11/pages/a05.words.json",
+   "memo": true,
+   "slideFrom": 1.75
+  }
+ },
+ "ghost": {
+  "src": "assets/apollo11/images/g01.png",
+  "x": 0.05,
+  "y": 0.55,
+  "w": 0.9,
+  "h": 0.675,
+  "label": "G01 onboard photograph",
+  "source": "Placeholder, mid grey frame",
+  "layer": "generated"
+ },
+ "world": {
+  "seed": "assets/apollo11/images/a04.png",
+  "label": "R01 fallback world",
+  "source": "Placeholder, generated from A04 crop",
+  "layer": "generated",
+  "objective": "Follow this picture home.",
+  "animate": "tv"
+ },
+ "hubCamera": {
+  "x": 0.39,
+  "y": 0.85,
+  "z": 7
+ },
+ "marks": [
+  {
+   "page": "A02",
+   "x": 0.015,
+   "y": 0.08,
+   "w": 0.715,
+   "h": 0.51,
+   "label": "Television frame",
+   "source": "Washington Post A1, Internet Archive",
+   "from": 145
+  },
+  {
+   "page": "A01",
+   "x": 0.08,
+   "y": 0.13,
+   "w": 0.86,
+   "h": 0.11,
+   "label": "Editorial, 22 July",
+   "source": "Trove, National Library of Australia",
+   "provenanceOnly": true
+  }
+ ],
+ "align": {
+  "headline": {
+   "start": 20,
+   "end": 23,
+   "words": [
+    0,
+    3
+   ]
+  },
+  "lead": {
+   "start": 30,
+   "rate": 2.6,
+   "words": [
+    3,
+    55
+   ]
+  },
+  "memo": {
+   "start": 165.5,
+   "end": 170,
+   "page": "A05",
+   "match": "will stay on the moon to rest in peace."
+  }
+ },
+ "audio": {
+  "N01": {
+   "src": "assets/apollo11/audio/n01.mp3"
+  },
+  "N02": {
+   "src": "assets/apollo11/audio/n02.mp3"
+  },
+  "N03": {
+   "src": "assets/apollo11/audio/n03.mp3"
+  },
+  "N04": {
+   "src": "assets/apollo11/audio/n04.mp3"
+  },
+  "N05": {
+   "src": "assets/apollo11/audio/n05.mp3"
+  },
+  "JFK": {
+   "src": "https://dn711303.ca.archive.org/0/items/Apollo11AudioHighlights/Apollo11Highlights.mp3",
+   "start": 1890,
+   "label": "Kennedy, Rice University, 1962",
+   "source": "Internet Archive, Apollo 11 audio highlights, 31:30"
+  }
+ },
+ "stops": [
+  {
+   "t": 95,
+   "label": "The camera on the lander",
+   "audio": "N02",
+   "voice": "V01-07",
+   "text": "Tranquility Base, 02:56 universal time. A television camera on the leg of the lander."
+  },
+  {
+   "t": 108,
+   "label": "Honeysuckle Creek",
+   "audio": "N03",
+   "voice": "V01-08",
+   "text": "Honeysuckle Creek, outside Canberra, 12:56 in the afternoon. The first eight minutes came through this dish."
+  },
+  {
+   "t": 121,
+   "label": "Houston",
+   "audio": "N04",
+   "voice": "V01-09",
+   "text": "Houston, the same minute. The picture is converted for broadcast and loses half its lines."
+  },
+  {
+   "t": 134,
+   "label": "The wire desk",
+   "audio": "N05",
+   "voice": "V01-10",
+   "text": "A wire desk, early evening. A frame is pulled from the broadcast and sent to print."
+  }
+ ],
+ "beats": [
+  {
+   "t": 0,
+   "phase": "hub",
+   "camera": {
+    "x": 0.39,
+    "y": 0.85,
+    "z": 7,
+    "dur": 0.1
+   },
+   "focus": {
+    "radius": 1,
+    "dur": 0.1
+   },
+   "post": {
+    "grain": 0.04,
+    "vignette": 0.15,
+    "aberration": 0,
+    "dur": 0.1
+   },
+   "warmth": {
+    "v": 0,
+    "dur": 0.1
+   },
+   "letterbox": {
+    "v": 0,
+    "dur": 0.1
+   },
+   "bed": {
+    "v": 1,
+    "dur": 2
+   },
+   "voice": {
+    "id": "V01-01",
+    "text": "Monday, twenty-first of July, 1969. Three cities. Three mornings.",
+    "dur": 7
+   }
+  },
+  {
+   "t": 8,
+   "phase": "select",
+   "camera": {
+    "x": 0.5,
+    "y": 1,
+    "z": 6,
+    "dur": 5
+   },
+   "letterbox": {
+    "v": 1,
+    "dur": 1.2
+   },
+   "warmth": {
+    "v": 0.5,
+    "dur": 3
+   },
+   "planes": {
+    "A02": {
+     "o": 0,
+     "dur": 1.5
+    },
+    "A03": {
+     "o": 0,
+     "dur": 1.5
+    }
+   },
+   "foley": [
+    {
+     "id": "F01",
+     "at": 8.25
+    }
+   ],
+   "voice": {
+    "id": "V01-02",
+    "text": "Canberra. The one closest to the signal.",
+    "dur": 5
+   }
+  },
+  {
+   "t": 14,
+   "phase": "read",
+   "camera": {
+    "x": 0.5,
+    "y": 0.2,
+    "z": 3.2,
+    "dur": 3
+   },
+   "focus": {
+    "x": 0.5,
+    "y": 0.09,
+    "radius": 0.3,
+    "dur": 3
+   },
+   "post": {
+    "vignette": 0.4,
+    "dur": 3
+   },
+   "bed": {
+    "v": 1.26,
+    "dur": 2
+   }
+  },
+  {
+   "t": 20,
+   "phase": "read",
+   "focus": {
+    "x": 0.5,
+    "y": 0.4,
+    "radius": 0.3,
+    "dur": 1.4
+   },
+   "desat": {
+    "v": 0.35,
+    "dur": 1.4
+   },
+   "voice": {
+    "id": "V01-03",
+    "text": "Six hundred million. The paper is counting its own readers.",
+    "at": 23.5,
+    "dur": 6
+   }
+  },
+  {
+   "t": 30,
+   "phase": "read",
+   "track": true,
+   "camera": {
+    "z": 2.2,
+    "dur": 2
+   },
+   "focus": {
+    "radius": 0.3,
+    "dur": 2
+   }
+  },
+  {
+   "t": 50,
+   "phase": "ghost",
+   "ghost": {
+    "opacity": 0.3,
+    "scale": 1,
+    "dur": 0.8
+   },
+   "post": {
+    "grain": 0.18,
+    "dur": 0.8
+   },
+   "archive": [
+    {
+     "id": "N01",
+     "at": 49.75,
+     "until": 62
+    }
+   ],
+   "caption": {
+    "text": "Houston, Tranquility Base here. The Eagle has landed.",
+    "kind": "archive",
+    "dur": 11
+   }
+  },
+  {
+   "t": 61,
+   "phase": "ghost",
+   "ghost": {
+    "opacity": 0,
+    "scale": 0.98,
+    "dur": 1
+   },
+   "post": {
+    "grain": 0.06,
+    "dur": 1
+   }
+  },
+  {
+   "t": 62,
+   "phase": "read",
+   "camera": {
+    "x": 0.506,
+    "y": 0.9,
+    "z": 2.2,
+    "dur": 2
+   },
+   "focus": {
+    "x": 0.75,
+    "y": 0.63,
+    "radius": 0.28,
+    "dur": 1.5
+   },
+   "voice": {
+    "id": "V01-04",
+    "text": "Houston's clock says 02:56 universal time. This page says 12.56 in the afternoon. Same footstep.",
+    "dur": 9
+   }
+  },
+  {
+   "t": 72,
+   "phase": "door",
+   "camera": {
+    "x": -0.887,
+    "y": 0.469,
+    "z": 0.6,
+    "dur": 3
+   },
+   "focus": {
+    "x": -0.887,
+    "y": 0.469,
+    "radius": 0.14,
+    "dur": 3
+   },
+   "post": {
+    "aberration": 0.0009,
+    "dur": 3
+   },
+   "planes": {
+    "A02": {
+     "o": 1,
+     "dur": 1.2,
+     "at": 71
+    }
+   },
+   "bed": {
+    "v": 1.6,
+    "dur": 2
+   },
+   "foley": [
+    {
+     "id": "F04",
+     "at": 72,
+     "until": 91.5
+    }
+   ],
+   "voice": {
+    "id": "V01-05",
+    "text": "This photograph was not taken on the Moon.",
+    "dur": 7
+   },
+   "photo": {
+    "page": "A02",
+    "x": 0.015,
+    "y": 0.08,
+    "w": 0.715,
+    "h": 0.51
+   }
+  },
+  {
+   "t": 80,
+   "phase": "door",
+   "camera": {
+    "x": -0.887,
+    "y": 0.469,
+    "z": 0.15,
+    "dur": 9.5
+   },
+   "post": {
+    "grain": 0.25,
+    "dur": 8
+   },
+   "voice": {
+    "id": "V01-06",
+    "text": "It is a frame from a television signal. The film in the astronauts' cameras is still in orbit.",
+    "dur": 9
+   }
+  },
+  {
+   "t": 90,
+   "phase": "world",
+   "world": {
+    "mix": 1,
+    "dur": 2
+   },
+   "focus": {
+    "radius": 1,
+    "dur": 0.5
+   },
+   "warmth": {
+    "v": 1,
+    "dur": 2
+   },
+   "objective": {
+    "at": 92
+   }
+  },
+  {
+   "t": 145,
+   "phase": "return",
+   "world": {
+    "mix": 0,
+    "dur": 2
+   },
+   "camera": {
+    "x": -0.45,
+    "y": 0.5,
+    "z": 2.2,
+    "dur": 3
+   },
+   "focus": {
+    "x": -0.887,
+    "y": 0.469,
+    "radius": 0.3,
+    "dur": 3
+   },
+   "post": {
+    "grain": 0.08,
+    "aberration": 0,
+    "dur": 3
+   },
+   "warmth": {
+    "v": 0.5,
+    "dur": 3
+   },
+   "foley": [
+    {
+     "id": "F02",
+     "at": 147
+    }
+   ],
+   "voice": {
+    "id": "V01-11",
+    "text": "Eight minutes of this signal came through a dish outside Canberra. The paper never says so.",
+    "dur": 11
+   }
+  },
+  {
+   "t": 158,
+   "phase": "memo",
+   "planes": {
+    "A05": {
+     "o": 1,
+     "slide": 1,
+     "dur": 1.4
+    }
+   },
+   "camera": {
+    "x": 1.05,
+    "y": 0.9,
+    "z": 4,
+    "dur": 2.5
+   },
+   "focus": {
+    "x": 1.6,
+    "y": 0.5,
+    "radius": 0.5,
+    "dur": 2.5
+   },
+   "foley": [
+    {
+     "id": "F01",
+     "at": 158.2
+    }
+   ],
+   "voice": {
+    "id": "V01-12",
+    "text": "Three days earlier. A page that never printed.",
+    "dur": 6
+   },
+   "archive": [
+    {
+     "id": "JFK",
+     "at": 157.75,
+     "until": 179
+    }
+   ]
+  },
+  {
+   "t": 165,
+   "phase": "memo",
+   "camera": {
+    "x": 1.6,
+    "y": 0.41,
+    "z": 1.8,
+    "dur": 2.5
+   },
+   "focus": {
+    "x": 1.6,
+    "y": 0.4,
+    "radius": 0.3,
+    "dur": 2.5
+   },
+   "caption": {
+    "text": "V03 memo read, not yet provided. Clause highlighted on the page.",
+    "kind": "voice",
+    "dur": 0
+   }
+  },
+  {
+   "t": 175,
+   "phase": "end",
+   "camera": {
+    "x": 1,
+    "y": 0.95,
+    "z": 6,
+    "dur": 4
+   },
+   "focus": {
+    "radius": 1,
+    "dur": 2
+   },
+   "warmth": {
+    "v": 0,
+    "dur": 4
+   },
+   "letterbox": {
+    "v": 0,
+    "dur": 2
+   },
+   "post": {
+    "grain": 0.04,
+    "vignette": 0.15,
+    "dur": 4
+   },
+   "bed": {
+    "v": 0,
+    "dur": 4
+   },
+   "voice": {
+    "id": "V01-13",
+    "text": "Both were written before anyone knew which one would be true.",
+    "dur": 5
+   },
+   "caption": null
+  },
+  {
+   "t": 180,
+   "phase": "hub",
+   "camera": {
+    "x": 0.39,
+    "y": 0.85,
+    "z": 7,
+    "dur": 3
+   },
+   "planes": {
+    "A05": {
+     "o": 0,
+     "dur": 1.5
+    },
+    "A02": {
+     "o": 1,
+     "dur": 2
+    },
+    "A03": {
+     "o": 1,
+     "dur": 2,
+     "at": 181.5
+    }
+   },
+   "resolved": true
+  }
+ ]
+}

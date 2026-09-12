@@ -1,0 +1,7 @@
+{
+  "name": "atlas-history",
+  "private": true,
+  "scripts": {
+    "walkthrough": "python3 -m http.server 5187 --directory walkthrough"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "countries": ["US", "GB", "DE", "FR", "AU"],
+  "decades": ["1910s", "1920s", "1930s", "1940s", "1950s", "1960s", "1980s"],
+  "clusters": [
+    { "id": "apollo11", "date": "1969-07-21", "label": "Man walks on the Moon", "country": "US", "thumb": "assets/apollo11/pages/a02.png", "pages": ["wapo:1969-07-21:p1", "latimes:1969-07-21:p1", "canberra:1969-07-22:p1"], "event": "apollo11" },
+    { "id": "berlin1989", "date": "1989-11-10", "label": "Border opened at the Wall", "country": "DE", "thumb": "assets/berlin1989/pages/b01.png", "pages": ["nd:1989-11-10:p1", "nd:1989-11-11:p1", "tagesspiegel:1989-11-10:p1"], "event": "berlin1989" },
+    { "id": "armistice1918", "date": "1918-11-11", "label": "Armistice signed", "country": "US", "pageCount": 4 },
+    { "id": "titanic1912", "date": "1912-04-16", "label": "Titanic sinks", "country": "US", "pageCount": 5 },
+    { "id": "lindbergh1927", "date": "1927-05-22", "label": "Lindbergh lands in Paris", "country": "FR", "pageCount": 4 },
+    { "id": "crash1929", "date": "1929-10-30", "label": "Stock market collapses", "country": "US", "pageCount": 3 },
+    { "id": "hindenburg1937", "date": "1937-05-07", "label": "Hindenburg burns at Lakehurst", "country": "US", "pageCount": 3 },
+    { "id": "dday1944", "date": "1944-06-07", "label": "Allies land in Normandy", "country": "GB", "pageCount": 6 },
+    { "id": "hiroshima1945", "date": "1945-08-07", "label": "Atomic bomb dropped", "country": "US", "pageCount": 4 },
+    { "id": "everest1953", "date": "1953-06-02", "label": "Everest climbed", "country": "GB", "pageCount": 3 },
+    { "id": "sputnik1957", "date": "1957-10-05", "label": "Sputnik in orbit", "country": "AU", "pageCount": 3 },
+    { "id": "kennedy1963", "date": "1963-11-23", "label": "President shot in Dallas", "country": "US", "pageCount": 5 }
+  ]
+}

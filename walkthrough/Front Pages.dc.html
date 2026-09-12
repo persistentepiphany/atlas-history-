@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:#000;overflow:hidden;height:100%}
+a,a:hover{color:rgba(235,230,220,0.72)}
+*{box-sizing:border-box}
+</style>
+</helmet>
+<div ref="{{ r.stage }}" onClick="{{ onStageClick }}" style="position:fixed; inset:0; background:#000; overflow:hidden; font-family:'Instrument Sans', 'Helvetica Neue', Helvetica, sans-serif; font-size:13px; letter-spacing:0.04em; color:rgba(235,230,220,0.72); user-select:none; cursor:default; text-shadow:0 0 14px rgba(0,0,0,0.95), 0 1px 2px rgba(0,0,0,0.9);">
+  <div ref="{{ r.scene }}" style="position:absolute; left:0; top:0; width:0; height:0; transform-origin:0 0; will-change:transform;">
+    <sc-for list="{{ planes }}" as="p" hint-placeholder-count="0">
+      <div data-plane="{{ p.id }}" onClick="{{ p.onClick }}" onMouseEnter="{{ p.onEnter }}" onMouseLeave="{{ p.onLeave }}" style="position:absolute; left:{{ p.left }}px; top:{{ p.top }}px; width:{{ p.width }}px; height:{{ p.height }}px; opacity:0; background:#111; box-shadow:0 0 0 1px rgba(255,255,255,0.04); transition:box-shadow 0.4s;">
+        <img alt="{{ p.label }}" draggable="false" style="display:block; width:100%; height:100%; object-fit:fill; pointer-events:none;">
+      </div>
+    </sc-for>
+    <div ref="{{ r.wash }}" style="position:absolute; left:0; top:0; width:10px; height:10px; opacity:0; background:rgba(255,178,86,0.42); box-shadow:0 0 14px 8px rgba(255,178,86,0.32); mix-blend-mode:multiply; border-radius:3px; pointer-events:none;"></div>
+    <div ref="{{ r.photo }}" style="position:absolute; left:0; top:0; width:10px; height:10px; opacity:0; overflow:hidden; pointer-events:none;">
+      <img ref="{{ r.photoImg }}" alt="" draggable="false" style="position:absolute; left:0; top:0; width:100%; height:100%; object-fit:fill; transform-origin:50% 50%;">
+      <div ref="{{ r.photoScan }}" style="position:absolute; inset:0; background:repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0px, rgba(0,0,0,0.18) 1px, transparent 1px, transparent 3px); mix-blend-mode:multiply; opacity:0;"></div>
+      <div ref="{{ r.photoSweep }}" style="position:absolute; left:-30%; top:0; width:30%; height:100%; background:linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent); opacity:0;"></div>
+    </div>
+    <div ref="{{ r.translate }}" style="position:absolute; left:0; top:0; width:10px; height:10px; opacity:0; pointer-events:none; background:rgba(246,240,228,0.96); color:#1a1714; font-family:Georgia, 'Times New Roman', serif; letter-spacing:0; overflow:hidden; box-shadow:0 0 0 0.5px rgba(0,0,0,0.12);">
+      <div ref="{{ r.translateHead }}" style="font-weight:700; line-height:1.05; text-wrap:balance;"></div>
+      <div ref="{{ r.translateText }}" style="line-height:1.32; text-align:justify; hyphens:auto; text-wrap:pretty;"></div>
+      <div ref="{{ r.translateTag }}" style="position:absolute; right:0; bottom:0; font-family:'Instrument Sans', Helvetica, sans-serif; letter-spacing:0.04em; color:rgba(26,23,20,0.5); white-space:nowrap;">English rendering</div>
+    </div>
+    <img ref="{{ r.ghost }}" alt="" draggable="false" style="position:absolute; left:0; top:0; width:10px; height:10px; opacity:0; pointer-events:none; filter:grayscale(1) contrast(0.9);">
+  </div>
+  <div ref="{{ r.world }}" style="position:absolute; inset:0; background:#060504; opacity:0; pointer-events:none; overflow:hidden;">
+    <img ref="{{ r.seed }}" alt="" draggable="false" style="position:absolute; left:50%; top:50%; width:120%; transform:translate(-50%,-50%) scale(1); opacity:0.32; filter:grayscale(1) contrast(1.4) brightness(0.55);">
+    <div ref="{{ r.worldScan }}" style="position:absolute; inset:0; background:repeating-linear-gradient(0deg, rgba(0,0,0,0.22) 0px, rgba(0,0,0,0.22) 1px, transparent 1px, transparent 3px); opacity:0.6;"></div>
+    <div ref="{{ r.worldTag }}" style="position:absolute; right:32px; bottom:calc(12vh + 24px); color:rgba(235,230,220,0.35); white-space:nowrap;">Generated world stand-in. Animated placeholder.</div>
+    <div style="position:absolute; inset:0; background:radial-gradient(ellipse at 50% 55%, rgba(0,0,0,0) 30%, rgba(0,0,0,0.85) 100%);"></div>
+  </div>
+  <div ref="{{ r.focus }}" style="position:absolute; inset:0; pointer-events:none; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);"></div>
+  <div ref="{{ r.warm }}" style="position:absolute; inset:0; pointer-events:none; background:rgb(255,196,140); mix-blend-mode:multiply; opacity:0;"></div>
+  <div ref="{{ r.vig }}" style="position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.92) 100%); opacity:0.15;"></div>
+  <div ref="{{ r.grain }}" style="position:absolute; inset:-100px; pointer-events:none; opacity:0.04;"></div>
+  <div ref="{{ r.barTop }}" style="position:absolute; left:0; right:0; top:0; height:0; background:#000; pointer-events:none;"></div>
+  <div ref="{{ r.barBot }}" style="position:absolute; left:0; right:0; bottom:0; height:0; background:#000; pointer-events:none;"></div>
+
+  <div ref="{{ r.labels }}" style="position:absolute; inset:0; pointer-events:none;">
+    <sc-for list="{{ planes }}" as="p" hint-placeholder-count="0">
+      <div data-anchor="{{ p.id }}" style="position:absolute; left:0; top:0; white-space:nowrap; display:flex; flex-direction:column; align-items:center; gap:4px; opacity:0; transition:opacity 0.8s;">
+        <span>{{ p.short }}</span>
+        <span data-resolved="{{ p.id }}" style="display:none; color:rgba(255,178,86,0.85);">Resolved</span>
+      </div>
+    </sc-for>
+    <sc-for list="{{ markList }}" as="m" hint-placeholder-count="0">
+      <div data-mark="{{ m.i }}" style="position:absolute; left:0; top:0; opacity:0; transition:opacity 1.2s;">
+        <div data-markbox style="position:absolute; left:0; top:0; border-right:1px solid rgba(235,230,220,0.7);"></div>
+        <div data-marklabel style="position:absolute; left:0; top:0; padding-left:10px; white-space:nowrap; display:flex; flex-direction:column; gap:3px;">
+          <span>{{ m.label }}</span>
+          <span data-marksource style="display:none; color:rgba(235,230,220,0.5);">{{ m.source }}</span>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div ref="{{ r.objective }}" style="position:absolute; left:32px; top:calc(12vh + 24px); opacity:0; transition:opacity 1.4s; display:flex; flex-direction:column; gap:6px; pointer-events:none;">
+    <span style="color:rgba(235,230,220,0.45);">Objective</span>
+    <span ref="{{ r.objectiveText }}"></span>
+  </div>
+
+  <div ref="{{ r.wire }}" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); opacity:0; transition:opacity 0.6s; display:flex; flex-direction:column; gap:10px; padding:22px 28px; background:rgba(8,7,6,0.82); border:1px solid rgba(235,230,220,0.18); pointer-events:none; min-width:260px;">
+    <span ref="{{ r.wireHead }}" style="color:rgba(235,230,220,0.45); text-transform:uppercase;"></span>
+    <span ref="{{ r.wireText }}" style="text-transform:uppercase; letter-spacing:0.12em; color:rgba(235,230,220,0.9);"></span>
+  </div>
+
+  <div ref="{{ r.provBadge }}" style="position:absolute; right:32px; top:calc(12vh + 24px); opacity:0; transition:opacity 0.4s; pointer-events:none; color:rgba(235,230,220,0.85); background:rgba(8,7,6,0.8); padding:8px 12px; max-width:34ch; text-align:right; line-height:1.5;">Provenance on. Generated and synthetic layers hidden.</div>
+
+  <div ref="{{ r.captionWrap }}" style="position:absolute; left:0; right:0; bottom:calc(12vh + 28px); display:flex; justify-content:center; pointer-events:none;">
+    <div ref="{{ r.caption }}" style="max-width:72ch; text-align:center; line-height:1.5; opacity:0; transition:opacity 0.5s; text-wrap:pretty; padding:0 24px;"></div>
+  </div>
+
+  <div style="position:absolute; left:32px; bottom:18px; display:flex; gap:18px; align-items:baseline; pointer-events:none;">
+    <span ref="{{ r.tc }}" style="font-variant-numeric:tabular-nums; color:rgba(235,230,220,0.5);">0:00</span>
+    <span ref="{{ r.phaseLabel }}" style="color:rgba(235,230,220,0.35);">hub</span>
+  </div>
+  <div ref="{{ r.hints }}" style="position:absolute; right:32px; bottom:18px; display:flex; gap:18px; color:rgba(235,230,220,0.35); pointer-events:none;">
+    <span>space pause</span><span>p provenance</span><span ref="{{ r.stopHint }}" style="display:none;">click next stop</span>
+  </div>
+
+  <div ref="{{ r.hubUi }}" style="position:absolute; left:32px; top:24px; display:flex; flex-direction:column; gap:14px; transition:opacity 0.8s;">
+    <div style="display:flex; gap:20px; align-items:baseline;">
+      <button onClick="{{ backToCatalogue }}" style="all:unset; cursor:pointer; padding:4px 0; color:rgba(235,230,220,0.45); font:inherit; letter-spacing:inherit;" style-hover="color:rgba(235,230,220,0.85)">Catalogue</button>
+      <span>{{ eventTitle }}</span>
+    </div>
+    <span style="color:rgba(235,230,220,0.45);">{{ dateLabel }}</span>
+  </div>
+
+  <section ref="{{ r.catalogue }}" aria-label="Catalogue" data-screen-label="catalogue" style="position:absolute; inset:0; z-index:20; display:flex; flex-direction:column; justify-content:center; gap:40px; padding:24px 48px; background:#000; transition:opacity 0.9s; overflow:hidden;">
+    <div style="display:flex; align-items:flex-end; gap:40px; flex-wrap:wrap;">
+      <input aria-label="Search the catalogue" value="{{ query }}" onChange="{{ onQuery }}" placeholder="Search" style="width:220px; background:transparent; border:0; border-bottom:1px solid rgba(235,230,220,0.25); color:rgba(235,230,220,0.85); font:inherit; letter-spacing:inherit; padding:6px 0; outline:none;">
+      <div role="group" aria-label="Country" style="display:flex; gap:18px;">
+        <sc-for list="{{ countries }}" as="c" hint-placeholder-count="5">
+          <button onClick="{{ c.onClick }}" style="all:unset; cursor:pointer; padding:4px 0; color:{{ c.color }}; font:inherit; letter-spacing:inherit; border-bottom:1px solid {{ c.border }};">{{ c.label }}</button>
+        </sc-for>
+      </div>
+      <div role="group" aria-label="Decade" style="display:flex; gap:18px;">
+        <sc-for list="{{ decades }}" as="d" hint-placeholder-count="7">
+          <button onClick="{{ d.onClick }}" style="all:unset; cursor:pointer; padding:4px 0; color:{{ d.color }}; font:inherit; letter-spacing:inherit; border-bottom:1px solid {{ d.border }};">{{ d.label }}</button>
+        </sc-for>
+      </div>
+      <span style="margin-left:auto; color:rgba(235,230,220,0.35);">Select a page. Space pauses, p shows provenance, escape returns.</span>
+    </div>
+    <div style="display:flex; gap:44px; overflow-x:auto; padding-bottom:12px; scrollbar-width:none;">
+      <sc-for list="{{ clusters }}" as="k" hint-placeholder-count="6">
+        <button onClick="{{ k.onClick }}" data-cluster="{{ k.id }}" style="all:unset; cursor:{{ k.cursor }}; flex:0 0 auto; width:236px; display:flex; flex-direction:column; gap:14px; opacity:{{ k.opacity }}; transition:opacity 0.4s;">
+          <div style="width:236px; height:min(316px, 48vh); background:#141312; overflow:hidden; box-shadow:0 0 0 1px rgba(255,255,255,0.04);">
+            <img src="{{ k.thumb }}" alt="" draggable="false" style="display:block; width:100%; height:100%; object-fit:cover; object-position:top; filter:grayscale(1) contrast(1.05);">
+          </div>
+          <span style="line-height:1.5; color:rgba(235,230,220,0.85); text-wrap:pretty;">{{ k.label }}</span>
+          <span style="color:rgba(235,230,220,0.45); margin-top:-8px;">{{ k.meta }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+  <div ref="{{ r.begin }}" style="position:absolute; left:0; top:0; white-space:nowrap; color:rgba(235,230,220,0.5); pointer-events:none; transition:opacity 0.6s;">Click the page to begin</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startAt&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0,&quot;max&quot;:180,&quot;unit&quot;:&quot;s&quot;,&quot;section&quot;:&quot;Playback&quot;},&quot;speed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0.5,&quot;max&quot;:4,&quot;step&quot;:0.5,&quot;section&quot;:&quot;Playback&quot;},&quot;provenanceDefault&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Playback&quot;}}">
+const BLANK = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+class Component extends DCLogic {
+  state = { eventId: null, scenario: null, planes: [], markList: [], provenance: false, running: false, phase: 'hub', view: 'catalogue', catalogue: null, query: '', country: null, decade: null };
+  r = Object.fromEntries(['stage','scene','wash','ghost','world','seed','worldScan','worldTag','focus','warm','vig','grain','barTop','barBot','labels','objective','objectiveText','wire','wireHead','wireText','provBadge','captionWrap','caption','tc','phaseLabel','hints','stopHint','hubUi','begin','catalogue','photo','photoImg','photoScan','photoSweep','translate','translateHead','translateText','translateTag'].map(k => [k, React.createRef()]));
+  T = 0; last = 0; ease = this.bezier(0.65, 0, 0.35, 1); resolvedPages = {}; stopIndex = -1; audio = null;
+
+  componentDidMount() {
+    this.r.grain.current.style.backgroundImage = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6 0 0 0 0 0.58 0 0 0 0 0.55 0 0 0 0.95 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>\")";
+    this.onKey = e => {
+      if (e.key === 'p' || e.key === 'P') this.setProvenance(!this.state.provenance);
+      if (e.key === ' ') { e.preventDefault(); if (this.state.running) this.paused = !this.paused; }
+      if (e.key === 'ArrowRight') this.advanceStop();
+      if (e.key === 'Escape') this.backToCatalogue();
+    };
+    fetch(new URL('catalogue.json', document.baseURI)).then(r => r.json()).then(cat => this.setState({ catalogue: cat }));
+    window.addEventListener('keydown', this.onKey); window.__frontPages = this;
+    this.raf = requestAnimationFrame(this.frame);
+    this.watchdog = setInterval(() => { if (!this.unmounted && performance.now() - (this.lastTick || 0) > 400) { cancelAnimationFrame(this.raf); this.frame(performance.now()); } }, 250);
+  }
+  componentWillUnmount() { this.unmounted = true; cancelAnimationFrame(this.raf); clearInterval(this.watchdog); window.removeEventListener('keydown', this.onKey); if (this.audio) this.audio.ctx.close(); }
+
+  async load(id) {
+    const base = new URL('.', document.baseURI).href;
+    const sc = await (await fetch(base + 'scenarios/' + id + '.json')).json();
+    for (const [pid, p] of Object.entries(sc.pages)) {
+      if (p.words) p.wordList = await (await fetch(base + p.words)).json();
+      if (p.lines) p.lineList = await (await fetch(base + p.lines)).json();
+      if (p.syntheticLines) { const s = p.syntheticLines; p.lineList = Array.from({ length: s.count }, (_, i) => ({ text: '', y: s.y0 + (s.y1 - s.y0) * i / s.count, h: (s.y1 - s.y0) / s.count * 0.8, x: s.x, w: s.w })); }
+    }
+    this.sc = sc; this.T = 0; this.paused = false; this.stopIndex = -1; this.firedEvents = new Set(); this.trackBase = {}; this.tracking = null; this.camY = null;
+    this.buildTracks(sc); this.buildAlign(sc); this.buildEvents(sc);
+    this.stopArchive(); this.currentCaption = null; this.setCaption('', 'voice'); this.objectiveResolved = false;
+    if (this.r.objective.current) { this.r.objective.current.style.opacity = 0; this.r.wire.current.style.opacity = 0; this.wireEnds = null; }
+    const planes = Object.entries(sc.pages).map(([id, p]) => ({ id, src: p.src, label: p.label, short: p.short || p.label, left: p.x * 1000, top: p.y * 1000, width: p.w * 1000, height: p.h * 1000, onClick: e => this.onPlaneClick(e, id), onEnter: e => { if (!this.state.running && p.hub) e.currentTarget.style.boxShadow = '0 0 0 1px rgba(255,178,86,0.55)'; }, onLeave: e => { e.currentTarget.style.boxShadow = '0 0 0 1px rgba(255,255,255,0.04)'; } }));
+    const markList = (sc.marks || []).map((m, i) => ({ ...m, i }));
+    this.translateKey = null; this.hoverPlane = null;
+    this.setState({ scenario: sc, eventId: id, planes, markList, running: false, phase: 'hub', view: 'hub' });
+    if (this.props.provenanceDefault && !this.state.provenance) this.setProvenance(true);
+  }
+
+  bezier(x1, y1, x2, y2) {
+    const A = (a, b) => 1 - 3 * b + 3 * a, B = (a, b) => 3 * b - 6 * a, C = a => 3 * a;
+    const calc = (t, a, b) => ((A(a, b) * t + B(a, b)) * t + C(a)) * t;
+    const slope = (t, a, b) => 3 * A(a, b) * t * t + 2 * B(a, b) * t + C(a);
+    return x => { if (x <= 0) return 0; if (x >= 1) return 1; let t = x; for (let i = 0; i < 6; i++) { const s = slope(t, x1, x2); if (s === 0) break; t -= (calc(t, x1, x2) - x) / s; } return calc(t, y1, y2); };
+  }
+
+  buildTracks(sc) {
+    const hub = sc.hubCamera; const init = {
+      'camera.x': hub.x, 'camera.y': hub.y, 'camera.z': hub.z, 'focus.x': hub.x, 'focus.y': hub.y, 'focus.radius': 1,
+      'post.grain': 0.04, 'post.vignette': 0.15, 'post.aberration': 0, warmth: 0, letterbox: 0, desat: 0, 'ghost.opacity': 0, 'ghost.scale': 1.05, 'world.mix': 0, bed: 0 };
+    for (const [id, p] of Object.entries(sc.pages)) { init['plane.' + id + '.o'] = p.hub ? 1 : 0; init['plane.' + id + '.slide'] = p.slideFrom != null ? 0 : 1; }
+    const tracks = {}; const add = (name, t, v, dur) => { (tracks[name] = tracks[name] || []).push({ t, v, dur: Math.max(dur || 1.5, 0.05) }); };
+    for (const b of sc.beats) {
+      const g = (obj, keys, prefix, ddur) => { if (!obj) return; for (const k of keys) if (obj[k] != null) add(prefix + k, obj.at != null ? obj.at : b.t, obj[k], obj.dur != null ? obj.dur : ddur); };
+      g(b.camera, ['x', 'y', 'z'], 'camera.', 2); g(b.focus, ['x', 'y', 'radius'], 'focus.', 1.5); g(b.post, ['grain', 'vignette', 'aberration'], 'post.', 1.5);
+      g(b.warmth, ['v'], 'warmth_', 2); g(b.letterbox, ['v'], 'letterbox_', 1.2); g(b.desat, ['v'], 'desat_', 1); g(b.bed, ['v'], 'bed_', 2);
+      g(b.ghost, ['opacity', 'scale'], 'ghost.', 0.8); g(b.world, ['mix'], 'world.', 2);
+      if (b.planes) for (const [id, pl] of Object.entries(b.planes)) { if (pl.o != null) add('plane.' + id + '.o', pl.at != null ? pl.at : b.t, pl.o, pl.dur); if (pl.slide != null) add('plane.' + id + '.slide', pl.at != null ? pl.at : b.t, pl.slide, pl.dur); }
+    }
+    for (const k of Object.keys(tracks)) { const nk = k.replace(/_v$/, ''); if (nk !== k) { tracks[nk] = tracks[k]; delete tracks[k]; } }
+    this.tracks = tracks; this.init = init;
+  }
+  val(name, t) {
+    const keys = this.tracks[name] || []; const base = this.trackBase[name]; let v = this.init[name]; let usedBase = false;
+    for (const k of keys) { if (k.t > t) break; let from = v; if (base && !usedBase && k.t >= base.t) { from = base.v; usedBase = true; } const p = Math.min(1, Math.max(0, (t - k.t) / k.dur)); v = from + (k.v - from) * this.ease(p); }
+    if (base && !usedBase && t >= base.t) return base.v;
+    return v;
+  }
+
+  buildAlign(sc) {
+    const al = []; const a = sc.align || {}; const page = sc.pages[sc.readPage];
+    if (a.headline && page.wordList) { const [s, e] = a.headline.words; const n = e - s; for (let i = s; i < e; i++) al.push({ page: sc.readPage, w: page.wordList[i], start: a.headline.start + (a.headline.end - a.headline.start) * (i - s) / n, end: a.headline.start + (a.headline.end - a.headline.start) * (i - s + 0.9) / n }); }
+    if (a.lead && page.wordList) { const [s, e] = a.lead.words; let t = a.lead.start; for (let i = s; i < e; i++) { const w = page.wordList[i]; const d = (0.6 + 0.08 * w.w.length) / a.lead.rate; al.push({ page: sc.readPage, w, start: t, end: t + d * 0.92 }); t += d; } }
+    if (a.memo) { const mp = sc.pages[a.memo.page]; const target = a.memo.match.split(' '); const ws = mp.wordList; let idx = -1; for (let i = 0; i <= ws.length - target.length; i++) { if (target.every((w, j) => ws[i + j].w === w)) { idx = i; break; } } if (idx >= 0) { const n = target.length; for (let j = 0; j < n; j++) al.push({ page: a.memo.page, w: ws[idx + j], start: a.memo.start + (a.memo.end - a.memo.start) * j / n, end: a.memo.start + (a.memo.end - a.memo.start) * (j + 0.9) / n }); } }
+    if (a.drift && page.lineList) { const n = page.lineList.length; const { start, end } = a.drift; page.lineList.forEach((l, i) => al.push({ page: sc.readPage, w: { x: l.x, y: l.y, width: l.w, height: l.h, line: i }, start: start + (end - start) * i / n, end: start + (end - start) * (i + 1) / n, driftLine: i })); }
+    this.align = al;
+  }
+  buildEvents(sc) {
+    const ev = [];
+    for (const b of sc.beats) {
+      if (b.voice) ev.push({ t: b.voice.at != null ? b.voice.at : b.t, run: () => this.setCaption(b.voice.text, 'voice', b.voice.dur) });
+      if (b.caption) ev.push({ t: b.t, run: () => this.setCaption(b.caption.text, b.caption.kind, b.caption.dur) });
+      (b.foley || []).forEach(f => ev.push({ t: f.at != null ? f.at : b.t, run: () => this.foley(f.id, f.until) }));
+      (b.archive || []).forEach(a => ev.push({ t: a.at != null ? a.at : b.t - 0.25, run: () => this.playArchive(a.id, a.until) }));
+      if (b.objective) ev.push({ t: b.objective.at, run: () => this.showObjective(true) });
+      if (b.wire) ev.push({ t: b.t, run: () => this.showWire(b.wire) });
+      if (b.resolved) ev.push({ t: b.t, run: () => { this.resolvedPages[sc.readPage] = true; this.stopArchive(); } });
+      if (b.translate !== undefined) ev.push({ t: b.t + (b.camera ? Math.min(1.2, (b.camera.dur || 2) * 0.5) : 0), run: () => this.showTranslation(b.translate) });
+    }
+    (sc.stops || []).forEach((s, i) => ev.push({ t: s.t - 0.25, run: () => this.enterStop(i) }));
+    ev.sort((x, y) => x.t - y.t); this.schedule = ev;
+  }
+
+  // interaction
+  onStageClick = e => { if (!this.state.running) return; if (this.phaseAt(this.T) === 'world') this.advanceStop(); };
+  onPlaneClick(e, id) {
+    const p = this.sc.pages[id];
+    if (!this.state.running) { if (!p.hub) return; e.stopPropagation(); this.start(); return; }
+    if (this.phaseAt(this.T) === 'hub' && this.T < 8 && p.hub) { e.stopPropagation(); this.seek(8); }
+  }
+  backToCatalogue = e => { if (e) e.stopPropagation(); this.stopArchive(); if (this.audio) this.audio.bedGain.gain.setTargetAtTime(0, this.audio.ctx.currentTime, 0.3); this.setState({ running: false, view: 'catalogue' }); }
+  openCluster(k) { if (!k.event) return; this.load(k.event); }
+  start() {
+    this.ensureAudio(); this.T = Math.max(0, Number(this.props.startAt) || 0); this.paused = false; this.firedEvents = new Set(); this.stopIndex = -1; this.trackBase = {}; this.camY = null; this.objectiveResolved = false;
+    this.showObjective(false); if (this.T > 0) this.seek(this.T); this.setState({ running: true });
+  }
+  seek(t) { for (const [i, ev] of this.schedule.entries()) if (ev.t < t) this.firedEvents.add(i); this.T = t; }
+  advanceStop() {
+    if (!this.state.running || this.phaseAt(this.T) !== 'world') return; const stops = this.sc.stops; const next = stops.findIndex(s => s.t - 0.25 > this.T + 0.01);
+    if (next >= 0) this.seek(stops[next].t - 0.25); else { const ret = this.sc.beats.find(b => b.phase === 'return'); if (ret) this.seek(ret.t); }
+  }
+  enterStop(i) { this.stopIndex = i; const s = this.sc.stops[i]; this.setCaption(s.text, 'voice', 11); this.stopEnteredAt = this.T; if (s.audio && this.sc.audio[s.audio]) this.playArchive(s.audio, (this.sc.stops[i + 1] ? this.sc.stops[i + 1].t : this.sc.beats.find(b => b.phase === 'return').t) - 0.3); if (i === this.sc.stops.length - 1) { this.objectiveResolved = true; this.showObjective(true); } }
+  setProvenance(on) { this.setState({ provenance: on }); this.r.provBadge.current.style.opacity = on ? 1 : 0; this.r.labels.current.querySelectorAll('[data-marksource]').forEach(el => el.style.display = on ? 'block' : 'none'); }
+  phaseAt(t) { let ph = 'hub'; for (const b of this.sc.beats) { if (b.t <= t) ph = b.phase; else break; } return ph; }
+
+  // DOM text
+  setCaption(text, kind, dur) {
+    const el = this.r.caption.current; if (!el) return; this.captionToken = (this.captionToken || 0) + 1; const tok = this.captionToken;
+    el.textContent = text; el.style.opacity = text ? 1 : 0; el.style.fontStyle = kind === 'archive' ? 'italic' : 'normal'; el.style.color = kind === 'archive' ? 'rgba(235,230,220,0.55)' : 'rgba(235,230,220,0.78)';
+    this.captionEnds = dur ? this.T + dur : null; this.captionKind = kind;
+  }
+  showObjective(on) { const o = this.r.objective.current; if (!o) return; o.style.opacity = on ? 1 : 0; const t = this.r.objectiveText.current; t.textContent = this.sc.world.objective; t.style.color = this.objectiveResolved ? 'rgba(255,178,86,0.85)' : 'rgba(235,230,220,0.78)'; t.style.textDecoration = this.objectiveResolved ? 'line-through' : 'none'; }
+  showTranslation(key) {
+    const el = this.r.translate.current; if (!el) return; const tr = key && this.sc.translations && this.sc.translations[key]; this.translateKey = tr ? key : null;
+    if (!tr) { el.style.opacity = 0; return; }
+    const page = this.sc.pages[this.sc.readPage]; const pg = (key === 'caption11' && this.sc.pages.B02) ? this.sc.pages.B02 : page;
+    const pad = tr.w * 1000 * 0.04; el.style.left = (pg.x + tr.x * pg.w) * 1000 + 'px'; el.style.top = (pg.y + tr.y * pg.h) * 1000 + 'px'; el.style.width = tr.w * pg.w * 1000 + 'px'; el.style.height = tr.h * pg.h * 1000 + 'px'; el.style.padding = pad + 'px';
+    const fs = tr.size * pg.w * 1000; this.r.translateHead.current.textContent = tr.heading || (tr.text && tr.weight === 700 ? tr.text : ''); this.r.translateHead.current.style.fontSize = (tr.heading ? fs * 1.35 : fs) + 'px'; this.r.translateHead.current.style.marginBottom = tr.heading ? fs * 0.6 + 'px' : '0';
+    this.r.translateText.current.textContent = tr.weight === 700 && !tr.heading ? (tr.sub || '') : tr.text; this.r.translateText.current.style.fontSize = (tr.weight === 700 && !tr.heading ? fs * 0.28 : fs) + 'px'; this.r.translateText.current.style.marginTop = tr.weight === 700 && !tr.heading ? fs * 0.3 + 'px' : '0';
+    this.r.translateTag.current.style.fontSize = Math.min(fs * 0.75, pg.w * 1000 * 0.008) + 'px'; this.r.translateTag.current.style.padding = pad * 0.5 + 'px ' + pad + 'px';
+    el.style.transition = 'opacity 1.6s cubic-bezier(0.65,0,0.35,1)'; el.style.opacity = 0; requestAnimationFrame(() => { el.style.opacity = 1; });
+  }
+  showWire(w) { const el = this.r.wire.current; this.r.wireHead.current.textContent = w.time + ' ' + w.agency + ' flash'; this.r.wireText.current.textContent = w.text; el.style.opacity = 1; this.wireEnds = this.T + w.dur; }
+
+  // audio
+  ensureAudio() {
+    if (this.audio) { this.audio.ctx.resume(); return; }
+    const ctx = new (window.AudioContext || window.webkitAudioContext)(); const master = ctx.createGain(); master.connect(ctx.destination);
+    const noise = ctx.createBuffer(1, ctx.sampleRate * 4, ctx.sampleRate); const d = noise.getChannelData(0); let b0 = 0; for (let i = 0; i < d.length; i++) { const w = Math.random() * 2 - 1; b0 = 0.98 * b0 + 0.02 * w; d[i] = b0 * 3; }
+    const bedSrc = ctx.createBufferSource(); bedSrc.buffer = noise; bedSrc.loop = true; const bedLp = ctx.createBiquadFilter(); bedLp.type = 'lowpass'; bedLp.frequency.value = 1800; const bedGain = ctx.createGain(); bedGain.gain.value = 0; bedSrc.connect(bedLp).connect(bedGain).connect(master); bedSrc.start();
+    const archiveHp = ctx.createBiquadFilter(); archiveHp.type = 'highpass'; archiveHp.frequency.value = 120; const archiveGain = ctx.createGain(); archiveGain.gain.value = 0.5; archiveHp.connect(archiveGain).connect(master);
+    const foleyGain = ctx.createGain(); foleyGain.gain.value = 0.25; foleyGain.connect(master);
+    this.audio = { ctx, master, noise, bedGain, archiveHp, foleyGain, players: {}, current: null };
+  }
+  playArchive(id, until) {
+    const spec = this.sc.audio[id]; if (!this.audio || !spec) return; const A = this.audio; this.stopArchive();
+    const src = typeof spec === 'string' ? spec : spec.src; const start = (typeof spec === 'object' && spec.start) || 0; const remote = /^https?:/.test(src) && !src.startsWith(location.origin);
+    let p = A.players[id];
+    if (!p) {
+      const url = remote ? src : new URL(src, document.baseURI).href;
+      if (remote) { const el = new Audio(url); el.preload = 'auto'; el.volume = 0; p = A.players[id] = { el, plain: true }; }
+      else { const el = new Audio(url); el.crossOrigin = 'anonymous'; const node = A.ctx.createMediaElementSource(el); const g = A.ctx.createGain(); node.connect(g).connect(A.archiveHp); p = A.players[id] = { el, g }; }
+    }
+    const el = p.el; const begin = () => { try { el.currentTime = start; } catch (e) {} el.play().catch(() => {}); };
+    A.current = { p, until };
+    if (p.plain) { el.volume = 0; const t0 = performance.now(); const ramp = () => { if (A.current && A.current.p === p) { const k = Math.min(1, (performance.now() - t0) / 400); el.volume = 0.7 * k; if (k < 1) requestAnimationFrame(ramp); } }; ramp(); }
+    else { p.g.gain.cancelScheduledValues(A.ctx.currentTime); p.g.gain.setValueAtTime(0, A.ctx.currentTime); p.g.gain.linearRampToValueAtTime(1, A.ctx.currentTime + 0.3); }
+    if (el.readyState >= 1) begin(); else el.addEventListener('loadedmetadata', begin, { once: true });
+  }
+  stopArchive() { const A = this.audio; if (!A || !A.current) return; const { p } = A.current; A.current = null;
+    if (p.plain) { const el = p.el; const v0 = el.volume; const t0 = performance.now(); const fade = () => { if (A.current && A.current.p === p) return; const k = Math.min(1, (performance.now() - t0) / 400); el.volume = v0 * (1 - k); if (k < 1) requestAnimationFrame(fade); else el.pause(); }; fade(); return; }
+    const t = A.ctx.currentTime; p.g.gain.cancelScheduledValues(t); p.g.gain.setValueAtTime(p.g.gain.value, t); p.g.gain.linearRampToValueAtTime(0, t + 0.4); setTimeout(() => { if (!A.current || A.current.p !== p) p.el.pause(); }, 450); }
+  foley(id, until) {
+    if (!this.audio || this.state.provenance) return; const A = this.audio; const ctx = A.ctx; const t0 = ctx.currentTime;
+    const burst = (dur, freq, q, gain, sweepTo) => { const s = ctx.createBufferSource(); s.buffer = A.noise; const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.frequency.setValueAtTime(freq, t0); if (sweepTo) f.frequency.exponentialRampToValueAtTime(sweepTo, t0 + dur); f.Q.value = q; const g = ctx.createGain(); g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(gain, t0 + 0.02); g.gain.exponentialRampToValueAtTime(0.001, t0 + dur); s.connect(f).connect(g).connect(A.foleyGain); s.start(t0, Math.random() * 3); s.stop(t0 + dur + 0.05); };
+    if (id === 'F01') burst(0.35, 900, 1.2, 0.5);
+    if (id === 'F02') burst(0.6, 400, 0.8, 0.6, 2600);
+    if (id === 'F03') { const n = Math.round(((until || this.T + 3) - this.T) * 14); for (let i = 0; i < n; i++) { const s = ctx.createBufferSource(); s.buffer = A.noise; const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 2400; f.Q.value = 3; const g = ctx.createGain(); const st = t0 + i / 14 + (Math.random() - 0.5) * 0.01; g.gain.setValueAtTime(0.35, st); g.gain.exponentialRampToValueAtTime(0.001, st + 0.03); s.connect(f).connect(g).connect(A.foleyGain); s.start(st, Math.random() * 3); s.stop(st + 0.05); } }
+    if (id === 'F04') { const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = 1180; const g = ctx.createGain(); g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(0.16, t0 + 2); const end = t0 + Math.max(1, (until || this.T + 10) - this.T); g.gain.linearRampToValueAtTime(0.5, end - 0.5); g.gain.linearRampToValueAtTime(0, end + 0.05); o.connect(g).connect(A.foleyGain); o.start(t0); o.stop(end + 0.1); }
+  }
+
+  // per frame
+  frame = now => {
+    if (this.unmounted) return; this.raf = requestAnimationFrame(this.frame); this.lastTick = performance.now();
+    const dt = Math.min(0.1, (now - this.last) / 1000 || 0); this.last = now;
+    const sc = this.sc; const st = this.r.stage.current; if (!st) return;
+    const inCatalogue = this.state.view === 'catalogue'; const cat = this.r.catalogue.current; if (cat) { cat.style.opacity = inCatalogue ? 1 : 0; cat.style.pointerEvents = inCatalogue ? 'auto' : 'none'; cat.style.zIndex = 20; }
+    if (inCatalogue) { if (this.r.hubUi.current) { this.r.hubUi.current.style.opacity = 0; this.r.hubUi.current.style.pointerEvents = 'none'; } if (this.r.begin.current) this.r.begin.current.style.opacity = 0; if (this.r.labels.current) this.r.labels.current.style.opacity = 0; if (this.r.tc.current) { this.r.tc.current.parentElement.style.opacity = 0; this.r.hints.current.style.opacity = 0; } }
+    else if (this.r.tc.current) { this.r.tc.current.parentElement.style.opacity = 1; this.r.hints.current.style.opacity = 1; this.r.labels.current.style.opacity = 1; }
+    if (!sc || !this.state.planes.length || inCatalogue) return;
+    const vw = st.clientWidth, vh = st.clientHeight; const prov = this.state.provenance; const running = this.state.running;
+    if (running && !this.paused) this.T += dt * (Number(this.props.speed) || 1);
+    const T = this.T; const phase = running ? this.phaseAt(T) : 'hub';
+    if (phase !== this.state.phase) this.setState({ phase });
+    if (running) {
+      this.schedule.forEach((ev, i) => { if (!this.firedEvents.has(i) && ev.t <= T) { this.firedEvents.add(i); if (T - ev.t < 1.5) ev.run(); } });
+      if (T > sc.beats[sc.beats.length - 1].t + 3.5) { this.setState({ running: false }); this.stopArchive(); this.setCaption('', 'voice'); }
+    }
+    if (this.captionEnds != null && T > this.captionEnds) { this.captionEnds = null; this.r.caption.current.style.opacity = 0; }
+    if (this.wireEnds != null && T > this.wireEnds) { this.wireEnds = null; this.r.wire.current.style.opacity = 0; }
+    if (this.audio && this.audio.current && T > this.audio.current.until) this.stopArchive();
+    if (this.audio && this.audio.current) { const el = this.audio.current.p.el; if (this.paused && !el.paused) el.pause(); else if (!this.paused && el.paused && el.readyState >= 2 && !el.ended) el.play().catch(() => {}); }
+
+    // camera
+    let cx = this.val('camera.x', T), cy = this.val('camera.y', T), cz = this.val('camera.z', T);
+    const beat = [...sc.beats].reverse().find(b => b.t <= T); const nextBeat = sc.beats.find(b => b.t > T);
+    const page = sc.pages[sc.readPage];
+    const cur = running ? this.align.find(a => T >= a.start && T < a.end) : null;
+    const lastAl = running ? [...this.align].reverse().find(a => a.start <= T) : null;
+    const trackingActive = running && beat && (beat.track || beat.drift) && (!nextBeat || T < nextBeat.t);
+    if (trackingActive) {
+      const ref = cur || lastAl; if (ref && ref.page === sc.readPage) {
+        const target = page.y + (ref.w.y + ref.w.height / 2) * page.h + 2 * sc.lineHeight * page.h;
+        if (this.camY == null) this.camY = cy; this.camY += (target - this.camY) * (1 - Math.exp(-dt / 0.6)); cy = this.camY;
+        this.trackBase['camera.y'] = { t: T, v: cy };
+        this.trackBase['focus.x'] = { t: T, v: page.x + (ref.w.x + ref.w.width / 2) * page.w }; this.trackBase['focus.y'] = { t: T, v: page.y + (ref.w.y + ref.w.height / 2) * page.h };
+        if (beat.drift) { cx = page.x + sc.columnX * page.w; this.trackBase['camera.x'] = { t: T, v: cx }; }
+      }
+    } else if (this.camY != null && !trackingActive) this.camY = null;
+    cx += 0.004 * Math.sin(T * 0.5); cy += 0.004 * Math.cos(T * 0.33);
+    const s = vh / (2 * Math.tan(17.5 * Math.PI / 180)) / cz; const scale = s / 1000;
+    const ox = vw / 2 - cx * s, oy = vh / 2 - cy * s;
+    this.r.scene.current.style.transform = 'translate(' + ox + 'px,' + oy + 'px) scale(' + scale + ')';
+    const proj = (u, v) => [ox + u * s, oy + v * s];
+
+    // planes
+    const desat = this.val('desat', T);
+    for (const el of this.r.scene.current.querySelectorAll('[data-plane]')) {
+      const id = el.dataset.plane; const p = sc.pages[id]; el.style.opacity = this.val('plane.' + id + '.o', T);
+      if (el.firstElementChild.getAttribute('src') !== p.src) el.firstElementChild.setAttribute('src', p.src);
+      if (p.slideFrom != null) { const sl = this.val('plane.' + id + '.slide', T); el.style.left = (p.slideFrom + (p.x - p.slideFrom) * sl) * 1000 + 'px'; }
+      el.style.cursor = (!running && p.selectable) ? 'pointer' : 'default';
+      if (id === sc.readPage) el.firstElementChild.style.filter = desat > 0.01 ? 'contrast(' + (1 - desat * 0.2) + ') brightness(' + (1 + desat * 0.08) + ')' : 'none';
+    }
+    // word wash
+    const wash = this.r.wash.current;
+    if (cur && !prov) { const wp = sc.pages[cur.page]; const pad = 2; wash.style.opacity = 1; wash.style.left = (wp.x + cur.w.x * wp.w) * 1000 - pad + 'px'; wash.style.top = (wp.y + cur.w.y * wp.h) * 1000 - pad + 'px'; wash.style.width = cur.w.width * wp.w * 1000 + pad * 2 + 'px'; wash.style.height = cur.w.height * wp.h * 1000 + pad * 2 + 'px';
+      if (cur.driftLine != null) { const lines = sc.readLines || []; const li = Math.min(lines.length - 1, Math.floor(cur.driftLine / this.align.length * lines.length)); if (this.readLine !== li) { this.readLine = li; this.setCaption(lines[li], 'read'); } }
+      else if (cur.w.line != null && page.lineList) { const li = cur.w.line; if (this.readLine !== li) { this.readLine = li; this.setCaption(page.lineList[li].text, 'read'); } }
+    } else { wash.style.opacity = 0; if (this.readLine != null && this.captionKind === 'read') { this.readLine = null; this.r.caption.current.style.opacity = 0; } }
+
+    // translation layer follows its page; hidden under provenance
+    { const tl = this.r.translate.current; if (tl) { const on = this.translateKey && !prov; tl.style.visibility = on ? 'visible' : 'hidden'; if (this.translateKey === 'caption11' && sc.pages.B02) { const tr = sc.translations.caption11; const pB = sc.pages.B02; const sl = this.val('plane.B02.slide', T); tl.style.left = ((pB.slideFrom + (pB.x - pB.slideFrom) * sl) + tr.x * pB.w) * 1000 + 'px'; } } }
+    // living photograph: parallax drift, scanlines, a slow light sweep while the door is open
+    { const ph = this.r.photo.current; const pb = beat && beat.photo ? beat.photo : null; const doorish = phase === 'door' || (phase === 'memo' && pb);
+      if (pb && doorish && !prov) { const pp = sc.pages[pb.page]; const slide = pp.slideFrom != null ? this.val('plane.' + pb.page + '.slide', T) : 1; const px = (pp.slideFrom != null ? pp.slideFrom + (pp.x - pp.slideFrom) * slide : pp.x);
+        ph.style.opacity = Math.min(1, (T - beat.t) / 2.5); ph.style.left = (px + pb.x * pp.w) * 1000 + 'px'; ph.style.top = (pp.y + pb.y * pp.h) * 1000 + 'px'; ph.style.width = pb.w * pp.w * 1000 + 'px'; ph.style.height = pb.h * pp.h * 1000 + 'px';
+        const im = this.r.photoImg.current; if (im.getAttribute('src') !== pp.src) im.setAttribute('src', pp.src); im.style.width = (1 / pb.w) * 100 + '%'; im.style.height = (1 / pb.h) * 100 + '%'; const k = (T - beat.t);
+        im.style.transform = 'translate(' + (-pb.x / pb.w * 100) + '%, ' + (-pb.y / pb.h * 100) + '%) translate(' + (Math.sin(k * 0.21) * 0.6) + '%, ' + (Math.cos(k * 0.17) * 0.4) + '%) scale(' + (1.02 + 0.03 * Math.sin(k * 0.13)) + ')'; im.style.transformOrigin = (pb.x + pb.w / 2) * 100 + '% ' + (pb.y + pb.h / 2) * 100 + '%';
+        this.r.photoScan.current.style.opacity = Math.min(0.7, k / 6); this.r.photoSweep.current.style.opacity = 0.5; this.r.photoSweep.current.style.transform = 'translateX(' + ((k * 9) % 160) * 3 + '%) skewX(-12deg)'; }
+      else ph.style.opacity = 0; }
+    // ghost
+    const g = this.r.ghost.current; const go = prov ? 0 : this.val('ghost.opacity', T); const gs = this.val('ghost.scale', T); const gh = sc.ghost;
+    const ghostSrc = (beat && beat.ghost && beat.ghost.src) || gh.src; if (g.getAttribute('src') !== ghostSrc && go < 0.01) g.setAttribute('src', ghostSrc);
+    const seedSrc = sc.world.seed || BLANK; if (this.r.seed.current.getAttribute('src') !== seedSrc) this.r.seed.current.setAttribute('src', seedSrc);
+    g.style.opacity = go; g.style.left = (page.x + gh.x * page.w) * 1000 + 'px'; g.style.top = (page.y + gh.y * page.w) * 1000 + 'px'; g.style.width = gh.w * page.w * 1000 + 'px'; g.style.height = gh.h * page.w * 1000 + 'px'; g.style.transform = 'scale(' + gs + ')';
+
+    // world
+    const mix = prov ? 0 : this.val('world.mix', T); const w = this.r.world.current;
+    w.style.opacity = mix > 0.001 ? 1 : 0; const rr = mix * 9.5; const mask = 'radial-gradient(circle, #000 ' + rr + 'px, transparent ' + (rr + 0.6) + 'px)'; w.style.maskImage = mask; w.style.webkitMaskImage = mask; w.style.maskSize = '12px 12px'; w.style.webkitMaskSize = '12px 12px';
+    if (mix > 0) { const k = T - (this.stopEnteredAt || T); const drift = 0.06 + 0.02 * Math.sin(T * 0.1); const jitter = (Math.random() < 0.04) ? (Math.random() - 0.5) * 6 : 0; const ws = 1 + Math.min(1, k / 13) * 0.14; const sx = Math.sin(T * 0.23) * 2 + jitter, sy = Math.cos(T * 0.19) * 1.5;
+      this.r.seed.current.style.transform = 'translate(-50%,-50%) translate(' + sx + '%,' + sy + '%) scale(' + ws + ') rotate(' + (Math.sin(T * 0.07) * 0.6) + 'deg)'; this.r.seed.current.style.opacity = sc.world.seed ? 0.36 + 0.06 * Math.sin(T * 1.7) : 0; this.r.seed.current.style.filter = 'grayscale(1) contrast(1.5) brightness(' + (0.5 + drift) + ') blur(' + (0.6 + 0.4 * Math.sin(T * 0.5)) + 'px)';
+      this.r.worldScan.current.style.transform = 'translateY(' + ((T * 18) % 3) + 'px)'; this.r.worldScan.current.style.opacity = sc.world.animate === 'tv' ? 0.6 : 0.25; }
+
+    // post
+    const radius = this.val('focus.radius', T); const f = this.r.focus.current;
+    if (radius >= 0.98 || prov || mix > 0.5) f.style.display = 'none'; else { f.style.display = 'block'; const [fx, fy] = proj(this.val('focus.x', T), this.val('focus.y', T)); const ry = Math.max(radius * vh, 0.12 * vh), rx = Math.max(ry * 2.6, vw * 0.42), soft = 0.5; const m = 'radial-gradient(ellipse ' + (rx / (1 - soft)) + 'px ' + (ry / (1 - soft)) + 'px at ' + fx + 'px ' + fy + 'px, transparent ' + ((1 - soft) * 100) + '%, #000 100%)'; f.style.maskImage = m; f.style.webkitMaskImage = m; const blurPx = 1.2 + 1.8 * (1 - Math.min(1, radius / 0.4)); f.style.backdropFilter = 'blur(' + blurPx.toFixed(2) + 'px)'; f.style.webkitBackdropFilter = f.style.backdropFilter; }
+    this.r.warm.current.style.opacity = prov ? 0 : this.val('warmth', T) * 0.55;
+    this.r.vig.current.style.opacity = prov ? 0.15 : this.val('post.vignette', T);
+    const gr = this.r.grain.current; gr.style.opacity = prov ? 0.04 : this.val('post.grain', T); if ((now | 0) % 2 === 0) gr.style.backgroundPosition = Math.round(Math.random() * 240) + 'px ' + Math.round(Math.random() * 240) + 'px';
+    const lb = this.val('letterbox', T) * 12; this.r.barTop.current.style.height = lb + 'vh'; this.r.barBot.current.style.height = lb + 'vh';
+    this.r.captionWrap.current.style.bottom = lb > 0.6 ? 'calc(' + (lb / 2) + 'vh - 0.5em)' : 'calc(' + lb + 'vh + 28px)'; this.r.captionWrap.current.style.transform = lb > 0.6 ? 'translateY(50%)' : 'none'; this.r.objective.current.style.top = 'calc(' + lb + 'vh + 24px)'; this.r.provBadge.current.style.top = 'calc(' + lb + 'vh + 24px)';
+
+    // bed and ducking
+    if (this.audio) { const duck = this.audio.current ? 0.5 : 1; const target = prov ? 0 : 0.0316 * this.val('bed', T) * duck; const gp = this.audio.bedGain.gain; gp.setTargetAtTime(target, this.audio.ctx.currentTime, 0.4); }
+
+    // anchored labels and marks
+    const hubVisible = phase === 'hub';
+    const hubBottom = Math.max(...Object.values(sc.pages).filter(p => p.hub).map(p => p.y + p.h));
+    for (const el of this.r.labels.current.querySelectorAll('[data-anchor]')) { const id = el.dataset.anchor; const p = sc.pages[id]; const [x, y] = proj(p.x + p.w / 2, hubBottom); el.style.transform = 'translate(-50%, 0) translate(' + x + 'px,' + (y + 12) + 'px)'; el.style.opacity = hubVisible && this.val('plane.' + id + '.o', T) > 0.5 ? 1 : 0; const rs = el.querySelector('[data-resolved]'); if (rs) rs.style.display = this.resolvedPages[id] ? 'block' : 'none'; }
+    (sc.marks || []).forEach((m, i) => { const el = this.r.labels.current.querySelector('[data-mark="' + i + '"]'); if (!el) return; const p = sc.pages[m.page]; const visible = prov || (!m.provenanceOnly && running && m.from != null && T >= m.from && phase !== 'hub' && phase !== 'world'); el.style.opacity = visible && this.val('plane.' + m.page + '.o', T) > 0.5 ? 1 : 0;
+      const [x0, y0] = proj(p.x + m.x * p.w, p.y + m.y * p.h); const [x1, y1] = proj(p.x + (m.x + m.w) * p.w, p.y + (m.y + m.h) * p.h); el.style.transform = 'translate(' + x0 + 'px,' + y0 + 'px)'; const box = el.querySelector('[data-markbox]'); box.style.width = (x1 - x0) + 'px'; box.style.height = (y1 - y0) + 'px'; box.style.border = m.outline ? '1px solid rgba(235,230,220,0.7)' : 'none'; box.style.borderRight = '1px solid rgba(235,230,220,0.7)'; const lab = el.querySelector('[data-marklabel]'); lab.style.left = (x1 - x0) + 'px'; });
+
+    // HUD
+    const mm = Math.floor(T / 60), ss = Math.floor(T % 60); this.r.tc.current.textContent = mm + ':' + (ss < 10 ? '0' : '') + ss + (this.paused ? '  paused' : '');
+    this.r.phaseLabel.current.textContent = phase + (phase === 'world' && this.stopIndex >= 0 ? '  ·  ' + sc.stops[this.stopIndex].label : '');
+    this.r.stopHint.current.style.display = phase === 'world' ? 'inline' : 'none';
+    this.r.hubUi.current.style.opacity = hubVisible ? 1 : 0; this.r.hubUi.current.style.pointerEvents = (!running) ? 'auto' : 'none';
+    this.r.begin.current.style.opacity = !running ? 1 : 0;
+    { const hubPages = Object.values(sc.pages).filter(p => p.hub); const cxh = (Math.min(...hubPages.map(p => p.x)) + Math.max(...hubPages.map(p => p.x + p.w))) / 2; const [bx, by] = proj(cxh, hubBottom); this.r.begin.current.style.transform = 'translate(-50%, 0) translate(' + bx + 'px,' + (by + 56) + 'px)'; }
+    if (phase === 'return' || phase === 'memo' || phase === 'end') this.r.objective.current.style.opacity = 0;
+  };
+
+  renderVals() {
+    const sc = this.state.scenario; const s = this.state; const cat = s.catalogue || { countries: [], decades: [], clusters: [] };
+    const q = s.query.trim().toLowerCase();
+    const on = 'rgba(235,230,220,0.85)', off = 'rgba(235,230,220,0.4)';
+    const clusters = cat.clusters.filter(k => (!s.country || k.country === s.country) && (!s.decade || k.date.slice(0, 3) + '0s' === s.decade) && (!q || k.label.toLowerCase().includes(q) || k.date.includes(q)))
+      .map(k => ({ id: k.id, label: k.label, meta: k.event ? k.date : k.date + '  ·  ' + k.pageCount + ' pages, not yet harvested', thumb: k.thumb || BLANK, cursor: k.event ? 'pointer' : 'default', opacity: k.event ? 1 : 0.45, onClick: e => { e.stopPropagation(); this.openCluster(k); } }));
+    return {
+      r: this.r, planes: s.planes, markList: s.markList, onStageClick: this.onStageClick, backToCatalogue: this.backToCatalogue,
+      dateLabel: sc ? sc.date : '', eventTitle: sc ? sc.title : '',
+      query: s.query, onQuery: e => this.setState({ query: e.target.value }),
+      countries: cat.countries.map(c => ({ label: c, color: s.country === c ? on : off, border: s.country === c ? 'rgba(235,230,220,0.7)' : 'transparent', onClick: e => { e.stopPropagation(); this.setState({ country: s.country === c ? null : c }); } })),
+      decades: cat.decades.map(d => ({ label: d, color: s.decade === d ? on : off, border: s.decade === d ? 'rgba(235,230,220,0.7)' : 'transparent', onClick: e => { e.stopPropagation(); this.setState({ decade: s.decade === d ? null : d }); } })),
+      clusters
+    };
+  }
+}
+</script>
+</body>
+</html>
