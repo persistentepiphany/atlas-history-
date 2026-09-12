@@ -1,0 +1,22 @@
+{
+  "id": "apollo11",
+  "title": "Man walks on the Moon",
+  "date": "Monday 21 July 1969",
+  "page": "assets/apollo11/pages/a02.png",
+  "photo": { "x": 0.015, "y": 0.08, "w": 0.715, "h": 0.51 },
+  "seed": "assets/apollo11/images/a04.png",
+  "voice": { "narrator": "nPczCjzI2devNBz1zQrb", "model": "eleven_multilingual_v2" },
+  "segments": [
+    { "id": "title", "kind": "title", "seconds": 14, "audio": "assets/apollo11/audio/narration.mp3", "text": "July 21, 1969. Humanity wakes to a new world. A man has walked on the Moon, and the front page fixes that impossible distance in ink." },
+    { "id": "page", "kind": "page", "seconds": 11, "audio": "assets/apollo11/audio/w-page.mp3", "text": "The Washington Post, morning edition. Six hundred million people watched the night before. Now the same picture is set in ink, on every doorstep." },
+    { "id": "photo", "kind": "photo", "seconds": 10, "audio": "assets/apollo11/audio/w-photo.mp3", "text": "This photograph was not taken on the Moon. It is a frame from a television signal, pulled from the broadcast and sent to print." },
+    { "id": "colour", "kind": "colour", "seconds": 9, "audio": "assets/apollo11/audio/w-colour.mp3", "text": "Let the picture warm. The grey dots become the surface, the flag, and the light of a lunar morning." },
+    { "id": "world", "kind": "reactor", "seconds": 24, "audio": "assets/apollo11/audio/w-world.mp3", "archive": "assets/apollo11/audio/n01.mp3", "archiveText": "Houston, Tranquility Base here. The Eagle has landed.", "archiveSpeaker": "Armstrong", "text": "Now step through it. Tranquility Base, 02:56 universal time. A television camera on the leg of the lander watches the first step.", "prompt": "Tranquility Base, 21 July 1969, 02:56 UTC. A slow scan television camera mounted on the leg of the lunar module Eagle watches Neil Armstrong descend the ladder onto the grey surface. Monochrome broadcast, soft grain, long shadows, the flag and the lander in frame.", "stops": [
+      { "at": 0, "label": "The camera on the lander", "prompt": "Tranquility Base, the television camera on the leg of the lander, Armstrong at the foot of the ladder." },
+      { "at": 9, "label": "Honeysuckle Creek", "prompt": "Honeysuckle Creek tracking station outside Canberra, 12:56 in the afternoon, the dish that carried the first eight minutes." },
+      { "at": 17, "label": "Houston", "prompt": "Mission Control in Houston, the same minute, the picture converted for broadcast and losing half its lines." }
+    ] },
+    { "id": "return", "kind": "return", "seconds": 9, "audio": "assets/apollo11/audio/w-return.mp3", "text": "Eight minutes of this signal came through a dish outside Canberra. The paper never says so." },
+    { "id": "end", "kind": "end", "seconds": 7, "audio": "assets/apollo11/audio/w-end.mp3", "text": "Two front pages were written before anyone knew which one would be true." }
+  ]
+}

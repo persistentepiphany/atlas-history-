@@ -8,7 +8,9 @@
     "preview": "vite preview --host 0.0.0.0",
     "walkthrough": "vite --host 0.0.0.0",
     "fetch:ia": "node --experimental-strip-types scripts/fetch-ia.ts",
-    "voices": "node --experimental-strip-types scripts/voices.ts"
+    "voices": "node --experimental-strip-types scripts/voices.ts",
+    "voices:walkthrough": "node --experimental-strip-types scripts/walkthrough-voices.ts",
+    "reactor": "node --experimental-strip-types typescript-handoff/mock-server/reactor.ts"
   },
   "dependencies": {
     "react": "^19.3.0",
