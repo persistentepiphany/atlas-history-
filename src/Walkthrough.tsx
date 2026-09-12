@@ -3,10 +3,21 @@ import { HeliosModel } from '@reactor-models/helios';
 
 export interface Stop { at: number; label: string; prompt: string }
 export interface Segment { id: string; kind: 'title' | 'page' | 'photo' | 'colour' | 'reactor' | 'return' | 'end'; seconds: number; audio?: string; voice?: string; text: string; archive?: string; archiveAt?: number; archiveText?: string; archiveSpeaker?: string; prompt?: string; stops?: Stop[] }
-export interface WalkthroughSpec { id: string; title: string; date: string; page: string; photo: { x: number; y: number; w: number; h: number }; seed: string | null; segments: Segment[] }
+export interface WalkthroughSpec { id: string; title: string; date: string; page: string; photo: { x: number; y: number; w: number; h: number }; seed: string | null; seedCrop?: { x: number; y: number; w: number; h: number }; segments: Segment[] }
 
 interface Cue { text: string; start: number; end: number }
 const publicUrl = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
+
+async function reactorSource(spec: WalkthroughSpec): Promise<Blob> {
+  const response = await fetch(publicUrl(spec.seed ?? spec.page));
+  if (!response.ok) throw new Error('Source image could not be loaded');
+  const source = await response.blob(); if (!spec.seedCrop) return source;
+  const bitmap = await createImageBitmap(source); const crop = spec.seedCrop;
+  const sw = Math.round(bitmap.width * crop.w), sh = Math.round(bitmap.height * crop.h); const scale = Math.max(1, 768 / sw);
+  const canvas = document.createElement('canvas'); canvas.width = Math.round(sw * scale); canvas.height = Math.round(sh * scale);
+  canvas.getContext('2d')?.drawImage(bitmap, Math.round(bitmap.width * crop.x), Math.round(bitmap.height * crop.y), sw, sh, 0, 0, canvas.width, canvas.height); bitmap.close();
+  return await new Promise<Blob>((resolve, reject) => canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('Could not crop the source photograph')), 'image/png'));
+}
 
 /** Sentences spread across a window by length, never shorter than a second, never longer than six. */
 export function cuesFor(text: string, start: number, seconds: number): Cue[] {
@@ -41,6 +52,7 @@ function useRoom() {
  */
 export function Walkthrough({ spec, onClose }: { spec: WalkthroughSpec; onClose: () => void }) {
   const [index, setIndex] = useState(-1); const [elapsed, setElapsed] = useState(0); const [ready, setReady] = useState(false);
+  const [interactivePrompt, setInteractivePrompt] = useState('');
   const [reactor, setReactor] = useState<ReactorState>({ status: 'idle', sessionId: null, prompt: '', inputs: [] });
   const [video, setVideo] = useState<MediaStream | null>(null); const model = useRef<HeliosModel | null>(null); const reactorOpening = useRef(false); const videoRef = useRef<HTMLVideoElement>(null);
   const voice = useRef<HTMLAudioElement>(null); const archive = useRef<HTMLAudioElement>(null); const room = useRoom(); const t0 = useRef(0); const raf = useRef(0);
@@ -71,8 +83,7 @@ export function Walkthrough({ spec, onClose }: { spec: WalkthroughSpec; onClose:
       const tokenResponse = await fetch('/reactor/token', { method: 'POST' }); const token = await tokenResponse.json() as { jwt?: string; error?: string };
       if (!tokenResponse.ok || !token.jwt) throw new Error(token.error || 'Reactor authorisation failed');
       await current.connect(token.jwt); setReactor(s => ({ ...s, status: 'conditioning', sessionId: current.getSessionId() ?? null, detail: 'Uploading the source image' }));
-      const imageResponse = await fetch(publicUrl(spec.seed ?? spec.page)); if (!imageResponse.ok) throw new Error('Source image could not be loaded');
-      const image = await current.uploadFile(await imageResponse.blob(), { name: (spec.seed ?? spec.page).split('/').at(-1) ?? 'newspaper.png' });
+      const image = await current.uploadFile(await reactorSource(spec), { name: (spec.seed ?? spec.page).split('/').at(-1) ?? 'newspaper.png' });
       const prompt = spec.segments.find(s => s.kind === 'reactor')?.prompt ?? spec.title;
       const ensureCommand = (name: string) => { const lastError = current.getLastError(); if (lastError) throw new Error(`${name}: ${lastError.message}`); };
       await current.setConditioning({ image, prompt }); ensureCommand('conditioning');
@@ -106,9 +117,14 @@ export function Walkthrough({ spec, onClose }: { spec: WalkthroughSpec; onClose:
     void model.current.setPrompt({ prompt: stop.prompt });
   }, [stop, reactor.inputs]);
 
-  useEffect(() => {
-    if (index >= spec.segments.length) { room.stop(); closeReactor(); const t = setTimeout(onClose, 1800); return () => clearTimeout(t); }
-  }, [index, spec.segments.length, onClose, room, closeReactor]);
+  useEffect(() => { if (index >= spec.segments.length) { room.stop(); voice.current?.pause(); archive.current?.pause(); } }, [index, spec.segments.length, room]);
+
+  const directWorld = useCallback(async (event: React.FormEvent) => {
+    event.preventDefault(); const prompt = interactivePrompt.trim(); const current = model.current; if (!prompt || !current) return;
+    setInteractivePrompt(''); setReactor(s => ({ ...s, prompt, inputs: [...s.inputs, prompt], detail: 'Applying your direction' }));
+    await current.setPrompt({ prompt }); const error = current.getLastError();
+    setReactor(s => error ? ({ ...s, status: 'fallback', detail: error.message }) : ({ ...s, detail: s.status === 'live' ? 'Live Helios stream · direction applied' : 'Direction applied' }));
+  }, [interactivePrompt]);
 
   useEffect(() => { const key = (e: KeyboardEvent) => { if (e.key === 'Escape') { room.stop(); closeReactor(); onClose(); } }; window.addEventListener('keydown', key); return () => { window.removeEventListener('keydown', key); closeReactor(); }; }, [onClose, room, closeReactor]);
 
@@ -117,7 +133,7 @@ export function Walkthrough({ spec, onClose }: { spec: WalkthroughSpec; onClose:
   const cue = cues.find(c => now >= c.start && now < c.end);
   const archiveAt = segment?.archiveAt ?? 0; const archiveCue = segment?.archiveText && elapsed > archiveAt && elapsed < archiveAt + 7.5 ? segment.archiveText : null;
 
-  const kind = segment?.kind ?? (index < 0 ? 'title' : 'end'); const done = index >= spec.segments.length;
+  const done = index >= spec.segments.length; const kind = done ? 'reactor' : segment?.kind ?? (index < 0 ? 'title' : 'end');
   const p = spec.photo; const cx = (p.x + p.w / 2) * 100, cy = (p.y + p.h / 2) * 100;
   const inWorld = kind === 'reactor'; const inPhoto = kind === 'photo' || kind === 'colour' || inWorld;
   const pageStyle = { transform: kind === 'title' ? 'translate(-50%, 0) scale(1.06)' : kind === 'page' ? 'translate(-50%, -1.5%) scale(1.22)' : inPhoto ? 'translate(-50%, 0) scale(1)' : kind === 'return' ? 'translate(-50%, -4%) scale(1.4)' : 'translate(-50%, 0) scale(1.06)', opacity: kind === 'title' || done || kind === 'end' ? 0 : inPhoto ? 0 : 1, transformOrigin: kind === 'return' ? `${cx}% ${cy}%` : 'center top' } as const;
@@ -133,7 +149,7 @@ export function Walkthrough({ spec, onClose }: { spec: WalkthroughSpec; onClose:
           {video && <video ref={videoRef} className="walk-video" autoPlay muted playsInline onCanPlay={() => setReactor(s => ({ ...s, status: 'live', detail: 'Live Helios stream' }))} style={{ opacity: inWorld && reactor.status === 'live' ? 1 : 0 }} />}
           <div className="walk-scan" style={{ opacity: inWorld ? 0.45 : 0 }} />
         </div>
-        <div className="walk-veil" style={{ opacity: kind === 'title' || kind === 'end' || done || index < 0 ? 1 : 0 }} />
+        <div className="walk-veil" style={{ opacity: kind === 'title' || kind === 'end' || index < 0 ? 1 : 0 }} />
         <div className="walk-vignette" style={{ opacity: inWorld ? 0.5 : 0.15 }} />
         <div className="walk-bar walk-bar--top" /><div className="walk-bar walk-bar--bottom" />
       </div>
@@ -145,9 +161,15 @@ export function Walkthrough({ spec, onClose }: { spec: WalkthroughSpec; onClose:
 
       <div className="walk-reactor" style={{ opacity: inWorld ? 1 : 0 }}>
         <span className={reactor.status !== 'live' && reactor.status !== 'fallback' ? 'walk-reactor-loading' : ''}>Reactor · {reactor.status === 'live' ? 'live Helios stream' : reactor.status === 'fallback' ? `source image fallback${reactor.detail ? ' · ' + reactor.detail : ''}` : reactor.detail ?? 'loading animated world'}{reactor.sessionId ? ' · ' + reactor.sessionId.slice(0, 8) : ''}</span>
-        <b>{stop?.label ?? ''}</b>
-        <p>{stop?.prompt ?? reactor.prompt}</p>
+        <b>{done ? 'Walkthrough complete — direct the world' : stop?.label ?? ''}</b>
+        <p>{done ? reactor.prompt : stop?.prompt ?? reactor.prompt}</p>
       </div>
+
+      {done && <form className="walk-interact" onSubmit={directWorld}>
+        <label htmlFor="world-direction">What happens next?</label>
+        <div><input id="world-direction" value={interactivePrompt} onChange={event => setInteractivePrompt(event.target.value)} placeholder="Move closer to the ladder…" autoFocus /><button type="submit" disabled={!interactivePrompt.trim() || !model.current}>Generate</button></div>
+        <small>Keep directing the live image, or Close to return to the newspaper.</small>
+      </form>}
 
       <div className="walk-lanes">
         <div className="walk-dialogue" style={{ opacity: archiveCue ? 1 : 0 }}>{segment?.archiveSpeaker && <i>{segment.archiveSpeaker}</i>}{archiveCue}</div>

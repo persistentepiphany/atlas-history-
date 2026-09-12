@@ -5,6 +5,7 @@
   "page": "assets/berlin1989/pages/b01.png",
   "photo": { "x": 0.566, "y": 0.455, "w": 0.26, "h": 0.165 },
   "seed": "assets/berlin1989/pages/b02.png",
+  "seedCrop": { "x": 0.17, "y": 0.745, "w": 0.27, "h": 0.16 },
   "voice": { "narrator": "nPczCjzI2devNBz1zQrb", "model": "eleven_multilingual_v2" },
   "segments": [
     { "id": "title", "kind": "title", "seconds": 9, "audio": "assets/berlin1989/audio/narration.mp3", "text": "November 10, 1989. The border is open. Berliners move through the Wall as a divided city discovers, almost at once, that history has changed direction." },
