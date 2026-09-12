@@ -62,7 +62,10 @@ export function Walkthrough({ spec, onClose }: { spec: WalkthroughSpec; onClose:
     reactorOpening.current = true; setReactor({ status: 'opening', sessionId: null, prompt: spec.segments.find(s => s.kind === 'reactor')?.prompt ?? '', inputs: [], detail: 'Authorising Reactor' });
     const current = new HeliosModel(); model.current = current;
     current.on('statusChanged', status => setReactor(s => ({ ...s, status: status === 'waiting' ? 'waiting' : status === 'ready' ? 'conditioning' : s.status, sessionId: current.getSessionId() ?? s.sessionId, detail: status === 'waiting' ? 'Warming the model' : 'Preparing the newspaper image' })));
-    current.on('trackReceived', (name, _track, stream) => { if (name === 'main_video') { setVideo(stream); setReactor(s => ({ ...s, status: 'live', sessionId: current.getSessionId() ?? null, detail: 'Live Helios stream' })); } });
+    current.onMainVideo((_track, stream) => { setVideo(stream); setReactor(s => ({ ...s, status: 'generating', sessionId: current.getSessionId() ?? null, detail: 'Receiving the first video frame' })); });
+    current.onGenerationStarted(() => setReactor(s => ({ ...s, status: 'generating', detail: 'Helios accepted generation' })));
+    current.onCommandError(message => setReactor(s => ({ ...s, status: 'fallback', detail: `${message.command}: ${message.reason}` })));
+    current.onState(message => { if (message.current_frame > 0) setReactor(s => ({ ...s, detail: `Receiving frame ${message.current_frame}` })); });
     current.on('error', error => setReactor(s => ({ ...s, status: 'fallback', detail: error.message })));
     try {
       const tokenResponse = await fetch('/reactor/token', { method: 'POST' }); const token = await tokenResponse.json() as { jwt?: string; error?: string };
@@ -71,9 +74,11 @@ export function Walkthrough({ spec, onClose }: { spec: WalkthroughSpec; onClose:
       const imageResponse = await fetch(publicUrl(spec.seed ?? spec.page)); if (!imageResponse.ok) throw new Error('Source image could not be loaded');
       const image = await current.uploadFile(await imageResponse.blob(), { name: (spec.seed ?? spec.page).split('/').at(-1) ?? 'newspaper.png' });
       const prompt = spec.segments.find(s => s.kind === 'reactor')?.prompt ?? spec.title;
-      await current.setConditioning({ image, prompt }); await current.setImageStrength({ image_strength: .9 }); await current.setSrScale({ sr_scale: 'off' });
-      setReactor(s => ({ ...s, status: 'generating', detail: 'Generating the first frame' })); await current.start();
-      const lastError = current.getLastError(); if (lastError) throw lastError;
+      const ensureCommand = (name: string) => { const lastError = current.getLastError(); if (lastError) throw new Error(`${name}: ${lastError.message}`); };
+      await current.setConditioning({ image, prompt }); ensureCommand('conditioning');
+      await current.setImageStrength({ image_strength: .9 }); ensureCommand('image strength');
+      await current.setSrScale({ sr_scale: 'off' }); ensureCommand('super resolution');
+      setReactor(s => ({ ...s, status: 'generating', detail: 'Generating the first frame' })); await current.start(); ensureCommand('generation');
     } catch (error) { setReactor(s => ({ ...s, status: 'fallback', detail: error instanceof Error ? error.message : 'Reactor unavailable' })); }
     finally { reactorOpening.current = false; }
   }, [spec]);
@@ -125,7 +130,7 @@ export function Walkthrough({ spec, onClose }: { spec: WalkthroughSpec; onClose:
         <img className="walk-page" src={publicUrl(spec.page)} alt="" draggable={false} style={pageStyle} />
         <div className="walk-photo" style={{ opacity: inPhoto ? 1 : 0, transform: `scale(${photoScale})` }}>
           <img src={publicUrl(spec.seed ?? spec.page)} alt="" draggable={false} className={`walk-crop ${colour ? 'walk-crop--colour' : ''} ${inWorld ? 'walk-crop--world' : ''}`} />
-          {video && <video ref={videoRef} className="walk-video" autoPlay muted playsInline style={{ opacity: inWorld && reactor.status === 'live' ? 1 : 0 }} />}
+          {video && <video ref={videoRef} className="walk-video" autoPlay muted playsInline onCanPlay={() => setReactor(s => ({ ...s, status: 'live', detail: 'Live Helios stream' }))} style={{ opacity: inWorld && reactor.status === 'live' ? 1 : 0 }} />}
           <div className="walk-scan" style={{ opacity: inWorld ? 0.45 : 0 }} />
         </div>
         <div className="walk-veil" style={{ opacity: kind === 'title' || kind === 'end' || done || index < 0 ? 1 : 0 }} />
