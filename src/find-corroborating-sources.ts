@@ -86,18 +86,31 @@ function parseSearchField<Item>(
   return parsed.data;
 }
 
-/** Search needs a handle on the event. The headline is best; failing that, the opening line. */
+/**
+ * Search needs a handle on the event. A real headline is the best one, but a transcribed
+ * clipping can yield a fragment — a column heading, a masthead line — which on its own
+ * searches for nothing useful. Anything short gets the opening of the body added to it.
+ */
+const USABLE_HEADLINE_CHARACTERS = 40;
+const OPENING_WORDS = 18;
+
 export function buildSearchQuery(article: {
   readonly headline: string;
   readonly bodyText: string;
 }): string {
   const headline = article.headline.trim();
-  if (headline.length >= 12) {
+  if (headline.length >= USABLE_HEADLINE_CHARACTERS) {
     return headline;
   }
-  const opening = article.bodyText.replace(/\s+/g, ' ').trim().split(' ').slice(0, 18).join(' ');
-  if (opening.length === 0) {
+
+  const opening = takeOpeningWords(article.bodyText);
+  const combined = [headline, opening].filter((part) => part.length > 0).join(' ');
+  if (combined.length === 0) {
     throw new InvalidInputError('The article carries neither a headline nor body text to search on');
   }
-  return opening;
+  return combined;
+}
+
+function takeOpeningWords(bodyText: string): string {
+  return bodyText.replace(/\s+/g, ' ').trim().split(' ').slice(0, OPENING_WORDS).join(' ');
 }
