@@ -29,7 +29,7 @@ Each `research/NN-*.md` file holds:
 - Citations + press-comparison table
 - Asset refs
 - Full Reactor world prompt (copy whole block; keep exclusions)
-- Three VEED avatar prompts (historian host, composite historical role, modern educator)
+- Three VEED Studio avatars: **Look** (pick avatar) + **Spoken script** (paste into talk box) + **Lower third** (add by hand)
 - Interaction ideas + principal caveat
 
 Image rights live in [`ASSET_MANIFEST.md`](ASSET_MANIFEST.md) and the summary table below. Local copies are under `assets/images/`.
@@ -43,11 +43,39 @@ Image rights live in [`ASSET_MANIFEST.md`](ASSET_MANIFEST.md) and the summary ta
 5. Historical + accessibility review  
 6. Release
 
+## Drafting a brief from a news article
+
+`src/` holds a CLI that turns one article into one draft brief. Give it a URL or a photo of a
+clipping; it writes `briefs/<slug>.json` with heading, summary, full article, narrative, event
+context, press perspectives, world prompt, sources, and image candidates.
+
+```
+export OPENAI_API_KEY=…
+export TAVILY_API_KEY=…
+npm run brief -- https://www.example.org/story
+npm run brief -- ~/Desktop/clipping.jpg --out briefs --overwrite
+```
+
+Needs Node 24 or newer — it runs the TypeScript directly, no build step. `npm run typecheck` and
+`npm test` cover the parts that work without network access.
+
+URLs are fetched by Tavily rather than by this process. Photos go to an OpenAI vision model that
+transcribes only what is printed and records unreadable columns instead of filling them in. The
+composer never sees a URL, so it cannot invent a citation: the source list is attached afterwards
+from the search results.
+
+**Every output is a draft.** `verification.status` is always `unverified`, `uncertainFacts` lists
+what the sources did not settle, and image candidates are all `needs-review` because a search
+result carries no per-item licence. Nothing here belongs in `assets/images/` or `ASSET_MANIFEST.md`
+until a person has read the source record, and nothing should ship until `verification.status`
+reads `reviewed`. The model default is `gpt-5.5`; override it with `OPENAI_MODEL`.
+
 ## Reactor and VEED
 
 - Paste the **full** world prompt from the event file. Prompts lock time window, place, POV, built environment, crowd level, hotspots, accessibility, and bans.
 - Banned by design: anachronistic props, invented dialogue, heroic combat, trauma spectacle, fake certainty where sources are thin.
-- VEED: historian host first. Label the historical-role avatar as a **composite reconstruction**; the second guide as a **modern educator**, not a witness.
+- VEED Studio: historian host first. Paste **only Spoken script** into speech — never the Look brief (that caused caption slop). Add Lower third by hand. Historical-role = **composite reconstruction**; guide = **modern educator**, not a witness.
+- No fal.ai / Fabric API required for this pack path.
 - No real historical figures’ voice or face without separate legal/ethical/technical approval.
 
 ## Release checks
