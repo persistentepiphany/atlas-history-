@@ -25,3 +25,7 @@ Run `npm run voices` with `ELEVENLABS_API_KEY` in the environment to refresh the
 ## Sequence application
 
 The `typescript-handoff` folder holds the React Three Fiber and Tone.js sequence application. Run `npm install` and `npm run dev` inside it. It serves the `walkthrough` folder as its public root, so both applications share the catalogue, the scenario files and the assets. The asset list is in `INVENTORY.md` and the state of the data branch in `DATA_BRANCH.md`.
+
+## Cinematic walkthrough
+
+Pressing Play on an event that carries a walkthrough file under `walkthrough/scenarios` opens the cinematic mode. It runs on black with the date and the title, pushes into the page, moves to the photograph, warms it with a slow colour pass, opens a Reactor session with a prompt drawn from the paper, sends one input per stop, returns to the page and ends. Narration files for the segments are generated with `npm run voices:walkthrough -- apollo11` from the environment key. Run `npm run reactor` beside `npm run dev` so the `/reactor` proxy has an endpoint. A real Reactor that answers the same session, input and delete routes replaces the mock through the proxy target in `vite.config.ts`.
