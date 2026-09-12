@@ -1,6 +1,6 @@
 import { getProject, types, type ISheet, type ISheetObject } from '@theatre/core';
 import type { Scenario } from '../data/types';
-import { buildTracks, initialValues, valueAt } from './beats';
+import { buildTracks, initialValues, valueAt, type SampleOptions } from './beats';
 
 export interface SheetObjects {
   camera: ISheetObject<{ x: number; y: number; z: number; fov: number }>;
@@ -24,10 +24,12 @@ export function createSheet(sc: Scenario, handKeyframes: unknown): { sheet: IShe
   return { sheet, objects };
 }
 
+export type Sampler = (name: string, t: number, opts?: SampleOptions) => number;
+
 /** Values derived from scenario beats. Hand keyframes in the Theatre state override these when present. */
-export function makeSampler(sc: Scenario) {
+export function makeSampler(sc: Scenario): Sampler {
   const tracks = buildTracks(sc); const init = initialValues(sc);
-  return (name: string, t: number, base?: { t: number; v: number }) => valueAt(tracks, init, name, t, base);
+  return (name, t, opts) => valueAt(tracks, init, name, t, opts);
 }
 
 export async function attachMasterAudio(sheet: ISheet, url: string) {
