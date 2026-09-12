@@ -7,12 +7,12 @@ const server = createServer((req, res) => {
   const url = req.url ?? '/'; const send = (code: number, body: unknown) => { res.writeHead(code, { 'content-type': 'application/json' }); res.end(JSON.stringify(body)); };
   let body = ''; req.on('data', (c) => (body += c)); req.on('end', () => {
     if (req.method === 'POST' && url === '/reactor/session') {
-      const { seedUrl } = JSON.parse(body || '{}') as { seedUrl: string }; const id = randomUUID(); sessions.set(id, { seedUrl, inputs: [] });
+      const { seedUrl, prompt } = JSON.parse(body || '{}') as { seedUrl: string; prompt?: string }; const id = randomUUID(); sessions.set(id, { seedUrl, inputs: prompt ? [prompt] : [] }); console.log('session ' + id + ' seed ' + seedUrl + (prompt ? ' prompt ' + prompt : ''));
       const fallbackUrl = seedUrl.includes('berlin1989') ? '/assets/events/berlin1989/video/r02.mp4' : '/assets/events/apollo11/video/r01.mp4';
       return send(200, { sessionId: id, streamUrl: process.env.REACTOR_LIVE ? fallbackUrl : '/reactor/stream/' + id, fallbackUrl });
     }
     const m = url.match(/^\/reactor\/session\/([^/]+)(\/input)?$/);
-    if (m && m[2] && req.method === 'POST') { sessions.get(m[1]!)?.inputs.push((JSON.parse(body) as { prompt: string }).prompt); return send(200, { ok: true }); }
+    if (m && m[2] && req.method === 'POST') { const prompt = (JSON.parse(body) as { prompt: string }).prompt; sessions.get(m[1]!)?.inputs.push(prompt); console.log('input ' + m[1] + ' ' + prompt); return send(200, { ok: true }); }
     if (m && req.method === 'DELETE') { sessions.delete(m[1]!); return send(200, { ok: true }); }
     if (url.startsWith('/reactor/stream/')) { res.writeHead(200, { 'content-type': 'video/mp4' }); return; }
     send(404, { error: 'not found' });

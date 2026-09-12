@@ -85,7 +85,7 @@ h1 { margin: 0; font: 400 clamp(54px, 8vw, 118px)/.82 Georgia, serif; letter-spa
 .reader--playing .reader-page { filter: grayscale(.82) sepia(.06) contrast(1.03) brightness(.92); animation: page-breathe 18s ease-in-out infinite alternate; }
 .reader-hint { position: absolute; right: 24px; bottom: 18px; margin: 0; color: #777269; font-size: 10px; letter-spacing: .1em; pointer-events: none; }
 
-.player { position: relative; z-index: 5; min-height: 118px; display: grid; grid-template-columns: auto minmax(0, 760px) 1fr; align-items: center; gap: 24px; padding: 18px 32px; border-top: 1px solid rgba(255,255,255,.08); background: rgba(7,7,6,.94); }
+.player { position: relative; z-index: 5; min-height: 118px; display: grid; grid-template-columns: auto minmax(0, 760px) auto 1fr; align-items: center; gap: 24px; padding: 18px 32px; border-top: 1px solid rgba(255,255,255,.08); background: rgba(7,7,6,.94); }
 .play { width: 84px; height: 54px; display: flex; align-items: center; justify-content: center; gap: 9px; border: 1px solid #755b3e; background: #16130f; cursor: pointer; color: #ede6db; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; transition: background .3s ease, border .3s ease; }
 .play:hover { background: #251c14; border-color: #b78959; }
 .play span { color: #c89662; }
@@ -115,3 +115,39 @@ h1 { margin: 0; font: 400 clamp(54px, 8vw, 118px)/.82 Georgia, serif; letter-spa
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .2s !important; animation-iteration-count: 1 !important; transition-duration: .2s !important; }
 }
+
+/* Walkthrough. Dark, unhurried, no blur anywhere. Every move is one long ease. */
+.walk { position: fixed; inset: 0; z-index: 30; background: #0b0b0a; overflow: hidden; font-family: Inter, "Helvetica Neue", Arial, sans-serif; color: #e8e3d9; }
+.walk-stage { position: absolute; inset: 0; overflow: hidden; }
+.walk-page { position: absolute; left: 50%; top: 3%; height: 94%; max-width: none; object-fit: contain; filter: grayscale(1) contrast(1.02) brightness(.92); transition: transform 11s cubic-bezier(.4, 0, .2, 1), opacity 2.4s cubic-bezier(.65, 0, .35, 1); will-change: transform, opacity; }
+.walk--photo .walk-page, .walk--colour .walk-page, .walk--reactor .walk-page { transition-duration: 2.4s; }
+.walk-photo { position: absolute; inset: 0; display: grid; place-items: center; transition: opacity 2.4s cubic-bezier(.65, 0, .35, 1), transform 12s cubic-bezier(.4, 0, .2, 1); will-change: transform, opacity; }
+.walk-crop, .walk-video { width: min(100vw, 170vh); height: auto; max-height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.05) brightness(.9); transition: filter 7s cubic-bezier(.65, 0, .35, 1); }
+.walk-crop--colour { filter: grayscale(.25) sepia(.42) saturate(1.35) contrast(1.02) brightness(.88) hue-rotate(-6deg); }
+.walk-crop--world { filter: grayscale(.55) sepia(.2) contrast(1.25) brightness(.62); animation: walk-drift 26s ease-in-out infinite alternate; }
+.walk-video { filter: grayscale(1) contrast(1.2) brightness(.6); }
+.walk-scan { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(0,0,0,.28) 0 1px, transparent 1px 3px); transition: opacity 2.4s ease; pointer-events: none; }
+.walk-veil { position: absolute; inset: 0; background: #0b0b0a; transition: opacity 1.6s cubic-bezier(.65, 0, .35, 1); pointer-events: none; }
+.walk-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,.92) 100%); transition: opacity 2.4s ease; pointer-events: none; }
+.walk-bar { position: absolute; left: 0; right: 0; height: 0; background: #000; transition: height 1.6s cubic-bezier(.65, 0, .35, 1); }
+.walk-bar--top { top: 0; } .walk-bar--bottom { bottom: 0; }
+.walk:not(.walk--title):not(.walk--done) .walk-bar { height: 12vh; }
+.walk-title { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; transition: opacity 2.2s ease; pointer-events: none; }
+.walk-title span { color: #9d988e; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; }
+.walk-title h2 { margin: 14px 0 0; font: 400 clamp(34px, 5vw, 64px)/1.05 Georgia, serif; letter-spacing: -.03em; }
+.walk-begin { position: absolute; left: 50%; bottom: 18vh; transform: translateX(-50%); padding: 14px 26px; border: 1px solid #755b3e; background: #16130f; color: #ede6db; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; }
+.walk-begin:disabled { opacity: .5; cursor: default; }
+.walk-reactor { position: absolute; left: 32px; top: calc(12vh + 24px); max-width: 38ch; display: grid; gap: 6px; transition: opacity 1.4s ease; pointer-events: none; }
+.walk-reactor span { color: #b98552; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; }
+.walk-reactor b { font: 400 16px/1.2 Georgia, serif; }
+.walk-reactor p { margin: 0; color: #9d988e; font-size: 12px; line-height: 1.5; }
+.walk-lanes { position: absolute; left: 0; right: 0; bottom: 0; height: 12vh; display: grid; place-items: center; pointer-events: none; }
+.walk-dialogue { max-width: 44ch; text-align: center; font: italic 15px/1.5 Georgia, serif; color: #cfc8bc; transition: opacity .6s ease; }
+.walk-dialogue i { display: block; font: 10px/1.6 Inter, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #9d988e; }
+.walk-narrator { position: absolute; left: 32px; bottom: calc(6vh - .8em); max-width: calc(50vw - 24ch); font-size: 13px; line-height: 1.55; color: #d9d2c6; transition: opacity .6s ease; }
+.walk--title .walk-narrator, .walk--end .walk-narrator { left: 50%; bottom: 10vh; transform: translateX(-50%); max-width: 60ch; text-align: center; }
+.walk-hud { position: absolute; right: 32px; bottom: 18px; display: flex; gap: 18px; align-items: baseline; color: #77736b; font-size: 11px; letter-spacing: .08em; font-variant-numeric: tabular-nums; }
+.walk-hud button { border: 0; background: none; color: #77736b; cursor: pointer; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.walk-hud button:hover { color: #e6dfd4; }
+@keyframes walk-drift { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.06) translate(-.6%, .4%); } }
+.play--walk { width: auto; padding: 0 18px; }

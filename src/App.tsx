@@ -1,4 +1,5 @@
 import { PointerEvent, WheelEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { Walkthrough, type WalkthroughSpec } from './Walkthrough';
 
 interface ArchiveInfo {
   title: string;
@@ -49,6 +50,18 @@ export function App() {
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const [walk, setWalk] = useState<WalkthroughSpec | null>(null);
+  const [walkAvailable, setWalkAvailable] = useState(false);
+
+  useEffect(() => {
+    setWalkAvailable(false); if (!selected?.event) return;
+    void fetch(publicUrl(`scenarios/${selected.event}.walkthrough.json`), { method: 'HEAD' }).then(r => setWalkAvailable(r.ok)).catch(() => setWalkAvailable(false));
+  }, [selected]);
+  const openWalk = async () => {
+    if (!selected?.event) return; audioRef.current?.pause(); setPlaying(false);
+    const spec = await fetch(publicUrl(`scenarios/${selected.event}.walkthrough.json`)).then(r => r.json() as Promise<WalkthroughSpec>);
+    setWalk(spec);
+  };
 
   useEffect(() => {
     void fetch(publicUrl('catalogue.json')).then(async response => {
@@ -218,10 +231,12 @@ export function App() {
               <p>{narration[selected.id]}</p>
               <i style={{ transform: `scaleX(${progress})` }} />
             </div>
+            {walkAvailable && <button className="play play--walk" onClick={() => void openWalk()}><span>◆</span>Walkthrough</button>}
             {selected.archive && <a href={selected.archive.sourceUrl} target="_blank" rel="noreferrer">Source ↗</a>}
           </footer>
         </section>
       )}
+      {walk && <Walkthrough spec={walk} onClose={() => setWalk(null)} />}
     </main>
   );
 }
