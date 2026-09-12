@@ -1,29 +1,34 @@
-import { useEffect, useRef } from 'react';
-import OpenSeadragon from 'openseadragon';
 import { motion } from 'framer-motion';
-import type { Cluster } from '../data/types';
+import type { Scenario } from '../data/types';
 
-export interface HubHandoff { bounds: { x: number; y: number; width: number; height: number }; pageId: string }
+export interface HubLabel { id: string; title: string; x: number; y: number; visible: boolean; resolved: boolean }
 
-/** Three DZI pages in a row, controls hidden, animationTime 2.4, springStiffness 3. On selection the viewport is captured and returned so the PagePlane can be placed at the same framing. */
-export function Hub({ cluster, resolved, visible, onSelect }: { cluster: Cluster; resolved: string[]; visible: boolean; onSelect: (h: HubHandoff) => void }) {
-  const el = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!el.current) return;
-    const viewer = OpenSeadragon({ element: el.current, showNavigationControl: false, showNavigator: false, animationTime: 2.4, springStiffness: 3, visibilityRatio: 1, gestureSettingsMouse: { clickToZoom: false } });
-    cluster.pages.forEach((p, i) => viewer.addTiledImage({ tileSource: p.thumb.replace(/\.(png|jpg)$/, '.dzi'), x: i * 1.12, y: 0, width: 1 }));
-    viewer.addHandler('canvas-click', (e) => {
-      const point = viewer.viewport.pointFromPixel(e.position); const idx = Math.floor(point.x / 1.12); const page = cluster.pages[idx]; if (!page) return;
-      const b = viewer.viewport.getBounds(); onSelect({ bounds: { x: b.x, y: b.y, width: b.width, height: b.height }, pageId: page.id });
-    });
-    return () => viewer.destroy();
-  }, [cluster, onSelect]);
+/**
+ * The hub is drawn by the same camera as the sequence at z 7, so the handoff into the read is a
+ * camera move rather than a viewer crossfade. Labels live in the DOM under each page and the
+ * begin prompt appears only once every asset of the sequence is in cache.
+ */
+export function Hub({ sc, labels, ready, running, prompt, onBegin, onCatalogue, reducedMotion }: { sc: Scenario; labels: HubLabel[]; ready: boolean; running: boolean; prompt: [number, number]; onBegin: () => void; onCatalogue: () => void; reducedMotion: boolean }) {
+  const fade = reducedMotion ? 0.2 : 1.2;
   return (
-    <motion.div className="fixed inset-0" animate={{ opacity: visible ? 1 : 0 }} transition={{ duration: 1.2 }} style={{ pointerEvents: visible ? 'auto' : 'none' }}>
-      <div ref={el} className="h-full w-full" />
-      <div className="ui pointer-events-none fixed bottom-[18vh] left-0 right-0 flex justify-center gap-16">
-        {cluster.pages.map((p) => <span key={p.id} className="flex flex-col items-center gap-1"><span>{p.title}</span>{resolved.includes(p.id) && <span style={{ color: 'rgba(255,178,86,0.85)' }}>Resolved</span>}</span>)}
-      </div>
-    </motion.div>
+    <div className="pointer-events-none fixed inset-0 ui">
+      {labels.map((l) => (
+        <div key={l.id} className="absolute left-0 top-0 flex flex-col items-center gap-1 whitespace-nowrap" style={{ transform: 'translate(-50%, 0) translate(' + l.x + 'px,' + (l.y + 12) + 'px)', opacity: l.visible ? 1 : 0, transition: 'opacity ' + fade + 's' }}>
+          <span>{l.title}</span>
+          {l.resolved && <span style={{ color: 'rgba(255,178,86,0.85)' }}>Resolved</span>}
+        </div>
+      ))}
+      <motion.button className="absolute left-0 top-0 whitespace-nowrap ui" style={{ transform: 'translate(-50%, 0) translate(' + prompt[0] + 'px,' + (prompt[1] + 56) + 'px)', background: 'none', border: 0, color: 'rgba(235,230,220,0.5)', pointerEvents: ready && !running ? 'auto' : 'none', cursor: 'pointer' }}
+        animate={{ opacity: running ? 0 : 1 }} transition={{ duration: fade }} onClick={(e) => { e.stopPropagation(); if (ready) onBegin(); }} aria-disabled={!ready}>
+        {ready ? 'Click the page to begin' : 'Loading the pages'}
+      </motion.button>
+      <motion.div className="absolute left-8 top-6 flex flex-col gap-3.5" animate={{ opacity: running ? 0 : 1 }} transition={{ duration: fade }} style={{ pointerEvents: running ? 'none' : 'auto' }}>
+        <div className="flex items-baseline gap-5">
+          <button className="ui" onClick={(e) => { e.stopPropagation(); onCatalogue(); }} style={{ background: 'none', border: 0, padding: '4px 0', opacity: 0.45, cursor: 'pointer' }}>Catalogue</button>
+          <span>{sc.title}</span>
+        </div>
+        <span style={{ opacity: 0.45 }}>{sc.date}</span>
+      </motion.div>
+    </div>
   );
 }
